@@ -145,9 +145,18 @@
             <button class="duv-voice__btn duv-spin__btn" type="button" data-spin-btn><kbd aria-hidden="true">F</kbd><span data-spin-label>Girar a roda</span></button>
             <p class="duv-spin__out" data-spin-out aria-live="polite">Descontos · carros · diamantes · VIP</p>
           </div>
+          <p class="duv-spin__who" data-spin-who hidden>Conectado como <b></b> · <button type="button" class="duv-spin__logout" data-spin-logout>sair</button></p>
+          <!-- Card do prêmio (modo valendo): o código também vai para o canal dos admins no Discord -->
+          <div class="duv-prize" data-prize hidden>
+            <p class="duv-prize__lbl">Seu prêmio de hoje</p>
+            <p class="duv-prize__name" data-prize-name></p>
+            <div class="duv-prize__code"><code data-prize-code></code><button type="button" class="duv-prize__copy" data-prize-copy>Copiar</button></div>
+            <p class="duv-prize__how">Abra um ticket no nosso Discord e mande este código. A equipe confere e entrega o prêmio.</p>
+            <a class="duv-prize__go" href="https://discord.gg/jogueryz" data-discord target="_blank" rel="noopener">Abrir ticket no Discord <span aria-hidden="true">›</span></a>
+          </div>
           <div class="duv-p__body">
             <p>Você tem <b>um giro por dia</b>. Gire e veja o que a cidade tem pra você: <b>descontos de 10% a 50%</b>, aluguel de carros, diamantes e tempo de VIP.</p>
-            <p class="duv-spin__note" data-placeholder="Roda de demonstração: prêmios e resgate reais ainda não existem">Giro de demonstração. A roda valendo prêmio chega com a abertura da cidade.</p>
+            <p class="duv-spin__note" data-spin-demo data-placeholder="Roda de demonstração: prêmios e resgate reais ainda não existem">Giro de demonstração. A roda valendo prêmio chega com a abertura da cidade.</p>
           </div>
         </div>
 

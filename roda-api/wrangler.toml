@@ -1,0 +1,13 @@
+# API da Roda da Sorte (Cloudflare Worker). Publicar: npx wrangler deploy (dentro de roda-api/)
+name = "ryz-roda"
+main = "src/index.js"
+compatibility_date = "2024-11-01"
+
+[vars]
+# sites que podem chamar a API (o primeiro é o padrão de volta do login)
+ALLOWED_ORIGINS = "https://ryzrp.com.br,https://www.ryzrp.com.br,http://localhost:4173"
+
+# guarda os giros do dia e os códigos (preencher o id depois de criar: npx wrangler kv namespace create RODA)
+[[kv_namespaces]]
+binding = "RODA"
+id = "PREENCHER_DEPOIS"

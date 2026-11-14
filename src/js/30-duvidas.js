@@ -112,6 +112,64 @@ var PREMIOS = [
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
   var OUT0 = out ? out.textContent : '';
 
+  /* ---- MODO VALENDO (RYZ.rodaApi preenchido em 00-config.js): login com Discord e sorteio no
+     servidor (roda-api/). Sem rodaApi, a roda continua como vitrine (sorteio e trava locais). ---- */
+  var API = String((window.RYZ || {}).rodaApi || '').replace(/\/+$/, '');
+  var TKEY = 'ryz-roda-token';
+  var prizeBox = document.querySelector('[data-prize]');
+  var whoBox = document.querySelector('[data-spin-who]');
+  var demoNote = document.querySelector('[data-spin-demo]');
+  var serverDay = null; /* giro de hoje vindo do servidor: { i, code, prize } */
+  var nextAt = 0;       /* próxima liberação (meia-noite de Brasília), em ms */
+  function getTok() { try { return window.localStorage.getItem(TKEY) || ''; } catch (e) { return ''; } }
+  function setTok(t) { try { if (t) window.localStorage.setItem(TKEY, t); else window.localStorage.removeItem(TKEY); } catch (e) { /* sem storage */ } }
+  if (API) (function () { /* volta do login com Discord: #roda=TOKEN (ou #roda-erro=...) */
+    var m = location.hash.match(/[#&]roda=([^&]+)/), e = /[#&]roda-erro=/.test(location.hash);
+    if (m) setTok(decodeURIComponent(m[1]));
+    if (m || e) {
+      history.replaceState(null, '', location.pathname + location.search + '#dp-1');
+      if (e) OUT0 = 'Não deu pra entrar com o Discord. Tenta de novo.';
+      var sec = document.getElementById('duvidas');
+      if (sec) window.setTimeout(function () { sec.scrollIntoView({ block: 'start' }); }, 80);
+    }
+  })();
+  function api(path, method) {
+    return fetch(API + path, { method: method || 'GET', headers: { Authorization: 'Bearer ' + getTok() } })
+      .then(function (r) {
+        return r.json().catch(function () { return {}; }).then(function (d) {
+          if (!r.ok) { var er = new Error(d.error || 'http'); er.status = r.status; throw er; }
+          return d;
+        });
+      });
+  }
+  function findIndex(p, i) { /* acha a fatia pelo prêmio (protege contra listas fora de ordem) */
+    for (var k = 0; k < N; k++) if (PREMIOS[k].valor === p.valor && PREMIOS[k].tipo === p.tipo) return k;
+    return i;
+  }
+  function updateWho(user) {
+    if (!whoBox) return;
+    whoBox.hidden = !user;
+    var b = whoBox.querySelector('b'); if (b && user) b.textContent = user.name;
+  }
+  function renderPrize(d, fresh) {
+    if (!prizeBox) return;
+    if (!d) { prizeBox.hidden = true; return; }
+    prizeBox.querySelector('[data-prize-name]').textContent = d.prize.nome;
+    prizeBox.querySelector('[data-prize-code]').textContent = d.code;
+    prizeBox.hidden = false;
+    prizeBox.classList.remove('is-new'); void prizeBox.offsetWidth; if (fresh) prizeBox.classList.add('is-new');
+  }
+  var copyBtn = document.querySelector('[data-prize-copy]');
+  if (copyBtn) copyBtn.addEventListener('click', function () {
+    var code = (document.querySelector('[data-prize-code]') || {}).textContent || '';
+    var ok = function () { copyBtn.textContent = 'Copiado!'; window.setTimeout(function () { copyBtn.textContent = 'Copiar'; }, 1800); };
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(code).then(ok, function () {});
+  });
+  var logoutBtn = document.querySelector('[data-spin-logout]');
+  if (logoutBtn) logoutBtn.addEventListener('click', function () {
+    setTok(''); serverDay = null; updateWho(null); renderPrize(null); setRot(restAngle(N - 1)); unlock();
+  });
+
   function el(tag, attrs, parent) {
     var e = document.createElementNS(NS, tag);
     for (var k in attrs) e.setAttribute(k, attrs[k]);
@@ -187,10 +245,11 @@ var PREMIOS = [
     var sm = document.createElement('small'); sm.appendChild(document.createTextNode('Próximo giro em '));
     var tm = document.createElement('time'); sm.appendChild(tm); out.appendChild(sm);
     out.classList.remove('is-new'); void out.offsetWidth; if (fresh) out.classList.add('is-new');
+    if (API) renderPrize(serverDay, fresh);
     var tick = function () {
-      var ms = msToMidnight();
+      var ms = API ? nextAt - Date.now() : msToMidnight();
       tm.textContent = fmt(ms);
-      if (ms <= 1000 || !load()) unlock();
+      if (ms <= 1000 || (!API && !load())) { serverDay = null; renderPrize(null); unlock(); }
     };
     window.clearInterval(timer); tick(); timer = window.setInterval(tick, 1000);
   }
@@ -204,8 +263,8 @@ var PREMIOS = [
   function unlock() {
     window.clearInterval(timer);
     btn.disabled = false;
-    if (label) label.textContent = 'Girar a roda';
-    if (out) { out.classList.remove('is-new'); out.textContent = OUT0; }
+    if (label) label.textContent = API && !getTok() ? 'Entrar com Discord' : 'Girar a roda';
+    if (out) { out.classList.remove('is-new'); out.textContent = API && !getTok() ? 'Entre com seu Discord para girar.' : OUT0; }
     slices.forEach(function (s) { s.classList.remove('is-win'); });
     setState('is-ready');
   }
@@ -271,7 +330,7 @@ var PREMIOS = [
       if (blurSvg) blurSvg.style.opacity = 0;
       if (hero) hero.style.setProperty('--spd', 0);
       if (ptrEl) ptrEl.style.transform = '';
-      save(i);
+      if (!API) save(i);
       lock(i, true);
       celebrate();
     };
@@ -304,7 +363,27 @@ var PREMIOS = [
   }
 
   btn.addEventListener('click', function () {
-    if (btn.disabled || load()) return;
+    if (btn.disabled) return;
+    if (API) {
+      if (!getTok()) { location.href = API + '/auth/login?r=' + encodeURIComponent(location.origin + location.pathname); return; }
+      if (serverDay) return;
+      btn.disabled = true;
+      if (label) label.textContent = 'Girando…';
+      if (out) { out.classList.remove('is-new'); out.textContent = 'Boa sorte…'; }
+      slices.forEach(function (s) { s.classList.remove('is-win'); });
+      api('/spin', 'POST').then(function (d) {
+        serverDay = d; nextAt = d.nextAt;
+        var k = findIndex(d.prize, d.i);
+        if (d.already) { setRot(restAngle(k)); lock(k, false); } else spin(k);
+      }).catch(function (e) {
+        if (e.status === 401) { setTok(''); updateWho(null); }
+        btn.disabled = false;
+        if (label) label.textContent = getTok() ? 'Girar a roda' : 'Entrar com Discord';
+        if (out) out.textContent = e.status === 401 ? 'Seu login expirou. Entre com o Discord de novo.' : 'Não deu pra girar agora. Tenta de novo em instantes.';
+      });
+      return;
+    }
+    if (load()) return;
     btn.disabled = true;
     if (label) label.textContent = 'Girando…';
     if (out) { out.classList.remove('is-new'); out.textContent = 'Boa sorte…'; }
@@ -317,9 +396,18 @@ var PREMIOS = [
   });
 
   /* estado inicial: já girou hoje -> mostra o prêmio do dia e a contagem; senão, o 50% no ponteiro */
-  var saved = load();
-  if (saved) { setRot(restAngle(saved.i)); lock(saved.i, false); }
-  else { setRot(restAngle(N - 1)); unlock(); }
+  if (API) {
+    if (demoNote) demoNote.hidden = true;
+    setRot(restAngle(N - 1)); unlock();
+    if (getTok()) api('/me').then(function (d) {
+      updateWho(d.user); nextAt = d.nextAt;
+      if (d.today) { serverDay = d.today; var k = findIndex(d.today.prize, d.today.i); setRot(restAngle(k)); lock(k, false); }
+    }).catch(function (e) { if (e.status === 401) { setTok(''); updateWho(null); unlock(); } });
+  } else {
+    var saved = load();
+    if (saved) { setRot(restAngle(saved.i)); lock(saved.i, false); }
+    else { setRot(restAngle(N - 1)); unlock(); }
+  }
 
   /* No celular o medalhão-roda entra no painel da pergunta 01 (no desktop fica no meio da cena). */
   if (hero && spinBox) {

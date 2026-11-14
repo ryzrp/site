@@ -21,3 +21,8 @@ assets/*.jpg
 .DS_Store
 Thumbs.db
 *.log
+
+# segredos da API da roda (nunca subir)
+roda-api/.dev.vars
+roda-api/.wrangler/
+roda-api/node_modules/
