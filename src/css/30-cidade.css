@@ -336,7 +336,7 @@
   overflow-wrap: normal;
   hyphens: none;
 }
-.cidade__card--concessionaria .cidade__name { font-size: 1.25rem; }
+.cidade__card--concessionaria .cidade__name { font-size: 1.0625rem; letter-spacing: 0; }
 .cidade__card--prefeitura .cidade__name { font-size: 1.5rem; }
 .cidade__meta {
   grid-row: 2;
@@ -344,6 +344,8 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
+  white-space: nowrap;
+  min-width: 0;
   font-size: 0.9375rem;
   font-weight: 600;
   letter-spacing: 0.08em;
@@ -469,7 +471,7 @@
   .cidade__card.is-sel { transform: none; }
   .cidade__band { padding: 10px calc(var(--leanc) * 0.7) 10px calc(var(--leanc) * 0.2 + 8px); grid-template-rows: 1fr 26px; row-gap: 6px; }
   .cidade__name { font-size: 1.3125rem; }
-  .cidade__card--concessionaria .cidade__name { font-size: 1rem; }
+  .cidade__card--concessionaria .cidade__name { font-size: 0.875rem; letter-spacing: 0; }
   .cidade__cat { width: 26px; height: 26px; }
   .cidade__cat svg { width: 14px; height: 14px; }
   .cidade__meta { font-size: 0.8125rem; gap: 6px; }
@@ -513,4 +515,9 @@
 .cidade__grid:has(.cidade__card:hover) .cidade__card.is-sel:not(:hover) .cidade__ph img { filter: brightness(0.82) saturate(0.85); }
 @media (prefers-reduced-motion: reduce) {
   .cidade__ph img, .cidade__ph::before { transition: none; }
+}
+
+/* telas médias: a placa "ZONA 0X" cabe numa linha só */
+@media (max-width: 1360px) and (min-width: 761px) {
+  .cidade__meta { font-size: 0.8125rem; letter-spacing: 0.05em; gap: 6px; }
 }
