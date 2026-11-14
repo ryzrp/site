@@ -1,0 +1,221 @@
+/* ==========================================================================
+   20-hero.css  (dono: construtor do HERO)
+   Palco com 3 painéis (cena 1 | moldura inclinada com a arte RYZ | cena 2),
+   título gigante sobreposto, legenda EN com a pronúncia, HUD (online + beta),
+   botão do Discord com selo BETA e aba de rolar presa na faixa de baixo.
+   ========================================================================== */
+.hero {
+  --hero-band: color-mix(in srgb, var(--c-lavender) 7%, color-mix(in srgb, var(--c-blue) 11%, color-mix(in srgb, var(--c-deep) 18%, var(--c-ink))));
+  --hero-side: color-mix(in srgb, var(--c-lavender) 5%, color-mix(in srgb, var(--c-deep) 4%, var(--c-ink)));
+  --hero-frame: color-mix(in srgb, var(--c-ink) 55%, var(--c-black));
+  --hero-lean: 80px;
+  --band-h: 22px;
+  position: relative;
+  min-height: min(calc(100svh - var(--nav-h)), 860px);
+  display: grid;
+  grid-template-areas: "stack";
+  overflow: hidden;
+  background: var(--hero-side);
+  padding-bottom: var(--band-h);
+}
+.hero > * { grid-area: stack; }
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0 0;
+  height: var(--band-h);
+  background: var(--hero-band);
+  z-index: 2;
+}
+
+/* ---- Palco ---- */
+.hero__stage {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr minmax(0, 52%) 1fr;
+  height: 100%;
+}
+.hero__side {
+  position: relative;
+  height: 100%;
+  min-width: 0;
+  overflow: hidden;
+  background: var(--hero-side);
+}
+/* a lateral passa por baixo da moldura inclinada (--hero-lean) */
+.hero__side--l { margin-right: calc(var(--hero-lean) * -1); }
+.hero__side--r { margin-left: calc(var(--hero-lean) * -1); }
+.hero__side picture { position: absolute; inset: 0; }
+.hero__side img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 18%; }
+/* escurece embaixo (título por cima) e na borda de fora (funde com a página) */
+.hero__side::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(180deg, transparent 45%, color-mix(in srgb, var(--c-ink) 78%, transparent) 100%);
+}
+.hero__side--l::after { background: linear-gradient(180deg, transparent 45%, color-mix(in srgb, var(--c-ink) 78%, transparent) 100%), linear-gradient(90deg, color-mix(in srgb, var(--c-ink) 55%, transparent), transparent 22%); }
+.hero__side--r::after { background: linear-gradient(180deg, transparent 45%, color-mix(in srgb, var(--c-ink) 78%, transparent) 100%), linear-gradient(270deg, color-mix(in srgb, var(--c-ink) 55%, transparent), transparent 22%); }
+
+/* moldura escura inclinada com a arte dentro */
+.hero__art {
+  position: relative;
+  z-index: 1;
+  clip-path: polygon(var(--hero-lean) 0, 100% 0, calc(100% - var(--hero-lean)) 100%, 0 100%);
+  background: var(--hero-frame);
+}
+.hero__art::before {
+  /* fundo do quadro (abaixo da arte), onde a aba de rolar encaixa */
+  content: "";
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 60px;
+  background: var(--c-ink);
+}
+.hero__art picture {
+  position: absolute;
+  top: 0;
+  left: 20px;
+  right: 20px;
+  bottom: 60px;
+  clip-path: polygon(calc(var(--hero-lean) - 6px) 0, 100% 0, calc(100% - var(--hero-lean) + 6px) 100%, 0 100%);
+}
+.hero__art picture::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 62%, color-mix(in srgb, var(--c-ink) 55%, transparent));
+}
+/* A arte tem a logo desenhada (ocupa ~60% da largura). Cobre o quadro, mas o zoom
+   para em 135% da largura do quadro, para as pontas do R e do Z nunca serem cortadas;
+   se sobrar espaço embaixo, a rua escura se funde no fundo do quadro. */
+.hero__art picture { container-type: size; background: var(--c-ink); }
+.hero__art img {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  translate: -50% 0;
+  width: max(100cqw, min(135cqw, 177.78cqh));
+  max-width: none;
+  height: auto;
+  -webkit-mask-image: linear-gradient(180deg, #000 78%, transparent);
+  mask-image: linear-gradient(180deg, #000 78%, transparent);
+}
+
+/* ---- Texto e chamada ---- */
+.hero__copy {
+  position: relative;
+  z-index: 3;
+  align-self: end;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 0 var(--gutter) 52px;
+}
+.hero__title {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  column-gap: 0.24em;
+  font-size: clamp(2.75rem, 1rem + 5.9vw, 6.5rem);
+  font-weight: 900;
+  font-style: italic;
+  line-height: 0.9;
+  letter-spacing: -0.005em;
+  text-transform: uppercase;
+  color: var(--c-text-strong);
+  text-shadow: var(--shadow-title);
+  padding-right: 0.1em;
+}
+.hero__title-b { color: var(--c-pink); text-shadow: var(--shadow-title-pink); }
+.hero__sub {
+  margin-top: var(--sp-3);
+  font-size: clamp(1rem, 0.8rem + 0.7vw, 1.375rem);
+  letter-spacing: 0.06em;
+  color: color-mix(in srgb, var(--c-lavender) 82%, var(--c-pink));
+  text-shadow: 0 2px 10px var(--c-ink), 0 0 2px var(--c-ink);
+}
+.hero__cta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  margin-top: var(--sp-3);
+}
+.hero__hud {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: var(--sp-2);
+  margin-right: 22px;
+  margin-bottom: -2px;
+}
+.hero__hud .g-chip-time { padding: 0.4em 1.1em; background: color-mix(in srgb, var(--c-ink) 88%, transparent); }
+.hero__players b { font-weight: 700; color: var(--c-pink); letter-spacing: 0.02em; }
+.hero__players b[data-state="offline"] { color: var(--c-text-dim); }
+.hero__players .ico { color: var(--c-magenta); }
+
+/* botão principal: só "Entrar no Discord", letra grande, ícone do Discord à esquerda */
+.hero__btn {
+  min-height: 104px;
+  min-width: min(560px, 100%);
+  gap: 0.45em;
+  padding: var(--sp-3) calc(var(--sp-8) + var(--sp-2));
+  font-size: clamp(1.9rem, 1.1rem + 2.6vw, 3.5rem);
+  font-weight: 800;
+  letter-spacing: 0.01em;
+}
+.hero__btn::before,
+.hero__btn::after { clip-path: polygon(44px 0, 100% 0, calc(100% - 44px) 100%, 0 100%); }
+.hero__btn-ico { width: 1.05em; height: 1.05em; flex: none; }
+
+/* aba de rolar: trapézio encaixado na faixa de baixo */
+.hero__scroll {
+  position: relative;
+  z-index: 3;
+  align-self: end;
+  justify-self: center;
+  display: grid;
+  width: 350px;
+  max-width: 70%;
+  height: 40px;
+  margin-bottom: calc(var(--band-h) * -1);
+  padding-bottom: 6px;
+  box-sizing: content-box;
+  font-size: 4rem;
+  line-height: 0;
+  overflow: hidden;
+  color: var(--c-purple);
+  background: var(--hero-band);
+  clip-path: polygon(34px 0, calc(100% - 34px) 0, 100% 100%, 0 100%);
+}
+.hero__scroll .ico { position: absolute; left: 50%; bottom: -8px; width: 1em; height: 1em; margin-left: -0.5em; }
+.hero__scroll:hover { color: var(--c-pink); }
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero__scroll .ico { animation: hero-bob 1.8s var(--ease) infinite; }
+  @keyframes hero-bob { 50% { transform: translateY(4px); } }
+}
+
+@media (max-width: 980px) {
+  .hero { --hero-lean: 48px; }
+  .hero__stage { grid-template-columns: 1fr minmax(0, 72%) 1fr; }
+}
+
+@media (max-width: 760px) {
+  .hero { min-height: 0; display: block; --band-h: 12px; }
+  .hero__stage { display: block; height: auto; }
+  .hero__side { display: none; }
+  .hero__art { position: relative; margin: 0; clip-path: polygon(0 0, 100% 0, 100% calc(100% - 28px), 0 100%); aspect-ratio: 4 / 3.4; }
+  .hero__art::before { display: none; }
+  .hero__art picture { inset: 0; clip-path: none; }
+  .hero__copy { margin-top: -64px; padding-bottom: var(--sp-8); }
+  .hero__title { font-size: clamp(2.6rem, 12.5vw, 4rem); }
+  .hero__cta { align-items: center; width: 100%; }
+  .hero__hud { justify-content: center; margin: 0 0 var(--sp-2); }
+  .hero__btn { width: 100%; min-width: 0; min-height: 84px; padding: var(--sp-3) var(--sp-5); font-size: clamp(1.75rem, 8.4vw, 2.1rem); }
+  .hero__btn::before,
+  .hero__btn::after { clip-path: polygon(22px 0, 100% 0, calc(100% - 22px) 100%, 0 100%); }
+  .hero__scroll { display: none; }
+}

@@ -1,0 +1,17 @@
+{
+  "name": "ryzrp-site",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node tools/build.mjs",
+    "serve": "node tools/serve.mjs",
+    "shoot": "node tools/shoot.mjs",
+    "lh": "node tools/lh.mjs"
+  },
+  "devDependencies": {
+    "playwright": "1.48.2",
+    "lighthouse": "12.2.1",
+    "@fontsource/barlow-condensed": "5.1.0",
+    "@fontsource/saira-condensed": "5.1.0"
+  }
+}

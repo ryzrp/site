@@ -1,0 +1,651 @@
+/* ==========================================================================
+   40-eventos.css  (dono: construtor de EVENTOS)
+   Grade 2x2 de cápsulas de evento em paralelogramo forte (~12°), todas com o
+   mesmo ângulo. Cada card tem cor-assinatura própria (borda grossa, filete
+   interno, gradiente da cena, brilho), arte em camadas (cena desfocada, luz,
+   figura com luz de recorte que vaza acima da borda, primeiro plano
+   desfocado), aba de tempo grande na quina e um HUD de progresso padrão.
+   ========================================================================== */
+.eventos {
+  padding-top: clamp(2.5rem, 1.5rem + 2.5vw, 3.75rem);
+  position: relative;
+  isolation: isolate;
+  overflow: clip;
+}
+
+/* ---- Palco: feixe de luz central, chão iluminado, raios, partículas, vinheta ---- */
+.eventos__fx {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(1.5px 1.5px at 12% 22%, color-mix(in srgb, var(--c-pink) 80%, transparent) 50%, transparent 51%),
+    radial-gradient(2px 2px at 78% 14%, color-mix(in srgb, var(--c-lavender) 70%, transparent) 50%, transparent 51%),
+    radial-gradient(1.5px 1.5px at 64% 82%, color-mix(in srgb, var(--c-purple) 80%, transparent) 50%, transparent 51%),
+    radial-gradient(2px 2px at 30% 68%, color-mix(in srgb, var(--c-pink) 60%, transparent) 50%, transparent 51%),
+    radial-gradient(1.5px 1.5px at 90% 56%, color-mix(in srgb, var(--c-lavender) 60%, transparent) 50%, transparent 51%),
+    radial-gradient(2px 2px at 46% 36%, color-mix(in srgb, var(--c-purple) 60%, transparent) 50%, transparent 51%),
+    radial-gradient(2.5px 2.5px at 6% 48%, color-mix(in srgb, var(--c-lavender) 55%, transparent) 50%, transparent 51%),
+    radial-gradient(2.5px 2.5px at 96% 30%, color-mix(in srgb, var(--c-pink) 55%, transparent) 50%, transparent 51%),
+    radial-gradient(70% 90% at 50% 45%, transparent 55%, color-mix(in srgb, var(--c-bg) 90%, transparent) 100%),
+    repeating-conic-gradient(from 150deg at 50% -12%, transparent 0deg 6deg, color-mix(in srgb, var(--c-lavender) 7%, transparent) 6deg 8deg, transparent 8deg 13deg),
+    linear-gradient(180deg, var(--c-bg) 0, color-mix(in srgb, var(--c-deep) 70%, var(--c-bg)) 40%, color-mix(in srgb, var(--c-deep) 55%, var(--c-bg)) 80%, var(--c-bg));
+}
+.eventos__fx::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: image-set(url("assets/img/ryz-hero-1024.webp") type("image/webp"), url("assets/img/ryz-hero-1024.jpg") type("image/jpeg")) 50% 100% / cover no-repeat;
+  opacity: .16;
+  filter: blur(20px) saturate(1.2);
+  -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 35%, #000 70%, transparent);
+  mask-image: linear-gradient(180deg, transparent 0, #000 35%, #000 70%, transparent);
+}
+.eventos__beam,
+.eventos__floor { position: absolute; left: 50%; display: block; transform: translateX(-50%); }
+.eventos__beam {
+  top: 0;
+  width: min(1200px, 96%);
+  height: 100%;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--c-lavender) 34%, transparent) 0, color-mix(in srgb, var(--c-purple) 16%, transparent) 45%, transparent 85%);
+  clip-path: polygon(40% 0, 60% 0, 100% 100%, 0 100%);
+  filter: blur(26px);
+}
+.eventos__floor {
+  bottom: -12%;
+  width: 90%;
+  height: 48%;
+  background: radial-gradient(closest-side, color-mix(in srgb, var(--c-pink) 42%, transparent), color-mix(in srgb, var(--c-magenta) 16%, transparent) 55%, transparent);
+}
+
+/* ---- Cabeçalho integrado num bloco de HUD ---- */
+.ev-head {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: var(--sp-4);
+  margin-bottom: 70px; /* espaço para as figuras que vazam pelo topo */
+}
+.ev-head__slab {
+  display: flex;
+  align-items: baseline;
+  gap: var(--sp-4);
+  flex: none;
+  padding: 0.5rem 2.6rem 0.6rem 1.8rem;
+  background: linear-gradient(90deg, color-mix(in srgb, var(--c-deep) 92%, transparent), color-mix(in srgb, var(--c-deep) 35%, transparent));
+  box-shadow: inset 7px 0 0 var(--c-magenta), inset 0 -2px 0 color-mix(in srgb, var(--c-purple) 55%, transparent);
+  clip-path: polygon(14px 0, 100% 0, calc(100% - 14px) 100%, 0 100%);
+}
+.ev-head__title {
+  font-size: clamp(2rem, 1.2rem + 2.2vw, 3.3rem);
+  text-shadow: 3px 3px 0 var(--c-ink);
+}
+.ev-head__sub {
+  font-size: clamp(1.05rem, 0.9rem + 0.5vw, 1.4rem);
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  color: var(--c-pink);
+}
+.ev-head__count {
+  flex: none;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.35em;
+  padding: 0.3em 1.1em 0.35em;
+  font-size: var(--fs-md);
+  font-weight: 800;
+  font-style: italic;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--c-lavender);
+  background: var(--c-ink);
+  box-shadow: inset 0 0 0 2px var(--c-magenta), 0 0 14px color-mix(in srgb, var(--c-magenta) 45%, transparent);
+  clip-path: polygon(8px 0, 100% 0, calc(100% - 8px) 100%, 0 100%);
+}
+.ev-head__count b { font-size: 1.5em; font-weight: 900; color: var(--c-magenta); line-height: 1; }
+.ev-head__rule {
+  flex: 1;
+  height: 2px;
+  min-width: 40px;
+  background: repeating-linear-gradient(90deg, color-mix(in srgb, var(--c-purple) 70%, transparent) 0 14px, transparent 14px 22px);
+  -webkit-mask-image: linear-gradient(90deg, #000, transparent);
+  mask-image: linear-gradient(90deg, #000, transparent);
+}
+
+/* ---- Grade inclinada única: colunas iguais, mesmo ângulo, gutter constante ---- */
+.eventos__grid {
+  --lean: 60px;      /* 60px sobre ~290px de altura = ~12° */
+  --cut: 16px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 76px 0;
+  padding: 0;
+  list-style: none;
+}
+/* os paralelogramos se encaixam: as caixas se sobrepõem em meio --lean, sobra um gutter fixo de 18px */
+.eventos__grid > li:nth-child(odd)  { margin-right: calc(var(--lean) * -0.5 + 9px); }
+.eventos__grid > li:nth-child(even) { margin-left:  calc(var(--lean) * -0.5 + 9px); }
+
+/* ---- Cápsula ---- */
+.evento {
+  --sig: var(--c-purple);
+  --sig-hi: var(--c-lavender);
+  --sig-mid: var(--c-violet);
+  --sig-lo: var(--c-deep);
+  --sig-grad: linear-gradient(110deg, var(--c-ink), var(--c-purple));
+  --panel-line: var(--sig);
+  --panel-bg: var(--c-ink);
+  --bw: 4px;      /* borda grossa na cor-assinatura */
+  --bb: 9px;      /* base ainda mais grossa */
+  --gap: 3px;     /* respiro escuro entre a borda e o filete */
+  --fl: 1.5px;    /* filete interno */
+  --leakh: 58px;  /* quanto a figura vaza acima do card */
+  --img: image-set(url("assets/img/ryz-hero-1024.webp") type("image/webp"), url("assets/img/ryz-hero-1024.jpg") type("image/jpeg"));
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 278px;
+  padding: calc(var(--bw) + var(--sp-4)) calc(var(--lean) + var(--sp-5)) calc(var(--bb) + var(--sp-3)) calc(var(--lean) + var(--sp-5));
+  filter: drop-shadow(0 0 14px color-mix(in srgb, var(--sig) 55%, transparent)) drop-shadow(8px 8px 0 color-mix(in srgb, var(--c-black) 70%, transparent));
+  transition: transform var(--t-med) var(--ease), filter var(--t-med) var(--ease);
+}
+/* Cores-assinatura: violeta, lilás, rosa claro brilhante, magenta neon sobre preto */
+.evento--frame {
+  --sig: var(--c-violet);
+  --sig-hi: color-mix(in srgb, var(--c-violet) 40%, var(--c-lavender));
+  --sig-mid: color-mix(in srgb, var(--c-violet) 80%, var(--c-lavender));
+  --sig-lo: color-mix(in srgb, var(--c-violet) 45%, var(--c-ink));
+  --sig-grad: linear-gradient(112deg, color-mix(in srgb, var(--c-violet) 18%, var(--c-ink)) 8%, color-mix(in srgb, var(--c-violet) 58%, var(--c-ink)) 42%, var(--c-violet) 74%, color-mix(in srgb, var(--c-purple) 65%, var(--c-lavender)) 100%);
+}
+.evento--arquivo {
+  --sig: var(--c-lavender);
+  --sig-hi: var(--c-lavender);
+  --sig-mid: var(--c-purple);
+  --sig-lo: color-mix(in srgb, var(--c-violet) 55%, var(--c-ink));
+  --sig-grad: linear-gradient(112deg, var(--c-violet) 0, var(--c-purple) 34%, color-mix(in srgb, var(--c-purple) 50%, var(--c-lavender)) 62%, var(--c-lavender) 92%);
+}
+.evento--voz {
+  --sig: var(--c-pink);
+  --sig-hi: var(--c-pink);
+  --sig-mid: var(--c-magenta);
+  --sig-lo: color-mix(in srgb, var(--c-magenta) 35%, var(--c-ink));
+  --sig-grad: linear-gradient(112deg, color-mix(in srgb, var(--c-magenta) 70%, var(--c-deep)) 0, var(--c-magenta) 30%, var(--c-pink) 62%, color-mix(in srgb, var(--c-pink) 60%, var(--c-lavender)) 100%);
+}
+.evento--live {
+  --sig: var(--c-magenta);
+  --sig-hi: var(--c-pink);
+  --sig-mid: var(--c-magenta);
+  --sig-lo: color-mix(in srgb, var(--c-magenta) 30%, var(--c-ink));
+  --sig-grad: linear-gradient(112deg, var(--c-ink) 20%, color-mix(in srgb, var(--c-deep) 60%, var(--c-ink)) 55%, color-mix(in srgb, var(--c-magenta) 40%, var(--c-ink)) 100%);
+}
+
+/* moldura: borda grossa (::before) > respiro escuro (::after) > filete (.evento__line) > cena */
+.evento::after { z-index: -1; inset: var(--bw) var(--bw) var(--bb) var(--bw); background: var(--c-ink); }
+.evento__line,
+.evento__bg {
+  position: absolute;
+  clip-path: polygon(calc(var(--lean) + var(--cut)) 0, 100% 0, calc(100% - var(--lean)) calc(100% - var(--cut)), calc(100% - var(--lean) - var(--cut)) 100%, 0 100%, var(--lean) var(--cut));
+}
+.evento__line {
+  z-index: 0;
+  inset: calc(var(--bw) + var(--gap)) calc(var(--bw) + var(--gap)) calc(var(--bb) + var(--gap)) calc(var(--bw) + var(--gap));
+  background: linear-gradient(100deg, var(--sig-hi), color-mix(in srgb, var(--sig) 60%, transparent) 60%, var(--sig-hi));
+}
+.evento:hover,
+.evento:focus-within {
+  transform: translateY(-4px);
+  filter: drop-shadow(0 0 24px color-mix(in srgb, var(--sig) 80%, transparent)) drop-shadow(8px 8px 0 color-mix(in srgb, var(--c-black) 70%, transparent));
+}
+/* brilho fino na quina chanfrada superior esquerda */
+.evento > .evento__line::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: calc(var(--lean) - 4px);
+  width: 90px;
+  height: 3px;
+  background: linear-gradient(90deg, var(--c-lavender), transparent);
+}
+
+/* ---- Cena dentro do recorte (plano de fundo) ---- */
+.evento__bg {
+  z-index: 0;
+  isolation: isolate;
+  overflow: hidden;
+  inset: calc(var(--bw) + var(--gap) + var(--fl)) calc(var(--bw) + var(--gap) + var(--fl)) calc(var(--bb) + var(--gap) + var(--fl)) calc(var(--bw) + var(--gap) + var(--fl));
+  background: var(--sig-grad);
+}
+.ev-scene {
+  position: absolute;
+  inset: -6px;
+  display: block;
+  background: var(--img) var(--bg-pos, 100% 8%) / var(--bg-size, 260%) auto no-repeat;
+  filter: blur(2.5px) saturate(1.2) contrast(1.15);
+  mix-blend-mode: soft-light;
+  opacity: var(--scene-op, .7);
+}
+.evento--frame   .ev-scene { --bg-pos: 0 0;     --bg-size: 300%; }
+.evento--arquivo .ev-scene { --bg-pos: 100% 0;  --bg-size: 320%; --scene-op: .4; }
+.evento--voz     .ev-scene { --bg-pos: 0 100%;  --bg-size: 240%; --scene-op: .28; }
+.evento--live    .ev-scene { --bg-pos: 100% 2%; --bg-size: 300%; --scene-op: .8; }
+/* legibilidade: escuro no terço inferior esquerdo + topo + listras */
+.evento__bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  background:
+    radial-gradient(52% 50% at 0 100%, color-mix(in srgb, var(--c-ink) 72%, transparent) 0, color-mix(in srgb, var(--c-ink) 35%, transparent) 50%, transparent 80%),
+    linear-gradient(180deg, color-mix(in srgb, var(--c-ink) 35%, transparent) 0, transparent 26%),
+    repeating-linear-gradient(-62deg, transparent 0 22px, color-mix(in srgb, var(--c-lavender) 7%, transparent) 22px 24px);
+}
+
+/* luzes da cena (atrás da figura), todas na cor-assinatura */
+.ev-light { position: absolute; z-index: 1; display: block; pointer-events: none; }
+.ev-light--rays {
+  right: 4%;
+  top: -45%;
+  width: 72%;
+  aspect-ratio: 1;
+  background:
+    radial-gradient(circle at 58% 50%, var(--c-lavender) 0 5%, color-mix(in srgb, var(--sig-hi) 80%, transparent) 14%, transparent 52%),
+    repeating-conic-gradient(from 0deg at 58% 50%, color-mix(in srgb, var(--c-lavender) 22%, transparent) 0 4deg, transparent 4deg 15deg);
+  -webkit-mask-image: radial-gradient(circle at 58% 50%, #000 20%, transparent 64%);
+  mask-image: radial-gradient(circle at 58% 50%, #000 20%, transparent 64%);
+}
+.ev-light--lamp {
+  right: 10%;
+  top: 0;
+  bottom: 0;
+  width: 52%;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--c-lavender) 90%, transparent), color-mix(in srgb, var(--c-lavender) 8%, transparent) 92%);
+  clip-path: polygon(42% 0, 58% 0, 100% 100%, 0 100%);
+  filter: blur(7px);
+}
+.ev-light--burst {
+  right: -4%;
+  top: -62%;
+  width: 84%;
+  aspect-ratio: 1;
+  background:
+    radial-gradient(circle, var(--c-lavender) 0 6%, color-mix(in srgb, var(--c-lavender) 70%, transparent) 16%, transparent 50%),
+    repeating-conic-gradient(from 0deg, color-mix(in srgb, var(--c-lavender) 45%, transparent) 0 6deg, transparent 6deg 18deg);
+  -webkit-mask-image: radial-gradient(circle, #000 15%, transparent 66%);
+  mask-image: radial-gradient(circle, #000 15%, transparent 66%);
+}
+.ev-light--ring {
+  right: 9%;
+  top: 4%;
+  width: 48%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 10px solid var(--c-pink);
+  box-shadow: 0 0 22px var(--c-magenta), 0 0 70px var(--c-magenta), inset 0 0 22px var(--c-magenta), inset 0 0 90px color-mix(in srgb, var(--c-magenta) 50%, transparent);
+}
+
+/* ---- Luz de recorte que vaza acima da borda superior ---- */
+.evento__leak {
+  position: absolute;
+  z-index: 2;
+  top: -78px;
+  right: calc(var(--lean) + 6%);
+  width: 50%;
+  height: 190px;
+  pointer-events: none;
+  background:
+    radial-gradient(closest-side, color-mix(in srgb, var(--c-lavender) 85%, transparent) 0, color-mix(in srgb, var(--sig-hi) 70%, transparent) 30%, color-mix(in srgb, var(--sig) 45%, transparent) 60%, transparent 100%);
+  filter: blur(8px);
+}
+.evento--voz .evento__leak { right: calc(var(--lean) + 16%); }
+
+/* ---- Figura: ancorada embaixo à direita, vaza pelo topo, com luz de recorte ---- */
+.evento__fig {
+  position: absolute;
+  z-index: 3;
+  right: calc(var(--lean) + 2%);
+  bottom: var(--bb);
+  height: calc(100% - var(--bb) + var(--leakh));
+  width: 56%;
+  pointer-events: none;
+  overflow: visible;
+  filter: drop-shadow(6px 2px 0 color-mix(in srgb, var(--c-black) 50%, transparent));
+}
+.evento--voz .evento__fig { width: 62%; right: calc(var(--lean) + 1%); }
+.evento--frame .evento__fig { --leakh: 76px; width: 60%; }
+
+/* FRAME DA CIDADE com arte real: print da cidade no fundo + personagem recortada.
+   O print (dia, céu azul) é tingido com a cor do card: mantém o desenho, ganha a paleta. */
+.evento--frame .ev-scene {
+  inset: 0;
+  background: image-set(url("assets/img/eventos/frame-fundo-1280.webp") type("image/webp"), url("assets/img/eventos/frame-fundo-1280.jpg") type("image/jpeg")) 50% 38% / cover no-repeat;
+  filter: brightness(0.7) contrast(1.2);
+  mix-blend-mode: luminosity;
+  opacity: 0.85;
+}
+/* ARQUIVO RYZ: letreiro RYZ CITY no fundo + personagem de óculos; a pasta do capítulo fica na frente */
+.evento--arquivo .ev-scene {
+  inset: 0;
+  background: image-set(url("assets/img/eventos/arquivo-fundo-1280.webp") type("image/webp"), url("assets/img/eventos/arquivo-fundo-1280.jpg") type("image/jpeg")) 34% 55% / cover no-repeat;
+  filter: brightness(0.95) contrast(1.25);
+  mix-blend-mode: luminosity;
+  opacity: 0.75;
+}
+.evento--arquivo .evento__fig--oculos { --leakh: 0px; width: 41%; right: calc(var(--lean) + 15%); }
+/* VOZ DA RUA: print noturno da cidade no fundo, tingido com o rosa do card */
+.evento--voz .ev-scene {
+  inset: 0;
+  background: image-set(url("assets/img/eventos/voz-fundo-1280.webp") type("image/webp"), url("assets/img/eventos/voz-fundo-1280.jpg") type("image/jpeg")) 50% 45% / cover no-repeat;
+  filter: brightness(1.15) contrast(1.15);
+  mix-blend-mode: luminosity;
+  opacity: 0.8;
+}
+/* o celular da personagem fica no topo direito: o selo de dia/tempo sai de lá e fica
+   ao lado da caixa "Prints enviados" (o espaço abaixo é da frase que aparece no hover) */
+.ev-top { display: flex; flex-wrap: wrap; align-items: flex-end; gap: var(--sp-2) var(--sp-3); }
+.ev-top .ev-hud { margin-top: var(--sp-2); }
+.evento--frame .evento__tab {
+  position: relative;
+  top: auto; right: auto;
+  min-height: 38px;
+  font-size: 1.05rem;
+  padding: 0.25em 1em 0.3em 1.4em;
+  clip-path: polygon(14px 0, 100% 0, 100% 100%, 0 100%);
+}
+.evento__fig--img {
+  object-fit: contain;
+  object-position: right bottom;
+  /* luz de recorte na cor do card + sombra dura do estilo */
+  filter:
+    drop-shadow(0 0 1.5px color-mix(in srgb, var(--sig-hi) 90%, transparent))
+    drop-shadow(0 0 16px color-mix(in srgb, var(--sig) 70%, transparent))
+    drop-shadow(6px 2px 0 color-mix(in srgb, var(--c-black) 50%, transparent));
+}
+.ev-sil path, .ev-sil circle { stroke: color-mix(in srgb, var(--sig) 35%, var(--c-ink)); stroke-width: 1.5; stroke-linejoin: round; }
+.ev-sil--back { opacity: .65; filter: blur(1.5px); }
+.ev-sil .ev-arm { fill: none; stroke: var(--sig-lo); stroke-width: 26; stroke-linecap: round; }
+.ev-sil .ev-arm--thin { stroke-width: 20; }
+.ev-detail { fill: none; stroke: color-mix(in srgb, var(--sig-hi) 40%, transparent); stroke-width: 2; stroke-linecap: round; }
+.ev-coat { fill: var(--sig-lo); stroke: color-mix(in srgb, var(--sig-hi) 55%, transparent); stroke-width: 2; stroke-linejoin: round; }
+.ev-rim {
+  fill: none;
+  stroke: var(--sig-hi);
+  stroke-width: 6.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  filter: drop-shadow(0 0 4px var(--sig-hi)) drop-shadow(0 0 14px var(--sig));
+}
+.ev-rim--hot { stroke: var(--c-lavender); stroke-width: 2.6; filter: none; }
+/* primeiro plano desfocado (bokeh) e fundo desfocado */
+.ev-fg circle { fill: var(--sig-hi); }
+.ev-fg { opacity: .42; filter: blur(5px); }
+.ev-fg--back { opacity: .3; filter: blur(3px); }
+.evento--voz .ev-fg { opacity: .55; }
+/* Frame: celular erguido */
+.ev-phone { fill: var(--c-ink); stroke: var(--sig-hi); stroke-width: 3.5; filter: drop-shadow(0 0 6px var(--sig)); }
+.ev-phone__scr { fill: var(--sig); }
+.ev-phone__vf { fill: none; stroke: var(--c-lavender); stroke-width: 3; }
+.ev-phone__dot { fill: var(--c-magenta); }
+.ev-hand { stroke: var(--sig-hi); stroke-width: 2; }
+/* Arquivo: chapéu e pasta */
+.ev-hatband { fill: var(--c-lavender); }
+.ev-folder { fill: var(--c-lavender); stroke: var(--c-ink); stroke-width: 3; }
+.ev-folder__sheet { fill: var(--c-pink); stroke: var(--c-ink); stroke-width: 2; }
+.ev-folder__txt { font: italic 900 34px/1 var(--font, inherit); fill: var(--c-ink); }
+.ev-folder__cap { font: italic 800 16px/1 var(--font, inherit); fill: var(--c-violet); letter-spacing: .1em; }
+/* Voz: megafone erguido */
+.ev-mega { fill: var(--c-lavender); stroke: var(--c-ink); stroke-width: 4; stroke-linejoin: round; }
+.ev-mega__bell { fill: var(--c-magenta); stroke: var(--c-ink); stroke-width: 4; }
+.ev-mega__wave { fill: none; stroke: var(--c-lavender); stroke-width: 6; stroke-linecap: round; filter: drop-shadow(0 0 6px var(--c-magenta)); }
+/* Streamers: fone e microfone */
+.ev-hp { fill: none; stroke: var(--c-ink); stroke-width: 14; stroke-linecap: round; }
+.ev-hp__cup { fill: var(--c-ink); stroke: var(--c-magenta); stroke-width: 4; filter: drop-shadow(0 0 6px var(--c-magenta)); }
+.ev-mic { fill: none; stroke: var(--c-ink); stroke-width: 6; stroke-linecap: round; }
+.ev-mic__head { fill: var(--c-magenta); stroke: var(--c-ink); stroke-width: 3; }
+
+/* conteúdo acima da cena e da figura */
+.evento > .ev-hud,
+.evento > .evento__foot { position: relative; z-index: 4; }
+
+/* ---- Aba do tempo: grande, sólida, chanfrada, presa na quina superior direita ---- */
+.evento__tab {
+  position: absolute;
+  top: var(--bw);
+  right: var(--bw);
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  min-height: 44px;
+  padding: 0.3em 1em 0.4em 2em;
+  font-size: 1.25rem;
+  background: var(--c-ink);
+  box-shadow: inset 0 -4px 0 var(--sig), inset 0 1px 0 color-mix(in srgb, var(--sig-hi) 40%, transparent);
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 20px 100%);
+}
+.evento__chip {
+  padding: 0;
+  background: none;
+  clip-path: none;
+  font-size: 1em;
+  font-weight: 800;
+  font-style: italic;
+  letter-spacing: 0.03em;
+  color: var(--c-lavender);
+}
+.evento__chip .ico { width: 1.05em; height: 1.05em; color: var(--sig-hi); }
+.evento__day {
+  font-weight: 800;
+  font-style: italic;
+  text-transform: uppercase;
+  color: var(--sig-hi);
+  padding-right: var(--sp-3);
+  border-right: 2px solid color-mix(in srgb, var(--sig-hi) 40%, transparent);
+}
+.evento__new,
+.evento__live {
+  font-size: 0.95rem;
+  font-weight: 900;
+  padding: 0.3em 1em;
+  color: var(--c-ink);
+}
+.evento__new { background: var(--c-lavender); box-shadow: 0 0 12px color-mix(in srgb, var(--c-lavender) 70%, transparent); }
+.evento__live {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  background: var(--c-magenta);
+  box-shadow: 0 0 14px var(--c-magenta);
+}
+.evento__live i {
+  width: 0.6em;
+  height: 0.6em;
+  border-radius: 50%;
+  background: var(--c-ink);
+  animation: ev-pulse 1.4s var(--ease) infinite;
+}
+@keyframes ev-pulse { 50% { opacity: 0.3; transform: scale(0.75); } }
+
+/* ---- HUD de progresso padrão (mesmo lugar e tamanho em todo card) ---- */
+.ev-hud {
+  display: grid;
+  grid-template-columns: auto auto;
+  justify-content: start;
+  align-items: center;
+  column-gap: var(--sp-3);
+  row-gap: 2px;
+  align-self: flex-start;
+  margin-top: var(--sp-2);
+  padding: 0.35rem 1.4rem 0.5rem 1rem;
+  background: linear-gradient(90deg, color-mix(in srgb, var(--c-ink) 82%, transparent), color-mix(in srgb, var(--c-ink) 40%, transparent));
+  box-shadow: inset 3px 0 0 var(--sig);
+  clip-path: polygon(8px 0, 100% 0, calc(100% - 8px) 100%, 0 100%);
+  text-transform: uppercase;
+}
+.ev-hud__lbl {
+  grid-column: 1 / -1;
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--c-lavender);
+}
+.evento__by { text-transform: none; font-weight: 800; color: var(--sig-hi); }
+.evento--voz .evento__by, .evento--arquivo .evento__by { color: var(--c-pink); }
+.ev-hud__num {
+  font-size: 1.15rem;
+  font-weight: 700;
+  font-style: italic;
+  color: color-mix(in srgb, var(--c-lavender) 80%, var(--c-ink));
+  line-height: 1;
+}
+.ev-hud__num b { font-size: 1.6em; font-weight: 900; color: var(--c-lavender); text-shadow: 0 0 10px var(--sig); }
+.ev-bar {
+  position: relative;
+  width: 160px;
+  height: 12px;
+  transform: skewX(-12deg);
+  background: color-mix(in srgb, var(--c-ink) 90%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--sig-hi) 45%, transparent);
+}
+.ev-bar i {
+  position: absolute;
+  top: 2px;
+  bottom: 2px;
+  left: 2px;
+  width: calc((100% - 4px) * var(--p, .5));
+  background: linear-gradient(90deg, var(--sig), var(--sig-hi));
+  box-shadow: 0 0 10px var(--sig), 0 0 2px var(--c-lavender);
+}
+.evento--live .ev-bar i, .evento--frame .ev-bar i { background: linear-gradient(90deg, var(--sig), var(--c-lavender)); }
+.ev-bar::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(90deg, transparent 0 calc(12.5% - 2px), var(--c-ink) calc(12.5% - 2px) 12.5%);
+}
+
+/* ---- Base: legenda em inglês acima + título grande seguindo a inclinação ---- */
+.evento__foot {
+  margin-top: auto;
+  margin-left: calc(var(--lean) * -0.7);
+  padding-top: var(--sp-5);
+  position: relative;
+}
+.evento__en {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  margin-bottom: 0.3rem;
+  font-size: var(--fs-md);
+  font-weight: 800;
+  font-style: italic;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--sig-hi);
+  text-shadow: 1px 1px 0 var(--c-ink), 0 0 8px var(--c-ink);
+}
+.evento__en::before {
+  content: "";
+  width: 22px;
+  height: 6px;
+  flex: none;
+  background: var(--sig);
+  transform: skewX(-20deg);
+  box-shadow: 0 0 8px var(--sig);
+}
+.evento--voz .evento__en, .evento--arquivo .evento__en { color: var(--c-lavender); }
+.evento--voz .evento__en::before { background: var(--c-lavender); }
+.evento__title {
+  font-size: clamp(2.6rem, 1.3rem + 2.7vw, 4rem);
+  font-weight: 900;
+  font-style: italic;
+  line-height: 0.86;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--c-text-strong);
+  -webkit-text-stroke: 2px var(--c-ink);
+  paint-order: stroke fill;
+  text-shadow: 4px 4px 0 var(--c-ink), 0 0 26px color-mix(in srgb, var(--sig) 70%, transparent);
+}
+/* descrição: só no hover/foco, como dica acima da legenda */
+.evento__desc {
+  position: absolute;
+  left: 0;
+  bottom: calc(100% - var(--sp-3));
+  max-width: 34ch;
+  padding: 0.35em 0.9em 0.4em;
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--c-lavender);
+  background: color-mix(in srgb, var(--c-ink) 94%, transparent);
+  box-shadow: inset 3px 0 0 var(--sig);
+  clip-path: polygon(6px 0, 100% 0, calc(100% - 6px) 100%, 0 100%);
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity var(--t-med) var(--ease), transform var(--t-med) var(--ease);
+}
+.evento:hover .evento__desc,
+.evento:focus-within .evento__desc { opacity: 1; transform: none; }
+.evento__link { color: inherit; text-decoration: none; }
+.evento__link::before { content: ""; position: absolute; inset: 0; z-index: 6; }
+.evento__link:focus-visible { outline: none; }
+.evento--live:focus-within::before { background: var(--c-lavender); }
+.evento__go {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2em;
+  margin-left: var(--sp-1);
+  font-weight: 800;
+  text-transform: uppercase;
+  color: var(--c-pink);
+  white-space: nowrap;
+}
+.evento--live:hover .evento__title { color: var(--c-pink); }
+
+@media (prefers-reduced-motion: reduce) {
+  .evento, .evento__desc { transition: none; }
+  .evento:hover, .evento:focus-within { transform: none; }
+  .evento__live i { animation: none; }
+}
+
+@media (max-width: 1100px) {
+  .eventos__grid { --lean: 50px; }
+  .evento { min-height: 260px; }
+  .evento__title { font-size: clamp(2.1rem, 0.9rem + 2.8vw, 3.1rem); }
+  .ev-bar { width: 140px; }
+}
+@media (max-width: 960px) {
+  .eventos__grid { grid-template-columns: minmax(0, 1fr); gap: 76px; }
+  .eventos__grid > li:nth-child(n) { margin: 0; }
+  .evento__title { font-size: clamp(2.2rem, 1.2rem + 3vw, 3.4rem); }
+}
+@media (max-width: 640px) {
+  .ev-head { flex-wrap: wrap; margin-bottom: 56px; gap: var(--sp-3); }
+  .ev-head__slab { flex: 1 1 100%; max-width: 100%; flex-wrap: wrap; row-gap: 0; column-gap: var(--sp-3); padding: 0.45rem 1.8rem 0.5rem 1.3rem; }
+  .evento--frame .evento__fig { --leakh: 48px; }
+  .ev-head__rule { display: none; }
+}
+@media (max-width: 560px) {
+  .eventos__grid { --lean: 34px; --cut: 11px; gap: 60px; }
+  .evento {
+    --bw: 3px; --bb: 7px; --gap: 2px; --leakh: 36px;
+    min-height: 236px;
+    padding: calc(var(--bw) + var(--sp-3)) calc(var(--lean) + var(--sp-2)) calc(var(--bb) + var(--sp-3)) calc(var(--lean) + var(--sp-2));
+  }
+  .evento__fig { width: 60%; right: calc(var(--lean) + 1%); }
+  .evento--voz .evento__fig { width: 66%; }
+  .evento__leak { top: -50px; height: 130px; }
+  .evento__tab { font-size: 1rem; min-height: 40px; padding-left: 1.5em; gap: var(--sp-2); clip-path: polygon(0 0, 100% 0, 100% 100%, 14px 100%); }
+  .evento__day { display: none; }
+  .evento__new, .evento__live { font-size: 0.8rem; }
+  .ev-hud { margin-top: 44px; padding: 0.3rem 1rem 0.4rem 0.8rem; }
+  .ev-hud__lbl { font-size: var(--fs-xs); }
+  .ev-hud__num { font-size: 1rem; }
+  .ev-bar { width: 96px; height: 10px; }
+  .evento__foot { margin-left: calc(var(--lean) * -0.5); }
+  .evento__en { font-size: var(--fs-xs); letter-spacing: 0.14em; }
+  .evento__title { font-size: 2.15rem; white-space: normal; max-width: 72%; }
+  .evento__desc { display: none; }
+}

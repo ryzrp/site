@@ -1,0 +1,115 @@
+/* ==========================================================================
+   00-tokens.css  (dono: Fundação, não editar)
+   Variáveis globais do site RYZ RP: paleta, superfícies, tipografia,
+   espaçamento, inclinação, sombras, brilhos e camadas.
+   ========================================================================== */
+:root {
+  /* Paleta oficial (só estas cores, mais preto) */
+  --c-purple:   #BE6BFF; /* roxo principal */
+  --c-violet:   #7A2CFF; /* violeta */
+  --c-deep:     #3A0A66; /* roxo profundo */
+  --c-ink:      #120022; /* quase preto */
+  --c-pink:     #FF9DFF; /* rosa claro */
+  --c-magenta:  #FF4DFF; /* magenta neon */
+  --c-lavender: #F3D6FF; /* lavanda (texto) */
+  --c-blue:     #4B23FF; /* azul-violeta */
+  --c-black:    #000;
+
+  /* Fundo e superfícies (derivadas da paleta) */
+  --c-bg:        #0b0014;
+  --c-surface-1: color-mix(in srgb, var(--c-ink) 82%, var(--c-deep));   /* painel escuro */
+  --c-surface-2: color-mix(in srgb, var(--c-ink) 55%, var(--c-deep));   /* painel médio */
+  --c-surface-3: color-mix(in srgb, var(--c-deep) 70%, var(--c-violet)); /* painel claro */
+  --c-line:      color-mix(in srgb, var(--c-purple) 22%, transparent);  /* divisórias */
+  --c-text:      var(--c-lavender);
+  --c-text-strong: var(--c-lavender); /* texto de destaque (no lugar de branco puro) */
+  --c-text-dim:  color-mix(in srgb, var(--c-lavender) 72%, var(--c-bg)); /* AA sobre o fundo */
+  --c-text-mute: color-mix(in srgb, var(--c-lavender) 58%, var(--c-bg));
+  --c-accent:    var(--c-pink);
+  --c-on-accent: var(--c-ink);
+
+  /* Cores dos planos VIP (exceção pedida no briefing: cada plano tem cor própria) */
+  --vip-bronze:    #D08A52;
+  --vip-prata:     #CFD3E6;
+  --vip-ouro:      #FFD15C;
+  --vip-esmeralda: #3EE6A0;
+  --vip-rubi:      #FF4D7A;
+  --vip-diamante:  #8FE9FF;
+
+  /* Tipografia */
+  --font: "Barlow Condensed", "RYZ FB Narrow", "RYZ FB", sans-serif;
+  --fs-xs:   0.8125rem;
+  --fs-sm:   0.9375rem;
+  --fs-md:   1.0625rem;
+  --fs-lg:   1.25rem;
+  --fs-xl:   clamp(1.5rem, 1.2rem + 1.2vw, 2rem);
+  --fs-2xl:  clamp(2rem, 1.4rem + 2.6vw, 3.25rem);
+  --fs-head: clamp(2.5rem, 1.6rem + 3.8vw, 4.75rem);   /* títulos de seção */
+  --fs-hero: clamp(2.75rem, 1.2rem + 6.2vw, 7rem);     /* título do hero */
+  --lh-tight: 0.92;
+  --lh-body: 1.5;
+  --track-ui: 0.02em;
+  --track-wide: 0.12em;
+
+  /* Espaçamento */
+  --sp-1: 0.25rem;
+  --sp-2: 0.5rem;
+  --sp-3: 0.75rem;
+  --sp-4: 1rem;
+  --sp-5: 1.5rem;
+  --sp-6: 2rem;
+  --sp-7: 3rem;
+  --sp-8: 4rem;
+  --sp-9: 6rem;
+  --section-y: clamp(4rem, 3rem + 4vw, 7.5rem);
+  --gutter: clamp(1rem, 0.5rem + 2.5vw, 3rem);
+  --container: 1240px;
+
+  /* Inclinação (linguagem de menu de jogo) */
+  --skew: -12deg;          /* ângulo padrão (skewX) para botões, abas e selos */
+  --skew-undo: 12deg;      /* para desfazer a inclinação no conteúdo */
+  --lean: clamp(14px, 2.2vw, 34px);  /* recuo horizontal dos paralelogramos em clip-path */
+  --lean-sm: 10px;
+  --cut: 14px;             /* tamanho do chanfro dos cantos */
+  --bw: 2px;               /* espessura da borda neon */
+
+  /* Sombras de título e brilhos neon */
+  --shadow-title: 4px 4px 0 var(--c-deep), 6px 6px 0 color-mix(in srgb, var(--c-violet) 45%, transparent);
+  --shadow-title-sm: 2px 2px 0 var(--c-deep), 3px 3px 0 color-mix(in srgb, var(--c-violet) 45%, transparent);
+  --shadow-title-pink: 4px 4px 0 var(--c-deep), 6px 6px 0 color-mix(in srgb, var(--c-magenta) 40%, transparent);
+  --glow-purple: 0 0 18px color-mix(in srgb, var(--c-purple) 55%, transparent);
+  --glow-pink:   0 0 22px color-mix(in srgb, var(--c-magenta) 55%, transparent);
+  --glow-blue:   0 0 18px color-mix(in srgb, var(--c-blue) 60%, transparent);
+  --shadow-panel: 0 18px 40px -18px rgba(0, 0, 0, 0.8);
+
+  /* Listras diagonais e textura */
+  --stripes: repeating-linear-gradient(-55deg, transparent 0 14px, color-mix(in srgb, var(--c-purple) 7%, transparent) 14px 16px);
+  --stripes-strong: repeating-linear-gradient(-55deg, color-mix(in srgb, var(--c-purple) 10%, transparent) 0 10px, transparent 10px 22px);
+
+  /* Movimento */
+  --ease: cubic-bezier(.2, .7, .2, 1);
+  --t-fast: 140ms;
+  --t-med: 260ms;
+
+  /* Barra fixa */
+  --nav-bar-h: 60px;
+  --nav-sub-h: 44px;
+  --nav-h: calc(var(--nav-bar-h) + var(--nav-sub-h));
+
+  /* Camadas */
+  --z-base: 1;
+  --z-raised: 10;
+  --z-overlay: 50;
+  --z-nav: 100;
+  --z-menu: 110;
+  --z-skip: 1000;
+}
+
+@media (max-width: 760px) {
+  :root {
+    --skew: -9deg;
+    --skew-undo: 9deg;
+    --nav-bar-h: 56px;
+    --cut: 10px;
+  }
+}

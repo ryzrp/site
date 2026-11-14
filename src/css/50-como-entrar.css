@@ -1,0 +1,146 @@
+/* ==========================================================================
+   50-como-entrar.css  (dono: construtor de COMO ENTRAR)
+   Quatro painéis inclinados altos com número gigante + linha do tempo
+   tracejada com etiquetas de etapa (como um chaveamento de torneio).
+   ========================================================================== */
+.entrar .g-head { margin-bottom: var(--sp-6); }
+.entrar__sub { color: color-mix(in srgb, var(--c-lavender) 62%, var(--c-bg)); font-size: clamp(1rem, 0.9rem + 0.4vw, 1.25rem); }
+
+.entrar__steps {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(1rem, 0.4rem + 2vw, 3.25rem);
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+/* Cada passo tem uma cor da paleta, em progressão com o fundo da página:
+   azul (fundo desta seção) -> violeta -> roxo -> rosa (o que vem depois). */
+.entrar__step:nth-child(1) { --acc: var(--c-blue);    --acc-hi: color-mix(in srgb, var(--c-blue) 45%, var(--c-lavender)); }
+.entrar__step:nth-child(2) { --acc: var(--c-violet);  --acc-hi: color-mix(in srgb, var(--c-violet) 42%, var(--c-lavender)); }
+.entrar__step:nth-child(3) { --acc: var(--c-purple);  --acc-hi: color-mix(in srgb, var(--c-purple) 60%, var(--c-lavender)); }
+.entrar__step:nth-child(4) { --acc: var(--c-magenta); --acc-hi: var(--c-pink); }
+.entrar__step {
+  --tilt: clamp(18px, 3.4vw, 40px);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  min-height: clamp(280px, 22vw + 30px, 340px);
+  padding: var(--sp-5) calc(var(--tilt) + var(--sp-4)) var(--sp-5) calc(var(--tilt) + var(--sp-4));
+  /* vidro escuro tingido com a cor do passo: o fundo aparece por trás */
+  background:
+    radial-gradient(120% 70% at 30% 0%, color-mix(in srgb, var(--acc) 34%, transparent), transparent 70%),
+    linear-gradient(165deg, color-mix(in srgb, var(--acc) 30%, rgba(18, 0, 34, 0.72)), rgba(14, 0, 28, 0.86) 75%);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  clip-path: polygon(var(--tilt) 0, 100% 0, calc(100% - var(--tilt)) 100%, 0 100%);
+  transition: transform var(--t-fast) var(--ease);
+}
+/* filete de luz no topo, na cor do passo */
+.entrar__step::after {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent 6%, var(--acc-hi) 30%, var(--acc) 75%, transparent 96%);
+  box-shadow: 0 0 18px var(--acc);
+  pointer-events: none;
+}
+.entrar__step:hover { transform: translateY(-4px); }
+/* passo atual: um pouco mais aceso */
+.entrar__step--now {
+  background:
+    radial-gradient(120% 75% at 30% 0%, color-mix(in srgb, var(--acc) 48%, transparent), transparent 72%),
+    linear-gradient(165deg, color-mix(in srgb, var(--acc) 40%, rgba(18, 0, 34, 0.7)), rgba(14, 0, 28, 0.84) 78%);
+}
+/* último passo (vídeo da cidade): rosa cheio, texto escuro, fecha a progressão */
+.entrar__step--video {
+  background: linear-gradient(160deg, var(--c-pink), color-mix(in srgb, var(--c-magenta) 70%, var(--c-pink)));
+  color: var(--c-ink);
+}
+.entrar__step--video::after { background: linear-gradient(90deg, transparent 6%, #fff 40%, transparent 96%); box-shadow: none; opacity: 0.8; }
+
+.entrar__num {
+  font-size: clamp(3.5rem, 2.6rem + 2.6vw, 5rem);
+  line-height: 0.82;
+  margin-left: -0.04em;
+  color: var(--acc-hi);
+  text-shadow: 0 0 28px color-mix(in srgb, var(--acc) 70%, transparent);
+}
+.entrar__step--video .entrar__num { color: color-mix(in srgb, var(--c-violet) 70%, var(--c-magenta)); text-shadow: none; }
+
+.entrar__title {
+  margin-top: var(--sp-3);
+  font-size: clamp(1.625rem, 1.2rem + 1.1vw, 2.25rem);
+  font-weight: 900;
+  font-style: italic;
+  line-height: 1.02;
+  text-transform: uppercase;
+  color: var(--c-text-strong);
+  padding-right: 0.1em;
+}
+.entrar__step--video .entrar__title { color: var(--c-ink); }
+
+.entrar__link {
+  align-self: flex-start;
+  min-height: 44px;
+  margin-top: var(--sp-1);
+  margin-bottom: calc(var(--sp-2) * -1);
+  font-size: var(--fs-md);
+  font-weight: 600;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  color: var(--acc-hi);
+}
+/* link do vídeo no card rosa: escuro, com ícone de play */
+.entrar__step--video .entrar__link { color: var(--c-ink); font-weight: 800; }
+.entrar__video { display: inline-flex; align-items: center; gap: 0.4em; }
+.entrar__video .ico { width: 1.1em; height: 1.1em; }
+.entrar__video[aria-disabled="true"] { text-decoration: none; cursor: default; opacity: 0.75; }
+
+/* Números, títulos e links na mesma altura nos 4 painéis */
+@supports (grid-template-rows: subgrid) {
+  .entrar__step {
+    display: grid;
+    grid-row: span 4;
+    grid-template-rows: subgrid;
+    row-gap: 0;
+    align-content: end;
+  }
+  .entrar__step::before { content: ""; }
+  .entrar__steps { grid-template-rows: minmax(clamp(90px, 9vw, 128px), 1fr) auto auto auto; }
+}
+
+/* Linha do tempo: etiquetas alinhadas ao centro de cada painel */
+.entrar__timeline { margin-top: var(--sp-4); gap: clamp(1rem, 0.4rem + 2vw, 3.25rem); }
+.entrar__timeline .g-timeline__step > span { padding: 0.35em 1.3em; font-weight: 800; }
+/* cada etiqueta na cor do seu passo */
+.entrar__timeline .g-timeline__step:nth-child(1) > span { background: color-mix(in srgb, var(--c-blue) 55%, var(--c-ink)); color: var(--c-lavender); }
+.entrar__timeline .g-timeline__step:nth-child(2) > span { background: color-mix(in srgb, var(--c-violet) 55%, var(--c-ink)); color: var(--c-lavender); }
+.entrar__timeline .g-timeline__step:nth-child(3) > span { background: var(--c-purple); color: var(--c-ink); }
+.entrar__timeline .g-timeline__step:nth-child(4) > span { background: var(--c-pink); color: var(--c-ink); }
+
+@media (prefers-reduced-motion: reduce) {
+  .entrar__step { transition: none; }
+  .entrar__step:hover { transform: none; }
+}
+
+@media (max-width: 980px) {
+  .entrar__steps { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: var(--sp-5); }
+  .entrar__step { min-height: 260px; }
+  .entrar__timeline { --steps: 4; }
+}
+@media (max-width: 760px) {
+  .entrar__steps { grid-template-columns: minmax(0, 1fr); grid-template-rows: none; row-gap: var(--sp-4); }
+  .entrar__step {
+    --tilt: 22px;
+    display: flex;
+    grid-row: auto;
+    min-height: 0;
+    padding-top: var(--sp-6);
+  }
+  .entrar__step::before { display: none; }
+  .entrar__num { font-size: 4rem; }
+  .entrar__timeline { margin-top: var(--sp-6); }
+}

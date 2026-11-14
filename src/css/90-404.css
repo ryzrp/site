@@ -1,0 +1,32 @@
+/* ==========================================================================
+   90-404.css  (dono: Fundação)
+   Tela "VOCÊ SE PERDEU NA CIDADE".
+   ========================================================================== */
+.perdido {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: calc(100svh - var(--nav-h) - 80px);
+  padding-block: var(--sp-8);
+  overflow: hidden;
+}
+.perdido__wrap { position: relative; display: grid; justify-items: center; text-align: center; gap: var(--sp-4); }
+.perdido__code {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: -1;
+  transform: translate(-50%, -58%);
+  font-size: clamp(10rem, 40vw, 26rem);
+  font-weight: 900;
+  font-style: italic;
+  line-height: 1;
+  color: transparent;
+  -webkit-text-stroke: 2px color-mix(in srgb, var(--c-purple) 30%, transparent);
+  pointer-events: none;
+  user-select: none;
+}
+.perdido .g-head { margin-bottom: 0; }
+.perdido__lead { text-align: center; }
+.perdido__actions { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--sp-4); margin-top: var(--sp-4); }
+.perdido__hint { margin-top: var(--sp-4); }

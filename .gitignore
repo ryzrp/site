@@ -1,0 +1,23 @@
+# dependências e saída do build (o GitHub monta o site sozinho)
+node_modules/
+dist/
+
+# arquivos de trabalho e prints de teste
+.preview/
+.snapshots/
+.verdicts/
+progress/
+referencias/
+referencias-crops/
+docs/
+.claude/
+
+# originais grandes (as versões leves usadas no site ficam em assets/img)
+assets/originais/
+assets/*.png
+assets/*.jpg
+
+# sistema
+.DS_Store
+Thumbs.db
+*.log

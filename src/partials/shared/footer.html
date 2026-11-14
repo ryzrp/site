@@ -1,0 +1,85 @@
+<!-- RODAPÉ (dono: construtor do RODAPÉ)
+     Cena final (arte + vinheta) com menu de opções em coluna (item focado = Discord),
+     lâminas sobrepostas com chevron vazado, barra de HUD (prompt | ESC) e telemetria tipo UID. -->
+<footer id="rodape" class="footer">
+  <section class="footer__cta" aria-labelledby="rodape-cta-t">
+    <div class="footer__art" aria-hidden="true"></div>
+
+    <div class="container footer__cta-in">
+      <div class="footer__cta-copy">
+        <p class="footer__eyebrow"><span class="g-tag g-tag--beta">Beta</span> Fechado por convite</p>
+        <h2 class="footer__cta-t" id="rodape-cta-t">A cidade tá <em>subindo</em></h2>
+        <p class="g-sub footer__cta-sub" lang="en">The city is rising</p>
+        <p class="footer__cta-txt">RYZ se diz <strong>“Rai-Zi”</strong>, de <span lang="en">Rise</span>. Entra como <strong>Beta Tester</strong>.</p>
+      </div>
+
+      <nav class="footer__menu" aria-label="Opções do rodapé">
+        <ul role="list">
+          <li class="footer__item is-focus">
+            <a class="g-btn g-btn--primary footer__cta-btn" href="https://discord.gg/jogueryz" data-discord target="_blank" rel="noopener">
+              <svg class="ico" aria-hidden="true"><use href="#i-discord"/></svg>
+              <span class="g-btn__label">Entrar no Discord</span>
+              <kbd class="footer__cta-key" aria-hidden="true">ENTER</kbd>
+            </a>
+          </li>
+          <li class="footer__item">
+            <a class="footer__opt" href="regras.html">
+              <span class="footer__opt-t">Regras</span><span class="footer__opt-en" lang="en">Rules</span>
+              <svg class="ico footer__opt-arr" aria-hidden="true"><use href="#i-chevron-right"/></svg>
+            </a>
+          </li>
+          <li class="footer__item">
+            <a class="footer__opt" href="streamers.html">
+              <span class="footer__opt-t">Streamers</span><span class="footer__opt-en" lang="en">Creators</span>
+              <svg class="ico footer__opt-arr" aria-hidden="true"><use href="#i-chevron-right"/></svg>
+            </a>
+          </li>
+          <li class="footer__item footer__item--social">
+            <span class="footer__opt-t">Redes</span>
+            <ul class="footer__social" role="list" aria-label="Redes sociais (em breve)">
+              <li><a href="#" data-social="instagram" data-placeholder="Link do Instagram" aria-label="Instagram (em breve)"><svg class="ico" aria-hidden="true"><use href="#i-instagram"/></svg></a></li>
+              <li><a href="#" data-social="tiktok" data-placeholder="Link do TikTok" aria-label="TikTok (em breve)"><svg class="ico" aria-hidden="true"><use href="#i-tiktok"/></svg></a></li>
+              <li><a href="#" data-social="youtube" data-placeholder="Link do YouTube" aria-label="YouTube (em breve)"><svg class="ico" aria-hidden="true"><use href="#i-youtube"/></svg></a></li>
+              <li><a href="#" data-social="twitch" data-placeholder="Link da Twitch" aria-label="Twitch (em breve)"><svg class="ico" aria-hidden="true"><use href="#i-twitch"/></svg></a></li>
+            </ul>
+            <span class="g-tag g-tag--soon">Em breve</span>
+          </li>
+        </ul>
+      </nav>
+    </div>
+
+    <!-- lâminas chapadas (periwinkle / roxo escuro / lavanda fina), diagonais subindo para a direita; a arte aparece entre elas -->
+    <svg class="footer__shards" viewBox="0 0 1440 100" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+      <!-- roxo escuro: plano grande do centro para a direita -->
+      <polygon class="fs-dark" points="440,44 1440,0 1440,100 440,100"/>
+      <!-- periwinkle: lâmina da esquerda, larga em cima e afinando para baixo -->
+      <polygon class="fs-peri" points="190,42 470,38 560,80 400,74"/>
+      <!-- periwinkle: cunha atrás do chevron -->
+      <polygon class="fs-peri" points="628,14 820,4 728,60"/>
+      <!-- periwinkle: lâmina da direita, no alto -->
+      <polygon class="fs-peri" points="1010,22 1350,2 1300,20 1070,32"/>
+      <!-- lavanda: filetes finos de destaque -->
+      <polygon class="fs-lav" points="0,52 300,44 240,50 0,57"/>
+      <polygon class="fs-lav" points="1180,16 1440,2 1440,6 1220,17"/>
+      <!-- chão: quase preto, sobe para a direita -->
+      <polygon class="fs-floor" points="0,60 590,80 1440,14 1440,100 0,100"/>
+    </svg>
+    <!-- chevron: peça da moldura, ancorada no topo da faixa e rompendo para cima -->
+    <svg class="footer__chev" viewBox="0 0 80 48" aria-hidden="true" focusable="false">
+      <polygon class="fc-out" points="0,0 80,0 40,48"/>
+      <polygon class="fc-in" points="14,11 27,11 40,26 53,11 66,11 40,41"/>
+    </svg>
+  </section>
+
+  <div class="footer__bar">
+    <a class="footer__prompt" href="https://discord.gg/jogueryz" data-discord target="_blank" rel="noopener">
+      <svg class="footer__prompt-ico" viewBox="0 0 24 20" aria-hidden="true" focusable="false"><path d="M2 1h20a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1H11l-5 5v-5H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1Zm5 5.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3Zm5 0a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3Zm5 0a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3Z"/></svg>
+      Bora trocar ideia no Discord
+    </a>
+    <a class="footer__top" href="#conteudo"><kbd>ESC</kbd>Voltar ao topo</a>
+  </div>
+
+  <p class="footer__uid">
+    <span>RYZ RP</span><span>ryz.group™</span><span>Fase: Beta</span><span class="footer__online"><span class="footer__dot" aria-hidden="true"></span><span class="sr-only">Jogadores online: </span><span data-players>--/100</span></span><span>Não afiliado à Rockstar Games/Take-Two/Cfx.re</span>
+  </p>
+</footer>

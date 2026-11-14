@@ -1,0 +1,172 @@
+<!-- EVENTOS DA CIDADE (dono: construtor de EVENTOS) -->
+<section id="eventos" class="section eventos" aria-labelledby="eventos-title">
+  <div class="eventos__fx" aria-hidden="true"><span class="eventos__beam"></span><span class="eventos__floor"></span></div>
+  <div class="container">
+    <header class="g-head ev-head">
+      <div class="ev-head__slab">
+        <h2 id="eventos-title" class="g-head__title ev-head__title">Eventos da cidade</h2>
+        <p class="g-sub ev-head__sub" lang="en">City events</p>
+      </div>
+      <span class="ev-head__count"><b>4</b> ativos</span>
+      <span class="ev-head__rule" aria-hidden="true"></span>
+    </header>
+
+    <ul class="eventos__grid" role="list">
+      <!-- FRAME DA CIDADE (violeta) -->
+      <li>
+        <article class="g-panel evento evento--frame" aria-labelledby="ev-frame">
+          <span class="evento__line" aria-hidden="true"></span>
+          <div class="evento__bg" data-placeholder="Fundo do Frame da Cidade: print da cidade (assets/img/eventos/frame-fundo-*); trocar pelo print vencedor da semana" aria-hidden="true">
+            <span class="ev-scene"></span>
+            <span class="ev-light ev-light--rays"></span>
+          </div>
+          <span class="evento__leak" aria-hidden="true"></span>
+          <img class="evento__fig evento__fig--img" src="assets/img/eventos/frame-personagem.webp" width="472" height="760" alt="" loading="lazy" decoding="async">
+          <div class="ev-top">
+            <div class="ev-hud">
+              <span class="ev-hud__lbl">Prints enviados</span>
+              <span class="ev-hud__num"><b data-placeholder="Prints enviados na semana (exemplo)">38</b>/50</span>
+              <span class="ev-bar" style="--p:.76" role="img" aria-label="38 de 50 prints"><i></i></span>
+            </div>
+            <span class="evento__tab">
+              <span class="evento__day" data-placeholder="Dia e hora do Frame (exemplo)">Sex 21h</span>
+              <span class="g-chip-time evento__chip" data-placeholder="Tempo até o próximo Frame (exemplo)"><svg class="ico" aria-hidden="true"><use href="#i-clock"/></svg>2d 14h</span>
+            </span>
+          </div>
+          <div class="evento__foot">
+            <p class="evento__desc">O melhor print da semana ganha a vitrine. Manda o seu no Discord.</p>
+            <p class="evento__en" lang="en">Frame of the week</p>
+            <h3 id="ev-frame" class="evento__title">Frame da Cidade</h3>
+          </div>
+        </article>
+      </li>
+
+      <!-- ARQUIVO RYZ (roxo) -->
+      <li>
+        <article class="g-panel evento evento--arquivo" aria-labelledby="ev-arquivo">
+          <span class="evento__line" aria-hidden="true"></span>
+          <div class="evento__bg" data-placeholder="Fundo do Arquivo RYZ: letreiro RYZ CITY (assets/img/eventos/arquivo-fundo-*); trocar pela capa do capítulo" aria-hidden="true">
+            <span class="ev-scene"></span>
+            <span class="ev-light ev-light--lamp"></span>
+          </div>
+          <span class="evento__leak" aria-hidden="true"></span>
+          <img class="evento__fig evento__fig--img evento__fig--oculos" src="assets/img/eventos/arquivo-personagem.webp" width="679" height="640" alt="" loading="lazy" decoding="async">
+          <svg class="evento__fig evento__fig--folder" viewBox="0 0 320 300" preserveAspectRatio="xMaxYMax meet" aria-hidden="true">
+            <g transform="translate(150 6) rotate(9 120 236)">
+              <path class="ev-folder" d="M44 196h44l8 10h80v86H44z"/>
+              <rect class="ev-folder__sheet" x="56" y="188" width="104" height="22"/>
+              <text class="ev-folder__txt" x="60" y="246">RYZ</text>
+              <text class="ev-folder__cap" x="60" y="270">CAP. 01</text>
+            </g>
+          </svg>
+          <span class="evento__tab">
+            <span class="g-tag g-tag--new evento__new">Novo</span>
+            <span class="g-chip-time evento__chip" data-placeholder="Tempo até o próximo capítulo (exemplo)"><svg class="ico" aria-hidden="true"><use href="#i-clock"/></svg>5d 02h</span>
+          </span>
+          <div class="ev-hud">
+            <span class="ev-hud__lbl">Temporada 01 · Capítulo</span>
+            <span class="ev-hud__num"><b data-placeholder="Capítulo atual (temporada 01)">01</b>/12</span>
+            <span class="ev-bar" style="--p:.083" role="img" aria-label="Temporada 1, capítulo 1 de 12"><i></i></span>
+          </div>
+          <div class="evento__foot">
+            <p class="evento__desc">Em que parte da história a cidade está: temporada, capítulo e o que vem por aí.</p>
+            <p class="evento__en" lang="en">RYZ files</p>
+            <h3 id="ev-arquivo" class="evento__title">Arquivo RYZ</h3>
+          </div>
+        </article>
+      </li>
+
+      <!-- VOZ DA RUA (rosa claro, o mais brilhante) -->
+      <li>
+        <article class="g-panel evento evento--voz" aria-labelledby="ev-voz">
+          <span class="evento__line" aria-hidden="true"></span>
+          <div class="evento__bg" data-placeholder="Arte da Voz da Rua: trocar pela arte da enquete" aria-hidden="true">
+            <span class="ev-scene"></span>
+            <span class="ev-light ev-light--burst"></span>
+          </div>
+          <span class="evento__leak" aria-hidden="true"></span>
+          <svg class="evento__fig" viewBox="0 0 360 300" preserveAspectRatio="xMaxYMax meet" aria-hidden="true">
+            <defs>
+              <linearGradient id="evBodyVoz" x1="1" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:var(--sig-lo)"/><stop offset=".55" style="stop-color:color-mix(in srgb, var(--sig-lo) 40%, var(--c-ink))"/><stop offset="1" style="stop-color:var(--c-ink)"/></linearGradient>
+            </defs>
+            <g class="ev-sil ev-sil--back" fill="url(#evBodyVoz)">
+              <circle cx="40" cy="186" r="24"/><path d="M0 300c2-48 18-72 40-72s40 24 42 72z"/>
+              <circle cx="318" cy="180" r="24"/><path d="M276 300c2-48 20-72 42-72s40 24 42 72z"/>
+              <path class="ev-arm ev-arm--thin" d="M62 232 50 124"/>
+            </g>
+            <g class="ev-sil" fill="url(#evBodyVoz)">
+              <path class="ev-arm" d="M262 236 296 112"/>
+              <circle cx="104" cy="196" r="28"/><path d="M50 300c4-50 24-78 54-78s50 28 54 78z"/>
+              <circle cx="250" cy="190" r="28"/><path d="M196 300c4-52 24-80 54-80s50 28 54 80z"/>
+              <path class="ev-arm" d="M156 210 132 86"/>
+              <circle cx="178" cy="152" r="32"/><path d="M110 300c6-62 32-96 68-96s62 34 68 96z"/>
+            </g>
+            <path class="ev-rim" d="M178 120c18 0 32 14 32 32M104 168c16 0 28 12 28 28M250 162c16 0 28 12 28 28M178 204c36 0 62 34 68 96M296 112l-34 124"/>
+            <path class="ev-rim ev-rim--hot" d="M192 124c10 6 16 16 18 28M262 166c8 4 14 12 16 24"/>
+            <g transform="rotate(-24 130 60)">
+              <path class="ev-mega" d="M112 72h22l60-36v84l-60-36h-22z"/>
+              <ellipse class="ev-mega__bell" cx="194" cy="78" rx="12" ry="42"/>
+              <path class="ev-mega__wave" d="M216 52a40 40 0 0 1 0 52M232 38a62 62 0 0 1 0 80"/>
+            </g>
+            <g class="ev-fg"><circle cx="340" cy="282" r="18"/><circle cx="14" cy="270" r="12"/></g>
+          </svg>
+          <span class="evento__tab">
+            <span class="g-chip-time evento__chip" data-placeholder="Tempo até fechar a votação (exemplo)"><svg class="ico" aria-hidden="true"><use href="#i-clock"/></svg>09h 40m</span>
+          </span>
+          <div class="ev-hud">
+            <span class="ev-hud__lbl">Votos de hoje</span>
+            <span class="ev-hud__num"><b data-placeholder="Votos de hoje (exemplo)">128</b>/500</span>
+            <span class="ev-bar" style="--p:.256" role="img" aria-label="128 de 500 votos"><i></i></span>
+          </div>
+          <div class="evento__foot">
+            <p class="evento__desc">A cidade vota, a cidade decide. Sua voz conta aqui.</p>
+            <p class="evento__en" lang="en">Street voice</p>
+            <h3 id="ev-voz" class="evento__title">Voz da Rua</h3>
+          </div>
+        </article>
+      </li>
+
+      <!-- STREAMERS (magenta neon sobre escuro, ao vivo) -->
+      <li>
+        <article class="g-panel evento evento--live" aria-labelledby="ev-streamers">
+          <span class="evento__line" aria-hidden="true"></span>
+          <div class="evento__bg" data-placeholder="Arte dos Streamers: trocar por um print de live na cidade" aria-hidden="true">
+            <span class="ev-scene"></span>
+            <span class="ev-light ev-light--ring"></span>
+          </div>
+          <span class="evento__leak" aria-hidden="true"></span>
+          <svg class="evento__fig" viewBox="0 0 320 300" preserveAspectRatio="xMaxYMax meet" aria-hidden="true">
+            <defs>
+              <linearGradient id="evBodyLive" x1="1" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:var(--sig-lo)"/><stop offset=".55" style="stop-color:color-mix(in srgb, var(--sig-lo) 40%, var(--c-ink))"/><stop offset="1" style="stop-color:var(--c-ink)"/></linearGradient>
+            </defs>
+            <g class="ev-fg ev-fg--back"><circle cx="40" cy="50" r="12"/><circle cx="300" cy="30" r="8"/></g>
+            <g class="ev-sil" fill="url(#evBodyLive)">
+              <path d="M74 300c6-38 28-60 58-68l6-26c-16-4-28-12-34-24l-10-2c-6-2-6-8-2-12l6-10c-6-4-8-10-2-16 2-22 6-44 18-62 18-26 52-38 84-30 36 10 52 44 48 82-2 26-14 48-26 62l2 30c38 10 70 38 82 76z"/>
+            </g>
+            <path class="ev-detail" d="M138 206c14 10 34 14 54 10M150 232l-6 68M206 232l14 68"/>
+            <path class="ev-rim" d="M108 112c2-22 6-44 18-62 18-26 52-38 84-30 36 10 52 44 48 82-2 26-14 48-26 62l2 30c38 10 70 38 82 76"/>
+            <path class="ev-rim ev-rim--hot" d="M210 20c36 10 52 44 48 82M234 240c30 12 50 32 60 56"/>
+            <path class="ev-hp" d="M118 84C130 22 236 6 262 96"/>
+            <ellipse class="ev-hp__cup" cx="236" cy="118" rx="24" ry="32"/>
+            <path class="ev-mic" d="M222 146c-20 34-58 46-100 38"/>
+            <rect class="ev-mic__head" x="104" y="174" width="22" height="16" rx="7"/>
+            <g class="ev-fg"><circle cx="30" cy="278" r="20"/><circle cx="296" cy="290" r="12"/></g>
+          </svg>
+          <span class="evento__tab">
+            <span class="g-tag g-tag--live evento__live"><i aria-hidden="true"></i>Ao vivo</span>
+          </span>
+          <div class="ev-hud">
+            <span class="ev-hud__lbl">Ao vivo agora</span>
+            <span class="ev-hud__num"><b data-placeholder="Streamers ao vivo agora (exemplo)">6</b>/24</span>
+            <span class="ev-bar" style="--p:.25" role="img" aria-label="6 de 24 streamers ao vivo"><i></i></span>
+          </div>
+          <div class="evento__foot">
+            <p class="evento__desc">Quem está transmitindo direto das ruas da RYZ. <span class="evento__go">Ver todos <svg class="ico" aria-hidden="true"><use href="#i-chevron-right"/></svg></span></p>
+            <p class="evento__en" lang="en">Live now</p>
+            <h3 id="ev-streamers" class="evento__title"><a class="evento__link" href="streamers.html">Streamers</a></h3>
+          </div>
+        </article>
+      </li>
+    </ul>
+  </div>
+</section>

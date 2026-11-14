@@ -1,0 +1,285 @@
+<!-- A CIDADE (dono: construtor da CIDADE) -->
+<section id="cidade" class="section cidade" aria-labelledby="cidade-title">
+  <!-- Ícones de categoria e peças das ilustrações (só desta seção) -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <defs>
+      <filter id="cid-glow" x="-60%" y="-60%" width="220%" height="220%">
+        <feGaussianBlur stdDeviation="3" result="b"/>
+        <feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+      </filter>
+      <filter id="cid-soft" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="14"/></filter>
+      <filter id="cid-blur" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="2.2"/></filter>
+      <linearGradient id="cid-fog" x1="0" y1="0" x2="0" y2="1"><stop offset="0" class="s-fog0"/><stop offset="1" class="s-fog1"/></linearGradient>
+      <pattern id="cid-win" width="10" height="12" patternUnits="userSpaceOnUse"><rect class="k-win" x="2" y="2" width="6" height="7"/></pattern>
+      <pattern id="cid-win2" width="8" height="10" patternUnits="userSpaceOnUse"><rect class="k-win2" x="2" y="2" width="4" height="5"/></pattern>
+      <pattern id="cid-win3" width="14" height="9" patternUnits="userSpaceOnUse"><rect class="k-win3" x="1" y="2" width="12" height="4"/></pattern>
+    </defs>
+    <symbol id="cid-hospital" viewBox="0 0 24 24"><path d="M9 2h6v7h7v6h-7v7H9v-7H2V9h7z"/></symbol>
+    <symbol id="cid-cassino" viewBox="0 0 24 24"><path d="M12 1.5 22.5 12 12 22.5 1.5 12zm0 5.2L6.7 12l5.3 5.3 5.3-5.3z"/><circle cx="12" cy="12" r="2"/></symbol>
+    <symbol id="cid-oficina" viewBox="0 0 24 24"><path d="M21.6 6.2 18 9.8l-3.1-.7-.7-3.1 3.6-3.6A6 6 0 0 0 9.9 10l-7.6 7.6a2.4 2.4 0 0 0 3.4 3.4L13.3 13.4a6 6 0 0 0 8.3-7.2z"/></symbol>
+    <symbol id="cid-praca" viewBox="0 0 24 24"><path d="M12 1.5 5 12h3.5L4 18.5h6.5V23h3v-4.5H20L15.5 12H19z"/></symbol>
+    <symbol id="cid-concessionaria" viewBox="0 0 24 24"><path d="M5.6 6.5A2.5 2.5 0 0 1 8 5h8a2.5 2.5 0 0 1 2.4 1.5L20.3 11H21a1.5 1.5 0 0 1 1.5 1.5V18H20v2h-3v-2H7v2H4v-2H1.5v-5.5A1.5 1.5 0 0 1 3 11h.7zm1.5 4.5h9.8l-1.4-3.3a1 1 0 0 0-.9-.7H9.4a1 1 0 0 0-.9.7zM5.5 13a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm13 0a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3z"/></symbol>
+    <symbol id="cid-prefeitura" viewBox="0 0 24 24"><path d="M12 1.5 2 7v2.2h20V7zM4 10.6h3v7.8H4zm6.5 0h3v7.8h-3zm6.5 0h3v7.8h-3zM2 19.8h20v2.7H2z"/></symbol>
+    <!-- skyline distante, repetido nas cenas -->
+    <symbol id="cid-sky" viewBox="0 0 200 120" preserveAspectRatio="none"><path d="M0 120V64h10V48h12v22h8V30h18v40h8V52h14v-8h10v34h12V20h20v58h10V46h16v26h8V36h14v84z"/></symbol>
+    <!-- carro esportivo visto de lado -->
+    <symbol id="cid-car" viewBox="0 0 160 52"><path d="M4 40c0-7 3-11 12-13l26-6c10-9 22-14 40-14 15 0 27 5 38 14l24 4c9 2 12 6 12 12v7H4z"/></symbol>
+    <!-- copa de árvore -->
+    <symbol id="cid-tree" viewBox="0 0 100 140"><path d="M46 140V96C22 98 4 86 6 66 2 52 12 38 26 36 28 18 44 6 60 10c16-2 30 12 28 28 12 6 14 22 6 32 2 16-12 28-34 26v44z"/></symbol>
+  </svg>
+
+  <div class="container">
+    <div class="cidade__top">
+      <header class="g-head">
+        <h2 id="cidade-title" class="g-head__title">A cidade</h2>
+        <p class="g-sub" lang="en">The city</p>
+      </header>
+      <div class="cidade__rule">
+        <span class="cidade__count" aria-hidden="true"><b>06</b><span class="cidade__count-txt">Lugares<span lang="en">Places</span></span></span>
+        <div class="cidade__trailer g-ph g-ph--free" data-placeholder="Trailer oficial da RYZ (vídeo do YouTube)">
+          <span class="cidade__trailer-play" aria-hidden="true"><svg class="ico"><use href="#i-play"/></svg></span>
+          <span class="cidade__trailer-txt">
+            <span class="cidade__trailer-title">[TRAILER — EM BREVE]</span>
+            <span class="cidade__trailer-sub" lang="en">Official trailer</span>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cidade__wide">
+    <div class="cidade__stage">
+      <ul class="cidade__grid" role="list">
+        <!-- 01 HOSPITAL : luz fria -->
+        <li class="cidade__card cidade__card--hospital is-sel" tabindex="0">
+          <div class="cidade__face">
+            <div class="g-ph cidade__ph" data-placeholder="Print do hospital (retrato, ~9:16)">
+              <svg class="cidade__scene" viewBox="0 0 200 400" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+                <circle class="k-glow" cx="128" cy="150" r="92" filter="url(#cid-soft)"/>
+                <use href="#cid-sky" class="k-far" x="-10" y="190" width="220" height="170"/>
+                <polygon class="k-beam" points="112,74 118,74 170,0 136,0"/>
+                <polygon class="k-beam" points="112,74 118,74 60,0 92,0"/>
+                <rect class="k-mid" x="70" y="112" width="92" height="288"/>
+                <polygon class="k-mid2" points="162,112 190,124 190,400 162,400"/>
+                <rect class="k-fg" x="64" y="104" width="104" height="9"/>
+                <rect x="78" y="186" width="76" height="150" fill="url(#cid-win)"/>
+                <rect x="165" y="134" width="22" height="200" fill="url(#cid-win2)" opacity=".45"/>
+                <path class="k-rim" d="M70 400V113h92"/>
+                <rect class="k-fg" x="114" y="70" width="3" height="34"/>
+                <circle class="k-acc" cx="115.5" cy="68" r="3.5" filter="url(#cid-glow)"/>
+                <rect class="k-fg" x="94" y="128" width="44" height="44"/>
+                <rect class="k-rimf" x="94.5" y="128.5" width="43" height="43"/>
+                <use href="#cid-hospital" class="k-acc" x="101" y="135" width="30" height="30" filter="url(#cid-glow)"/>
+                <polygon class="k-fg" points="56,334 176,334 182,346 50,346"/>
+                <rect class="k-lit" x="92" y="346" width="48" height="54"/>
+                <polygon class="k-spill" points="92,400 140,400 170,420 60,420"/>
+                <rect width="200" height="400" fill="url(#cid-fog)"/>
+                <path class="k-fg" d="M-20 400V318c0-6 4-10 10-10h62c8 0 12 3 16 10l14 24c6 2 10 6 10 12v46z"/>
+                <rect class="k-hot2" x="2" y="302" width="18" height="6" filter="url(#cid-glow)"/>
+                <rect class="k-acc" x="22" y="302" width="18" height="6" filter="url(#cid-glow)"/>
+                <path class="k-rim" d="M-20 318c0-6 4-10 10-10h62c8 0 12 3 16 10l14 24"/>
+                <polygon class="k-glass2" points="54,318 66,318 76,338 54,338"/>
+                <circle class="k-fg2" cx="18" cy="398" r="13"/><circle class="k-fg2" cx="70" cy="398" r="13"/>
+              </svg>
+              <span class="g-ph__label">[PRINT — HOSPITAL]</span>
+            </div>
+            <p class="cidade__line">Onde todo plantão vira história, e ninguém sai igual de lá.</p>
+            <div class="cidade__band">
+              <h3 class="cidade__name">Hospital</h3>
+              <span class="cidade__cat" aria-hidden="true"><svg><use href="#cid-hospital"/></svg></span>
+              <span class="cidade__meta" aria-hidden="true"><svg class="cidade__rank" viewBox="0 0 20 22"><path class="r-o" d="M1 1h18v12l-9 8-9-8z"/><path class="r-i" d="M4 6l6 5 6-5v4l-6 5-6-5z"/></svg>Zona 01</span>
+            </div>
+          </div>
+        </li>
+        <!-- 02 CASSINO : magenta quente -->
+        <li class="cidade__card cidade__card--cassino" tabindex="0">
+          <div class="cidade__face">
+            <div class="g-ph cidade__ph" data-placeholder="Print do cassino (retrato, ~9:16)">
+              <svg class="cidade__scene" viewBox="0 0 200 400" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+                <ellipse class="k-glow" cx="100" cy="300" rx="130" ry="110" filter="url(#cid-soft)"/>
+                <polygon class="k-beam" points="40,250 50,250 0,20 -30,20"/>
+                <polygon class="k-beam" points="150,250 160,250 230,30 196,30"/>
+                <polygon class="k-beam" points="96,200 104,200 120,0 84,0"/>
+                <use href="#cid-sky" class="k-far" x="-10" y="150" width="220" height="140"/>
+                <polygon class="k-mid" points="-10,196 210,196 210,400 -10,400"/>
+                <rect class="k-mid2" x="-10" y="186" width="220" height="12"/>
+                <path class="k-rim" d="M-10 186.5h220"/>
+                <rect x="0" y="214" width="46" height="110" fill="url(#cid-win2)"/>
+                <rect x="154" y="214" width="46" height="110" fill="url(#cid-win2)"/>
+                <rect class="k-fg" x="44" y="222" width="112" height="32"/>
+                <rect class="k-rimf" x="44.5" y="222.5" width="111" height="31"/>
+                <path class="k-bulbs" d="M52 238h96"/>
+                <polygon class="k-acc" points="100,166 112,180 100,194 88,180" filter="url(#cid-glow)"/>
+                <path class="k-hot" d="M62 400v-80a38 38 0 0 1 76 0v80z"/>
+                <path class="k-lit" d="M74 400v-74a26 26 0 0 1 52 0v74z"/>
+                <path class="k-bulbs" d="M56 400v-80a44 44 0 0 1 88 0v80"/>
+                <rect width="200" height="400" fill="url(#cid-fog)"/>
+                <polygon class="k-carpet" points="74,400 126,400 170,440 30,440"/>
+                <rect class="k-fg" x="22" y="330" width="6" height="70"/><rect class="k-fg" x="172" y="330" width="6" height="70"/>
+                <circle class="k-lit" cx="25" cy="328" r="5"/><circle class="k-lit" cx="175" cy="328" r="5"/>
+                <path class="k-rope" d="M28 336c20 26 34 26 44 22M172 336c-20 26-34 26-44 22"/>
+                <path class="k-fg" d="M-30 400v-30c14-10 30-14 52-14 14 0 22 6 26 18l4 26z"/>
+                <path class="k-rim" d="M-30 370c14-10 30-14 52-14 14 0 22 6 26 18"/>
+              </svg>
+              <span class="g-ph__label">[PRINT — CASSINO]</span>
+            </div>
+            <p class="cidade__line">Luzes roxas, apostas altas e gente que nunca dorme.</p>
+            <div class="cidade__band">
+              <h3 class="cidade__name">Cassino</h3>
+              <span class="cidade__cat" aria-hidden="true"><svg><use href="#cid-cassino"/></svg></span>
+              <span class="cidade__meta" aria-hidden="true"><svg class="cidade__rank" viewBox="0 0 20 22"><path class="r-o" d="M1 1h18v12l-9 8-9-8z"/><path class="r-i" d="M4 6l6 5 6-5v4l-6 5-6-5z"/></svg>Zona 02</span>
+            </div>
+          </div>
+        </li>
+        <!-- 03 OFICINA : rosa sobre escuro -->
+        <li class="cidade__card cidade__card--oficina" tabindex="0">
+          <div class="cidade__face">
+            <div class="g-ph cidade__ph" data-placeholder="Print da oficina mecânica (retrato, ~9:16)">
+              <svg class="cidade__scene" viewBox="0 0 200 400" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+                <use href="#cid-sky" class="k-far" x="-10" y="120" width="220" height="140"/>
+                <polygon class="k-mid" points="-10,190 210,166 210,400 -10,400"/>
+                <polygon class="k-mid2" points="-10,190 210,166 210,176 -10,200"/>
+                <path class="k-rim" d="M-10 190.5 210 166.5"/>
+                <rect class="k-acc" x="46" y="204" width="108" height="5" filter="url(#cid-glow)"/>
+                <ellipse class="k-glow" cx="100" cy="320" rx="90" ry="70" filter="url(#cid-soft)"/>
+                <rect class="k-hot" x="22" y="224" width="156" height="176"/>
+                <ellipse class="k-lit" cx="100" cy="296" rx="80" ry="46" filter="url(#cid-soft)"/>
+                <rect class="k-mid2" x="22" y="224" width="156" height="26"/>
+                <path class="k-line" d="M22 232h156M22 240h156"/>
+                <rect class="k-fg" x="40" y="292" width="8" height="108"/><rect class="k-fg" x="152" y="292" width="8" height="108"/>
+                <rect class="k-fg" x="36" y="298" width="128" height="6"/>
+                <use href="#cid-car" class="k-fg" x="30" y="252" width="140" height="46"/>
+                <path class="k-rimf" d="M48 270l22-5c9-8 19-12 34-12 13 0 23 4 33 12"/>
+                <path class="k-spark" d="M156 330l18-10M160 340l20 0M152 324l6-18M164 336l14 10" filter="url(#cid-glow)"/>
+                <polygon class="k-spill" points="22,400 178,400 240,440 -40,440"/>
+                <rect width="200" height="400" fill="url(#cid-fog)"/>
+                <circle class="k-fg" cx="12" cy="384" r="34"/><circle class="k-fg2" cx="12" cy="384" r="14"/>
+                <circle class="k-fg" cx="20" cy="340" r="30"/><circle class="k-fg2" cx="20" cy="340" r="12"/>
+                <path class="k-rim" d="M-8 313a30 30 0 0 1 56 16"/>
+                <path class="k-fg" d="M176 290h34v110h-40z"/>
+                <path class="k-rim" d="M176 290.5h34M176 290v110"/>
+                <path class="k-line2" d="M178 312h32M178 334h32M178 356h32"/>
+              </svg>
+              <span class="g-ph__label">[PRINT — OFICINA MECÂNICA]</span>
+            </div>
+            <p class="cidade__line">Graxa, motor roncando e o carro que vai fazer seu nome na rua.</p>
+            <div class="cidade__band">
+              <h3 class="cidade__name">Oficina mecânica</h3>
+              <span class="cidade__cat" aria-hidden="true"><svg><use href="#cid-oficina"/></svg></span>
+              <span class="cidade__meta" aria-hidden="true"><svg class="cidade__rank" viewBox="0 0 20 22"><path class="r-o" d="M1 1h18v12l-9 8-9-8z"/><path class="r-i" d="M4 6l6 5 6-5v4l-6 5-6-5z"/></svg>Zona 03</span>
+            </div>
+          </div>
+        </li>
+        <!-- 04 PRAÇA : violeta e lua -->
+        <li class="cidade__card cidade__card--praca" tabindex="0">
+          <div class="cidade__face">
+            <div class="g-ph cidade__ph" data-placeholder="Print da praça (retrato, ~9:16)">
+              <svg class="cidade__scene" viewBox="0 0 200 400" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+                <circle class="k-glow" cx="118" cy="120" r="70" filter="url(#cid-soft)"/>
+                <circle class="k-moon" cx="118" cy="120" r="34"/>
+                <circle class="k-moon2" cx="106" cy="112" r="7"/><circle class="k-moon2" cx="128" cy="132" r="5"/>
+                <use href="#cid-sky" class="k-far" x="-10" y="210" width="220" height="130"/>
+                <use href="#cid-sky" class="k-mid" x="30" y="256" width="200" height="100"/>
+                <polygon class="k-path" points="88,320 112,320 170,400 30,400"/>
+                <rect class="k-mid2" x="70" y="314" width="60" height="10"/>
+                <ellipse class="k-hot" cx="100" cy="313" rx="26" ry="3"/>
+                <path class="k-water" d="M100 312c0-22-14-28-22-14M100 312c0-22 14-28 22-14M100 312v-30"/>
+                <rect class="k-fg" x="56" y="250" width="3" height="80"/><rect class="k-fg" x="141" y="250" width="3" height="80"/>
+                <circle class="k-lit" cx="57.5" cy="248" r="5" filter="url(#cid-glow)"/><circle class="k-lit" cx="142.5" cy="248" r="5" filter="url(#cid-glow)"/>
+                <ellipse class="k-spill" cx="57" cy="330" rx="22" ry="4"/><ellipse class="k-spill" cx="143" cy="330" rx="22" ry="4"/>
+                <rect width="200" height="400" fill="url(#cid-fog)"/>
+                <use href="#cid-tree" class="k-fg" x="-58" y="140" width="130" height="182"/>
+                <use href="#cid-tree" class="k-fg" x="128" y="170" width="116" height="162"/>
+                <rect class="k-fg" x="-10" y="318" width="70" height="90"/><rect class="k-fg" x="150" y="324" width="70" height="90"/>
+                <path class="k-fg" d="M-10 360h66v6h-4v34h-6v-28H0v28h-10z"/>
+                <path class="k-rim" d="M60 318v82M150 324v76"/>
+              </svg>
+              <span class="g-ph__label">[PRINT — PRAÇA]</span>
+            </div>
+            <p class="cidade__line">O ponto de encontro da cidade. É aqui que tudo começa.</p>
+            <div class="cidade__band">
+              <h3 class="cidade__name">Praça</h3>
+              <span class="cidade__cat" aria-hidden="true"><svg><use href="#cid-praca"/></svg></span>
+              <span class="cidade__meta" aria-hidden="true"><svg class="cidade__rank" viewBox="0 0 20 22"><path class="r-o" d="M1 1h18v12l-9 8-9-8z"/><path class="r-i" d="M4 6l6 5 6-5v4l-6 5-6-5z"/></svg>Zona 04</span>
+            </div>
+          </div>
+        </li>
+        <!-- 05 CONCESSIONÁRIA : azul elétrico -->
+        <li class="cidade__card cidade__card--concessionaria" tabindex="0">
+          <div class="cidade__face">
+            <div class="g-ph cidade__ph" data-placeholder="Print da concessionária (retrato, ~9:16)">
+              <svg class="cidade__scene" viewBox="0 0 200 400" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+                <use href="#cid-sky" class="k-far" x="-10" y="110" width="220" height="140"/>
+                <polygon class="k-mid" points="-10,170 210,154 210,186 -10,198"/>
+                <rect class="k-acc" x="-10" y="192" width="220" height="4" filter="url(#cid-glow)"/>
+                <polygon class="k-glass" points="-10,198 210,186 210,400 -10,400"/>
+                <ellipse class="k-glow" cx="100" cy="330" rx="100" ry="60" filter="url(#cid-soft)"/>
+                <path class="k-line" d="M30 197v203M74 195v205M118 192v208M162 190v210"/>
+                <polygon class="k-beam" points="58,198 70,198 128,350 4,350"/>
+                <polygon class="k-beam" points="130,192 142,192 196,350 74,350"/>
+                <ellipse class="k-plat" cx="100" cy="352" rx="92" ry="12" filter="url(#cid-glow)"/>
+                <ellipse class="k-fg" cx="100" cy="350" rx="86" ry="9"/>
+                <use href="#cid-car" class="k-car" x="14" y="292" width="172" height="58"/>
+                <path class="k-rimL" d="M32 318l32-7c11-10 24-15 43-15 16 0 29 5 41 15l25 4"/>
+                <circle class="k-fg" cx="50" cy="345" r="12"/><circle class="k-fg" cx="152" cy="345" r="12"/>
+                <circle class="k-acc" cx="50" cy="345" r="5"/><circle class="k-acc" cx="152" cy="345" r="5"/>
+                <rect width="200" height="400" fill="url(#cid-fog)"/>
+                <polygon class="k-fg" points="-10,150 22,148 18,400 -10,400"/>
+                <path class="k-rim" d="M22 148 18 400"/>
+                <polygon class="k-fg" points="0,372 210,362 210,400 0,400"/>
+                <path class="k-rim" d="M0 372.5 210 362.5"/>
+              </svg>
+              <span class="g-ph__label">[PRINT — CONCESSIONÁRIA]</span>
+            </div>
+            <p class="cidade__line">Do primeiro carro àquele que todo mundo vira para ver passar.</p>
+            <div class="cidade__band">
+              <h3 class="cidade__name">Concessio&shy;nária</h3>
+              <span class="cidade__cat" aria-hidden="true"><svg><use href="#cid-concessionaria"/></svg></span>
+              <span class="cidade__meta" aria-hidden="true"><svg class="cidade__rank" viewBox="0 0 20 22"><path class="r-o" d="M1 1h18v12l-9 8-9-8z"/><path class="r-i" d="M4 6l6 5 6-5v4l-6 5-6-5z"/></svg>Zona 05</span>
+            </div>
+          </div>
+        </li>
+        <!-- 06 PREFEITURA : fachada com frontão e colunas, neon roxo -->
+        <li class="cidade__card cidade__card--prefeitura" tabindex="0">
+          <div class="cidade__face">
+            <div class="g-ph cidade__ph" data-placeholder="Print da prefeitura (retrato, ~9:16)">
+              <svg class="cidade__scene" viewBox="0 0 200 400" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+                <ellipse class="k-glow" cx="100" cy="230" rx="80" ry="70" filter="url(#cid-soft)"/>
+                <use href="#cid-sky" class="k-far" x="-10" y="150" width="220" height="90"/>
+                <path class="k-rim" d="M100 96v-34"/>
+                <polygon class="k-hot2" points="100,62 124,68 100,74" filter="url(#cid-glow)"/>
+                <path class="k-mid" d="M62 150a38 38 0 0 1 76 0z"/>
+                <path class="k-rim" d="M62 150a38 38 0 0 1 76 0"/>
+                <polygon class="k-mid" points="14,206 100,150 186,206"/>
+                <path class="k-rim" d="M14 206 100 150 186 206"/>
+                <circle class="k-acc" cx="100" cy="186" r="7" filter="url(#cid-glow)"/>
+                <rect class="k-mid" x="22" y="206" width="156" height="12"/>
+                <rect class="k-mid" x="26" y="218" width="148" height="108"/>
+                <g class="k-lit" filter="url(#cid-glow)"><rect x="36" y="222" width="10" height="100"/><rect x="66" y="222" width="10" height="100"/><rect x="124" y="222" width="10" height="100"/><rect x="154" y="222" width="10" height="100"/></g>
+                <rect class="k-hot2" x="88" y="262" width="24" height="60" filter="url(#cid-glow)"/>
+                <polygon class="k-road" points="20,326 180,326 196,344 4,344"/>
+                <polygon class="k-road" points="4,348 196,348 214,368 -14,368"/>
+                <polygon class="k-road" points="-14,372 214,372 240,400 -40,400"/>
+                <path class="k-rim" d="M20 326h160M4 348h192M-14 372h228"/>
+                <rect width="200" height="400" fill="url(#cid-fog)"/>
+              </svg>
+              <span class="g-ph__label">[PRINT — PREFEITURA]</span>
+            </div>
+            <p class="cidade__line">Leis, cargos e eleições: aqui a cidade decide.</p>
+            <div class="cidade__band">
+              <h3 class="cidade__name">Prefeitura</h3>
+              <span class="cidade__cat" aria-hidden="true"><svg><use href="#cid-prefeitura"/></svg></span>
+              <span class="cidade__meta" aria-hidden="true"><svg class="cidade__rank" viewBox="0 0 20 22"><path class="r-o" d="M1 1h18v12l-9 8-9-8z"/><path class="r-i" d="M4 6l6 5 6-5v4l-6 5-6-5z"/></svg>Zona 06</span>
+            </div>
+          </div>
+        </li>
+      </ul>
+
+      <div class="cidade__hud">
+        <span class="g-key cidade__hint" aria-hidden="true"><kbd>Q</kbd><kbd>E</kbd>Navegar</span>
+        <span class="g-key cidade__hint" aria-hidden="true"><kbd>Z</kbd>Inspecionar</span>
+        <a class="g-key cidade__hint cidade__hint--go" href="https://discord.gg/jogueryz" target="_blank" rel="noopener"><kbd><svg class="ico" aria-hidden="true"><use href="#i-discord"/></svg></kbd>Entrar no Discord</a>
+      </div>
+    </div>
+  </div>
+</section>

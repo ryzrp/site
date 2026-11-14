@@ -1,0 +1,75 @@
+<!-- STREAMERS (dono: construtor de STREAMERS).
+     Os cards são gerados por src/js/50-streamers.js a partir da lista STREAMERS no topo do arquivo. -->
+<section class="streamers" aria-labelledby="streamers-title">
+  <!-- CENA de fundo (CSS/SVG, escura e desfocada): céu, skyline em dois planos, névoa, bokeh e vinheta -->
+  <div class="streamers__scene" aria-hidden="true">
+    <span class="st-sky"></span>
+    <svg class="st-city st-city--far" viewBox="0 0 1440 300" preserveAspectRatio="xMidYMax slice" focusable="false">
+      <defs><pattern id="st-win-far" width="14" height="18" patternUnits="userSpaceOnUse"><rect x="3" y="4" width="6" height="8" fill="#cdb6ff" opacity=".55"/></pattern></defs>
+      <path class="b" d="M0 300V150h60v-40h40v190zM110 300V120h70v180zM190 300V170h50v-30h44v160zM300 300V90h56v210zM366 300V180h80v120zM456 300V130h48v-26h30v196zM544 300V160h90v140zM644 300V70h54v230zM708 300V150h76v150zM794 300V110h58v190zM862 300V180h70v120zM942 300V96h60v204zM1012 300V160h84v140zM1106 300V120h52v180zM1168 300V170h72v130zM1250 300V86h56v214zM1316 300V150h70v150zM1396 300V120h44v180z"/>
+      <path fill="url(#st-win-far)" d="M116 130h58v160h-58zM306 100h44v190h-44zM650 80h42v210h-42zM800 120h46v170h-46zM948 106h48v184h-48zM1256 96h44v194h-44z"/>
+    </svg>
+    <svg class="st-city st-city--near" viewBox="0 0 1440 300" preserveAspectRatio="xMidYMax slice" focusable="false">
+      <defs><pattern id="st-win-near" width="20" height="26" patternUnits="userSpaceOnUse"><rect x="5" y="6" width="8" height="11" fill="#FF9DFF" opacity=".5"/></pattern></defs>
+      <path class="b" d="M-10 300V170h120v130zM120 300V210h110v90zM240 300V150h80v150zM330 300V220h120v80zM460 300V176h70v124zM540 300V230h130v70zM680 300V160h76v140zM766 300V214h118v86zM894 300V182h84v118zM988 300V236h110v64zM1108 300V166h72v134zM1190 300V220h120v80zM1320 300V176h130v124z"/>
+      <path fill="url(#st-win-near)" d="M0 180h100v110H0zM250 160h60v130h-60zM690 170h56v120h-56zM904 192h64v98h-64zM1118 176h52v114h-52zM1330 186h110v104h-110z"/>
+      <path class="n" d="M262 162h6v60h-6zM700 172h6v54h-6zM1126 178h6v58h-6z"/>
+    </svg>
+    <span class="st-fog st-fog--a"></span>
+    <span class="st-fog st-fog--b"></span>
+    <span class="st-bokeh"></span>
+    <span class="st-vig"></span>
+  </div>
+  <div class="container">
+    <div class="streamers__top">
+      <div class="streamers__titles">
+        <header class="g-head streamers__head">
+          <h1 id="streamers-title" class="g-head__title">Streamers <em>da cidade</em></h1>
+          <p class="g-sub" lang="en">City streamers</p>
+        </header>
+      </div>
+
+      <div class="streamers__tabs" role="tablist" aria-label="Filtrar streamers" data-streamers-tabs>
+        <span class="streamers__hint" aria-hidden="true"><kbd>Q</kbd></span>
+        <button class="g-tab" type="button" role="tab" id="st-tab-todos" aria-controls="st-grid" aria-selected="true" data-filter="todos">Todos<span class="streamers__count" data-count="todos"></span></button>
+        <button class="g-tab" type="button" role="tab" id="st-tab-live" aria-controls="st-grid" aria-selected="false" tabindex="-1" data-filter="live"><span class="streamers__dot" aria-hidden="true"></span>Ao vivo<span class="streamers__count" data-count="live"></span></button>
+        <button class="g-tab" type="button" role="tab" id="st-tab-twitch" aria-controls="st-grid" aria-selected="false" tabindex="-1" data-filter="twitch"><svg class="ico" aria-hidden="true"><use href="#i-twitch"/></svg>Twitch<span class="streamers__count" data-count="twitch"></span></button>
+        <button class="g-tab" type="button" role="tab" id="st-tab-youtube" aria-controls="st-grid" aria-selected="false" tabindex="-1" data-filter="youtube"><svg class="ico" aria-hidden="true"><use href="#i-youtube"/></svg>YouTube<span class="streamers__count" data-count="youtube"></span></button>
+        <button class="g-tab" type="button" role="tab" id="st-tab-tiktok" aria-controls="st-grid" aria-selected="false" tabindex="-1" data-filter="tiktok"><svg class="ico" aria-hidden="true"><use href="#i-tiktok"/></svg>TikTok<span class="streamers__count" data-count="tiktok"></span></button>
+        <span class="streamers__hint" aria-hidden="true"><kbd>E</kbd></span>
+      </div>
+    </div>
+
+    <!-- O painel das abas fica num div (display: contents) para a <ul> continuar sendo uma lista de verdade. -->
+    <div class="streamers__panel" id="st-grid" role="tabpanel" aria-labelledby="st-tab-todos">
+    <ul class="streamers__grid" data-streamers>
+      <!-- preenchido pelo JS; o card de convite (slot vazio) fica sempre no fim -->
+      <li class="sc sc--join" data-join>
+        <a class="sc__card" href="https://discord.gg/jogueryz" data-discord target="_blank" rel="noopener">
+          <span class="sc__join">
+            <span class="sc__join-plus" aria-hidden="true"></span>
+            <span class="sc__join-title">Quer ser streamer<br> da RYZ?</span>
+            <span class="sc__en" lang="en">Join the crew</span>
+          </span>
+          <span class="sc__go"><svg class="ico" aria-hidden="true"><use href="#i-discord"/></svg><span class="sc__go-label">Chamar no Discord</span></span>
+          <span class="sc__sel" aria-hidden="true"></span>
+        </a>
+      </li>
+    </ul>
+    </div>
+    <p class="streamers__empty" data-streamers-empty hidden>Ninguém nessa aba agora. Volta mais tarde ou cola no Discord.</p>
+    <noscript><p class="streamers__empty">Ative o JavaScript para ver a lista de streamers.</p></noscript>
+
+    <div class="streamers__foot">
+      <p class="streamers__status" aria-live="polite">
+        <span class="streamers__status-live"><span class="streamers__dot" aria-hidden="true"></span><b data-count="live">0</b> ao vivo</span>
+        <span class="streamers__slash" aria-hidden="true">/</span>
+        <span><b data-count="todos">0</b> na cidade</span>
+      </p>
+      <span class="streamers__keys" aria-hidden="true">
+        <span class="g-key"><kbd>Q</kbd><kbd>E</kbd>Trocar aba</span>
+        <span class="g-key"><kbd>ESC</kbd>Voltar</span>
+      </span>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,909 @@
+/* ==========================================================================
+   60-vip.css  (dono: construtor do VIP)
+   Tela de passe de batalha, travada na altura da tela:
+   1) cena: céu frio azul-violeta contra brilho rosa, horizonte luminoso, chão, vinheta e partículas em 2 camadas;
+   2) trilha à esquerda em perspectiva, com régua de níveis e cadeados;
+   3) palco central: vitrine do item selecionado (carro da concessionária Premium ou emblema grande);
+   4) coluna direita: selo + prévia no topo, nome, chips de recompensa e CTA no canto de baixo.
+   Hierarquia: rosa dessaturado = base (molduras, cards, aba inativa).
+   Lavanda sólida (#F3D6FF) com texto escuro = só CTA, moldura do destaque e item selecionado.
+   Cada card é um <input type=radio> + <label>; tudo troca via :has(), sem JS.
+   ========================================================================== */
+
+.vip {
+  --v-rose:    color-mix(in srgb, var(--c-violet) 38%, var(--c-ink));  /* base fria (roxo apagado) */
+  --v-rose-2:  color-mix(in srgb, var(--c-purple) 55%, var(--c-ink));
+  --v-line:    color-mix(in srgb, var(--c-purple) 30%, transparent);  /* borda lilás ~30% */
+  --v-cell:    color-mix(in srgb, var(--c-ink) 70%, transparent);
+  --v-dim:     color-mix(in srgb, var(--c-lavender) 70%, var(--c-ink));
+  --v-hot:     var(--c-lavender);                                     /* item selecionado (frio) */
+  /* COR DE AÇÃO exclusiva: magenta neon saturado. Só no CTA, na faixa de requisito,
+     na aba ativa e na moldura da carta destaque. Nenhum outro elemento usa magenta. */
+  --v-act:     var(--c-magenta);
+  --v-act-hi:  color-mix(in srgb, var(--c-magenta) 55%, #fff);
+  --v-act-lo:  color-mix(in srgb, var(--c-magenta) 78%, var(--c-violet));
+  --v-pad:     clamp(20px, 3.6vw, 60px);
+  /* rodada 7: BASE DESSATURADA. Índigo-grafite, traço neutro 1px cinza-lavanda. */
+  --v-base:    #17141f;
+  --v-base-2:  #1d1a29;
+  --v-panel:   color-mix(in srgb, #0f0d16 82%, transparent);
+  --v-stroke:  color-mix(in srgb, #c9bfdc 18%, transparent);
+  --v-stroke-hi: color-mix(in srgb, #c9bfdc 32%, transparent);
+  --v-mute:    color-mix(in srgb, var(--c-lavender) 62%, var(--v-base));
+
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  height: calc(100vh - var(--nav-bar-h) - var(--nav-sub-h));
+  height: calc(100svh - var(--nav-bar-h) - var(--nav-sub-h));
+  min-height: 720px;
+  padding: 0;
+  background: var(--v-base);
+  color: var(--c-text);
+}
+.vip__defs { position: absolute; width: 0; height: 0; overflow: hidden; }
+.vip .ico { width: 1em; height: 1em; fill: currentColor; flex: none; }
+
+/* ---------------- Zona 1: cena (rodada 8: LUZ DE CENA) ----------------
+   A luz é da cena, não da interface: rua noturna desfocada, um foco forte magenta/violeta
+   saindo de trás do carro (~58% x, 54% y), feixes diagonais, névoa baixa, asfalto molhado com o neon
+   refletido, bokeh em 3 planos e vinheta forte nas bordas. A interface por cima continua neutra. */
+.vip__scene { position: absolute; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; background: #0a0612; }
+.vip__scene > span { position: absolute; inset: 0; }
+.vip__sky {
+  /* rodada 9: LUZ FRIA. Céu índigo/azul-violeta; o magenta fica reservado à interface (CTA, aba ativa, carta selecionada) */
+  background:
+    radial-gradient(60% 50% at 22% 30%, color-mix(in srgb, var(--c-blue) 34%, transparent), transparent 72%),
+    radial-gradient(46% 40% at 88% 18%, color-mix(in srgb, var(--c-blue) 26%, transparent), transparent 72%),
+    linear-gradient(180deg, #0b0a24 0%, #110f38 40%, #17134a 60%, #08071a 100%);
+}
+.vip__glow {
+  /* o foco de luz atrás do carro: núcleo lavanda quase branco, anel azul-violeta, borda índigo */
+  background:
+    radial-gradient(14% 18% at 52% 54%, color-mix(in srgb, var(--c-lavender) 62%, transparent), transparent 70%),
+    radial-gradient(30% 34% at 52% 54%, color-mix(in srgb, #8f7bff 50%, transparent), transparent 72%),
+    radial-gradient(50% 52% at 52% 52%, color-mix(in srgb, var(--c-blue) 62%, transparent), transparent 74%),
+    radial-gradient(72% 62% at 52% 48%, color-mix(in srgb, var(--c-blue) 26%, transparent), transparent 80%);
+}
+.vip__beams {
+  /* feixes de luz diagonais frios saindo de cima/trás-direita */
+  inset: -20% -10% 18% 14% !important;
+  background:
+    linear-gradient(112deg, transparent 30%, color-mix(in srgb, var(--c-lavender) 22%, transparent) 33%, transparent 37%,
+      transparent 44%, color-mix(in srgb, #8f7bff 20%, transparent) 46%, transparent 49%,
+      transparent 56%, color-mix(in srgb, var(--c-blue) 30%, transparent) 60%, transparent 66%,
+      transparent 72%, color-mix(in srgb, var(--c-lavender) 14%, transparent) 74%, transparent 77%);
+  mask-image: radial-gradient(60% 70% at 56% 46%, #000 20%, transparent 78%);
+  filter: blur(10px);
+  mix-blend-mode: screen;
+  opacity: .9;
+  animation: vip-beams 14s ease-in-out infinite alternate;
+}
+@keyframes vip-beams { from { opacity: .7; } to { opacity: 1; } }
+/* cidade noturna desfocada (plano de trás), tingida pela luz fria */
+.vip__city { top: auto !important; bottom: 34% !important; height: 46%; }
+.vip__city svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.vip__city--far { filter: blur(6px) hue-rotate(-28deg) saturate(.9) brightness(.85); opacity: .55; mask-image: linear-gradient(90deg, transparent 2%, #000 22%, #000 82%, transparent 98%); }
+.vip__city--near { height: 32%; filter: blur(5px) hue-rotate(-30deg) brightness(.75); opacity: .9; mask-image: linear-gradient(90deg, #000 0%, #000 30%, transparent 44%, transparent 70%, #000 84%); }
+.vip__fog {
+  /* névoa volumétrica baixa, lavanda/azul */
+  background:
+    radial-gradient(46% 14% at 52% 70%, color-mix(in srgb, var(--c-lavender) 26%, transparent), transparent 75%),
+    radial-gradient(70% 16% at 36% 74%, color-mix(in srgb, var(--c-blue) 30%, transparent), transparent 75%),
+    radial-gradient(60% 14% at 84% 72%, color-mix(in srgb, #8f7bff 22%, transparent), transparent 75%),
+    linear-gradient(180deg, transparent 56%, color-mix(in srgb, #7d86d8 14%, transparent) 68%, transparent 84%);
+}
+.vip__fog--drift {
+  inset: 52% -20% 6% -20% !important;
+  background:
+    radial-gradient(30% 40% at 20% 50%, color-mix(in srgb, var(--c-lavender) 12%, transparent), transparent 70%),
+    radial-gradient(26% 36% at 62% 60%, color-mix(in srgb, #8f7bff 16%, transparent), transparent 70%),
+    radial-gradient(34% 44% at 92% 44%, color-mix(in srgb, var(--c-blue) 18%, transparent), transparent 70%);
+  filter: blur(6px);
+  animation: vip-fog 38s ease-in-out infinite alternate;
+}
+@keyframes vip-fog { to { transform: translate3d(12%, -2%, 0); } }
+/* bokeh, plano de trás: luzes pequenas frias ao longo do horizonte */
+.vip__bokeh {
+  filter: blur(1.5px);
+  background:
+    radial-gradient(circle at 30% 61%, var(--c-lavender) 0 2px, transparent 7px),
+    radial-gradient(circle at 35% 59%, #8f7bff 0 3px, transparent 9px),
+    radial-gradient(circle at 41% 62%, var(--c-lavender) 0 2px, transparent 7px),
+    radial-gradient(circle at 47% 58%, var(--c-blue) 0 3px, transparent 9px),
+    radial-gradient(circle at 53% 60%, #fff 0 2px, transparent 6px),
+    radial-gradient(circle at 66% 59%, var(--c-blue) 0 4px, transparent 12px),
+    radial-gradient(circle at 71% 61%, var(--c-lavender) 0 2px, transparent 8px),
+    radial-gradient(circle at 76% 58%, #8f7bff 0 2px, transparent 7px),
+    radial-gradient(circle at 82% 62%, var(--c-blue) 0 3px, transparent 10px),
+    radial-gradient(circle at 88% 59%, var(--c-lavender) 0 3px, transparent 9px),
+    radial-gradient(circle at 94% 61%, #8f7bff 0 2px, transparent 8px),
+    radial-gradient(circle at 24% 58%, var(--c-blue) 0 3px, transparent 10px);
+  opacity: .8;
+}
+.vip__bokeh--mid {
+  filter: blur(4px);
+  background:
+    radial-gradient(circle at 38% 44%, color-mix(in srgb, var(--c-lavender) 40%, transparent) 0 8px, transparent 18px),
+    radial-gradient(circle at 49% 36%, color-mix(in srgb, #8f7bff 45%, transparent) 0 6px, transparent 16px),
+    radial-gradient(circle at 70% 40%, color-mix(in srgb, var(--c-blue) 55%, transparent) 0 10px, transparent 22px),
+    radial-gradient(circle at 78% 30%, color-mix(in srgb, var(--c-lavender) 40%, transparent) 0 6px, transparent 14px),
+    radial-gradient(circle at 63% 26%, color-mix(in srgb, var(--c-blue) 55%, transparent) 0 9px, transparent 20px),
+    radial-gradient(circle at 90% 48%, color-mix(in srgb, #8f7bff 40%, transparent) 0 8px, transparent 18px);
+  opacity: .75;
+}
+.vip__bokeh--big {
+  filter: blur(14px);
+  background:
+    radial-gradient(circle at 44% 14%, color-mix(in srgb, var(--c-blue) 34%, transparent) 0 30px, transparent 60px),
+    radial-gradient(circle at 74% 10%, color-mix(in srgb, #8f7bff 26%, transparent) 0 40px, transparent 80px),
+    radial-gradient(circle at 96% 70%, color-mix(in srgb, var(--c-lavender) 18%, transparent) 0 44px, transparent 90px),
+    radial-gradient(circle at 48% 96%, color-mix(in srgb, var(--c-blue) 34%, transparent) 0 60px, transparent 120px);
+  opacity: .9;
+  animation: vip-drift 30s linear infinite alternate;
+}
+.vip__horizon {
+  top: 64% !important; bottom: auto !important; height: 120px; margin-top: -60px;
+  background:
+    linear-gradient(180deg, transparent 49.4%, color-mix(in srgb, var(--c-lavender) 55%, transparent) 50%, transparent 50.8%),
+    radial-gradient(40% 50% at 52% 50%, color-mix(in srgb, #8f7bff 40%, transparent), transparent 72%);
+  filter: blur(1px);
+  mask-image: linear-gradient(90deg, transparent 4%, #000 30%, #000 86%, transparent 100%);
+}
+/* asfalto molhado: chão escuro e brilhante, com a poça de luz fria do foco */
+.vip__floor {
+  top: 64% !important;
+  background:
+    radial-gradient(38% 40% at 52% 10%, color-mix(in srgb, #8f7bff 34%, transparent), transparent 75%),
+    radial-gradient(70% 60% at 50% 0%, color-mix(in srgb, var(--c-blue) 34%, transparent), transparent 80%),
+    linear-gradient(180deg, #110f30 0%, #0a0920 60%, #05040e 100%);
+}
+.vip__wet {
+  /* luzes frias da cidade refletidas no asfalto: listras verticais esticadas e desfocadas */
+  top: 64% !important; bottom: 0 !important;
+  background:
+    linear-gradient(90deg,
+      transparent 22%, color-mix(in srgb, var(--c-blue) 55%, transparent) 23.5%, transparent 25%,
+      transparent 29%, color-mix(in srgb, var(--c-lavender) 45%, transparent) 30%, transparent 31%,
+      transparent 34.5%, color-mix(in srgb, #8f7bff 50%, transparent) 35.5%, transparent 36.5%,
+      transparent 46%, color-mix(in srgb, var(--c-blue) 50%, transparent) 47%, transparent 48%,
+      transparent 52%, color-mix(in srgb, var(--c-lavender) 40%, transparent) 53%, transparent 54%,
+      transparent 65%, color-mix(in srgb, var(--c-blue) 55%, transparent) 66.5%, transparent 68%,
+      transparent 70.5%, color-mix(in srgb, var(--c-lavender) 45%, transparent) 71.2%, transparent 72%,
+      transparent 81%, color-mix(in srgb, #8f7bff 50%, transparent) 82.2%, transparent 83.4%,
+      transparent 87.5%, color-mix(in srgb, var(--c-blue) 45%, transparent) 88.5%, transparent 89.5%,
+      transparent 93.5%, color-mix(in srgb, var(--c-lavender) 35%, transparent) 94.2%, transparent 95%);
+  filter: blur(5px);
+  mask-image: linear-gradient(180deg, #000 0%, color-mix(in srgb, #000 50%, transparent) 45%, transparent 90%);
+}
+.vip__dust--far {
+  background-image:
+    radial-gradient(circle, color-mix(in srgb, var(--c-lavender) 70%, transparent) 0 1px, transparent 1.5px),
+    radial-gradient(circle, color-mix(in srgb, #8f7bff 70%, transparent) 0 1px, transparent 1.6px);
+  background-size: 140px 120px, 210px 170px;
+  background-position: 20px 30px, 90px 70px;
+  opacity: .55;
+  mask-image: radial-gradient(45% 55% at 54% 50%, #000, transparent);
+  animation: vip-drift 40s linear infinite;
+}
+.vip__dust--near {
+  background-image:
+    radial-gradient(circle, color-mix(in srgb, var(--c-lavender) 34%, transparent) 0 3px, transparent 7px),
+    radial-gradient(circle, color-mix(in srgb, var(--c-blue) 40%, transparent) 0 4px, transparent 10px);
+  background-size: 520px 460px, 700px 620px;
+  background-position: 380px 120px, 120px 380px;
+  filter: blur(2px);
+  opacity: .5;
+  animation: vip-drift 26s linear infinite reverse;
+}
+.vip__vig {
+  background:
+    radial-gradient(90% 85% at 54% 50%, transparent 38%, color-mix(in srgb, #03020a 70%, transparent) 78%, #03020a 108%),
+    linear-gradient(90deg, color-mix(in srgb, #03020a 55%, transparent) 0%, transparent 22%),
+    linear-gradient(0deg, color-mix(in srgb, #03020a 70%, transparent) 0%, transparent 12%);
+}
+@keyframes vip-drift { to { transform: translate3d(-60px, -40px, 0); } }
+
+
+/* ---------------- Grade da tela (rodada 10) ----------------
+   Coluna 1: a TRILHA ocupa de cima até o rodapé (centro de leitura).
+   Coluna 2: título no topo; o carro vira cenário atrás, mais para a direita.
+   Coluna 3: prévia no topo; nome, citação e CTA embaixo. */
+.vip__wrap {
+  position: relative;
+  height: 100%;
+  display: grid;
+  grid-template-columns: minmax(460px, 40%) 1fr minmax(320px, 370px);
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  column-gap: clamp(16px, 2vw, 32px);
+  padding: 14px var(--v-pad) 0;
+}
+
+/* ---------------- Cabeçalho (coluna do meio, topo) ---------------- */
+.vip__top { grid-column: 2; grid-row: 1; padding: 4px 0 0 clamp(24px, 3vw, 56px); position: relative; z-index: 2; }
+.vip__ctx { display: flex; gap: 4px; margin-bottom: 12px; }
+.vip__ctx-tab {
+  display: inline-flex; align-items: center;
+  min-height: 34px; padding: 0 20px;
+  font-weight: 600; font-size: var(--fs-sm); letter-spacing: var(--track-ui);
+  text-transform: uppercase; text-decoration: none;
+  color: var(--v-dim);
+  background: var(--v-panel);
+  box-shadow: inset 0 0 0 1px var(--v-stroke);
+  clip-path: polygon(10px 0, 100% 0, calc(100% - 10px) 100%, 0 100%);
+  cursor: pointer;
+}
+/* rodada 11: aba ativa SEM magenta cheio (ele fica exclusivo do botão). Contorno lavanda + filete rosa claro embaixo. */
+.vip__ctx-tab.is-active {
+  color: #fff; font-weight: 800; font-style: italic;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--c-lavender) 14%, #17141f), #17141f);
+  box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--c-lavender) 78%, transparent), inset 0 -4px 0 var(--c-pink);
+}
+.vip__ctx-tab:hover:not(.is-active) { color: var(--c-lavender); }
+.vip__kicker {
+  margin: 0;
+  font-weight: 600; font-size: var(--fs-md); text-transform: uppercase; letter-spacing: var(--track-ui);
+  color: var(--v-dim);
+}
+.vip__kicker span { font-style: italic; font-weight: 500; text-transform: none; color: var(--c-text-mute); }
+/* rodada 11: "Trilha Rise" rebaixado a cabeçalho de seção (o único display da tela é o nome do plano) */
+.vip__title {
+  display: flex; align-items: center; gap: 12px;
+  margin: 2px 0 0;
+  font-weight: 800; font-style: italic; text-transform: uppercase;
+  font-size: 1.625rem; line-height: 1; white-space: nowrap; letter-spacing: .01em;
+  color: color-mix(in srgb, #fff 88%, var(--c-lavender));
+  text-shadow: 2px 2px 0 var(--c-deep);
+}
+.vip__title b { color: color-mix(in srgb, var(--c-lavender) 80%, var(--c-blue)); font-weight: 800; }
+.vip__season {
+  display: flex; align-items: center; gap: 8px;
+  margin: 10px 0 0;
+  font-weight: 600; font-size: var(--fs-sm); text-transform: uppercase; letter-spacing: var(--track-ui);
+  color: color-mix(in srgb, var(--c-lavender) 72%, transparent);
+}
+.vip__season .ico { width: 16px; height: 16px; }
+
+/* ---------------- Zona 2: TRILHA ----------------
+   Painel paralelogramo PLANO (skewX, sem rotateY), alto, com faixa sólida no topo.
+   Dentro: uma linha por plano (1 a 6), régua de níveis à esquerda e duas colunas de recompensa.
+   O conteúdo é endireitado com o skew inverso, então texto e emblemas ficam retos. */
+.vip { --sk: -9deg; --unsk: 9deg; }
+.vip__stage {
+  grid-column: 1; grid-row: 1 / 3;
+  min-height: 0;
+  position: relative; z-index: 2;
+  padding: 6px 0 14px;
+}
+.vip__track {
+  position: relative;
+  height: 100%;
+  width: calc(100% - 64px);
+  margin-left: 62px;
+  display: flex; flex-direction: column;
+  transform: skewX(var(--sk));
+  transform-origin: 50% 50%;
+  padding: 0 12px 12px 10px;
+  background:
+    linear-gradient(180deg, color-mix(in srgb, #fff 5%, transparent), transparent 30%),
+    color-mix(in srgb, #14121c 86%, transparent);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, #c9bfdc 20%, transparent),
+    26px 30px 40px -8px rgba(0, 0, 0, .6);
+}
+.vip__track::after {
+  /* fio claro de 1px na borda de baixo, como o painel do jogo */
+  content: ""; position: absolute; left: -14px; right: 22px; bottom: -8px; height: 2px;
+  background: linear-gradient(90deg, transparent, color-mix(in srgb, #c9bfdc 40%, transparent) 20%, transparent);
+}
+.vip__track-bar {
+  display: flex; align-items: center; justify-content: space-between;
+  margin: 0 -12px 12px -10px;
+  height: 46px; padding: 0 20px;
+  background: #2b2839;
+  box-shadow: inset 0 1px 0 color-mix(in srgb, #fff 22%, transparent), inset 0 -2px 0 #0d0c12;
+}
+.vip__track-bar > span {
+  display: inline-block; transform: skewX(var(--unsk));
+  font-weight: 800; font-style: italic; text-transform: uppercase; font-size: 1.375rem; letter-spacing: .02em;
+  color: #fff;
+}
+
+/* contador de nível na barra da trilha (troca com o plano selecionado) */
+.vip__lvls { display: inline-block; transform: skewX(var(--unsk)); }
+.vip__lvl {
+  display: none;
+  font-weight: 800; font-style: italic; text-transform: uppercase; font-size: 1.0625rem; letter-spacing: .04em;
+  color: #fff;
+}
+.vip__lvl i { font-style: italic; font-weight: 600; color: color-mix(in srgb, var(--c-lavender) 55%, transparent); margin-left: 2px; }
+.vip:has(#vip-p-bronze:checked) .vip__lvl--bronze,
+.vip:has(#vip-p-prata:checked) .vip__lvl--prata,
+.vip:has(#vip-p-ouro:checked) .vip__lvl--ouro,
+.vip:has(#vip-p-esmeralda:checked) .vip__lvl--esmeralda,
+.vip:has(#vip-p-rubi:checked) .vip__lvl--rubi,
+.vip:has(#vip-p-diamante:checked) .vip__lvl--diamante { display: inline; }
+
+/* rodada 11: HIERARQUIA. As linhas crescem de Bronze a Diamante (--g) e o brilho de raridade cresce junto (--r).
+   O plano selecionado vira TILE DESTAQUE: o dobro da altura, ocupando as duas colunas, com faixa de chamada. */
+.vip__grid {
+  position: relative;
+  flex: 1; min-height: 0;
+  display: flex; flex-direction: column;
+  gap: 8px;
+}
+.vip__grid::before {
+  /* trilho vertical da régua (parte não alcançada) */
+  content: ""; position: absolute; left: 17px; top: 10px; bottom: 10px; width: 4px;
+  background: color-mix(in srgb, #c9bfdc 14%, transparent);
+}
+.vip__radio { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+
+.vip__row--bronze    { --g: .74; --r: .08; --s: .74; }
+.vip__row--prata     { --g: .8;  --r: .2;  --s: .8; }
+.vip__row--ouro      { --g: .86; --r: .34; --s: .86; }
+.vip__row--esmeralda { --g: .96; --r: .52; --s: .94; }
+.vip__row--rubi      { --g: 1.04; --r: .7; --s: 1; }
+.vip__row--diamante  { --g: 1.1; --r: 1;   --s: 1.06; }
+
+.vip__row {
+  --pc: color-mix(in oklab, var(--plan) 76%, #8f899e);       /* cor do plano, levemente dessaturada */
+  --pc-lt: color-mix(in oklab, var(--pc) 62%, #f4f0f8);     /* versão clara para a tag */
+  position: relative;
+  flex: var(--g) 1 0;
+  display: grid;
+  grid-template-columns: 38px minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr);
+  column-gap: 8px;
+  min-height: 0;
+  cursor: pointer;
+  transition: filter var(--t-med) var(--ease);
+}
+.vip__row > .vip__lv { grid-column: 1; grid-row: 1 / -1; }
+.vip__row > .vip__cell--badge { grid-column: 2; grid-row: -2; }
+.vip__row > .vip__cell--prem { grid-column: 3; grid-row: -2; }
+.vip__call { display: none; }
+
+/* régua: número do nível + segmento de progresso */
+.vip__lv { position: relative; display: grid; place-items: center; }
+.vip__lv::after {
+  /* segmento preenchido: liga este nível ao de cima (atravessa o gap) */
+  content: ""; position: absolute; left: 17px; top: -9px; bottom: -9px; width: 4px; z-index: 0;
+  background: linear-gradient(180deg, var(--c-pink), color-mix(in srgb, var(--c-lavender) 90%, var(--c-pink)));
+  box-shadow: 0 0 8px color-mix(in srgb, var(--c-pink) 50%, transparent);
+}
+.vip__row--bronze .vip__lv::after { top: 50%; }
+.vip__lv b {
+  position: relative; z-index: 1;
+  display: grid; place-items: center;
+  width: 30px; height: 30px;
+  transform: skewX(var(--unsk));
+  font-weight: 900; font-style: italic; font-size: 1.125rem; line-height: 1;
+  color: #120022;
+  background: color-mix(in srgb, var(--c-lavender) 92%, var(--c-pink));
+  clip-path: polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px);
+}
+/* níveis depois do selecionado: não alcançados (trilho apagado, número escuro) */
+.vip__radio:checked + .vip__row ~ .vip__row .vip__lv::after { display: none; }
+.vip__radio:checked + .vip__row ~ .vip__row .vip__lv b {
+  color: color-mix(in srgb, var(--c-lavender) 60%, transparent);
+  background: #1b1925;
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, #c9bfdc 30%, transparent);
+}
+.vip__radio:checked + .vip__row .vip__lv::after { bottom: 50%; }
+.vip__radio:checked + .vip__row.vip__row--bronze .vip__lv::after { display: none; }
+
+/* célula de recompensa: base escura, cor e brilho do plano proporcionais à raridade */
+.vip__cell {
+  position: relative;
+  display: flex; flex-direction: column;
+  min-width: 0; min-height: 0;
+  overflow: hidden;
+  clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+  background:
+    radial-gradient(52% 80% at 80% 50%, color-mix(in oklab, var(--pc) calc(16% + var(--r) * 34%), transparent), transparent 74%),
+    linear-gradient(180deg, color-mix(in oklab, var(--pc) calc(14% + var(--r) * 18%), #1c1a27) 0%, color-mix(in oklab, var(--pc) 8%, #121019) 100%);
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, #fff 12%, transparent),
+    inset 0 1px 0 color-mix(in srgb, #fff 24%, transparent),
+    inset 0 0 calc(var(--r) * 26px) color-mix(in oklab, var(--pc) calc(var(--r) * 55%), transparent);
+}
+/* partículas de raridade: pontos de luz na cor do plano, mais visíveis nos tiers altos */
+.vip__cell::before {
+  content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  background:
+    radial-gradient(circle at 62% 22%, color-mix(in oklab, var(--pc) 40%, #fff) 0 1.2px, transparent 2.4px),
+    radial-gradient(circle at 88% 70%, color-mix(in oklab, var(--pc) 40%, #fff) 0 1px, transparent 2px),
+    radial-gradient(circle at 74% 84%, var(--pc-lt) 0 1.4px, transparent 3px),
+    radial-gradient(circle at 94% 30%, var(--pc-lt) 0 1px, transparent 2.2px),
+    radial-gradient(circle at 54% 60%, color-mix(in oklab, var(--pc) 40%, #fff) 0 .9px, transparent 2px),
+    radial-gradient(circle at 80% 12%, #fff 0 .8px, transparent 1.8px);
+  opacity: calc(var(--r) * .95);
+  animation: vip-twinkle calc(5s - var(--r) * 2s) ease-in-out infinite alternate;
+}
+@keyframes vip-twinkle { from { opacity: calc(var(--r) * .35); } to { opacity: var(--r); } }
+.vip__cell > * { position: relative; z-index: 1; }
+/* tag chanfrada presa no topo */
+.vip__cell > .vip__tag {
+  position: absolute; left: 0; top: 0; z-index: 3;
+  display: inline-flex; align-items: center; gap: 5px;
+  height: 20px; padding: 0 14px 0 12px;
+  font-weight: 800; font-style: italic; font-size: 12px; letter-spacing: .06em; text-transform: uppercase;
+  color: #120022;
+  background: var(--pc-lt);
+  clip-path: polygon(0 0, 100% 0, calc(100% - 8px) 100%, 0 100%);
+}
+.vip__cell-body {
+  flex: 1; min-height: 0;
+  display: flex; align-items: center; justify-content: space-between; gap: 6px;
+  padding: 18px 8px 4px 14px;
+  transform: skewX(var(--unsk));
+}
+.vip__cell-name {
+  display: flex; flex-direction: column;
+  min-width: 0;
+  padding-top: 4px;
+  font-weight: 800; font-style: italic; text-transform: uppercase; font-size: calc(1.0625rem + var(--r) * .25rem); line-height: 1;
+  color: #fff;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, .6);
+}
+.vip__cell-name small {
+  margin-top: 3px;
+  font-weight: 600; font-style: normal; font-size: 12px; letter-spacing: .04em;
+  color: color-mix(in srgb, var(--c-lavender) 78%, transparent);
+}
+.vip__cell--prem .vip__cell-name { font-size: .9375rem; }
+.vip__cell-art {
+  order: 2;
+  flex: none;
+  align-self: center;
+  width: calc(clamp(52px, 9.4vh, 84px) * var(--s)); height: calc(clamp(52px, 9.4vh, 84px) * var(--s));
+  margin: -12px 0 -8px;
+  object-fit: contain;
+  filter:
+    drop-shadow(0 0 calc(2px + var(--r) * 12px) color-mix(in oklab, var(--plan) calc(20% + var(--r) * 60%), transparent))
+    drop-shadow(0 6px 5px rgba(0, 0, 0, .65));
+}
+.vip__cell-art--key {
+  width: calc(clamp(46px, 8vh, 66px) * var(--s)); height: calc(clamp(46px, 8vh, 66px) * var(--s));
+  color: color-mix(in srgb, #fff 70%, var(--pc));
+}
+
+/* TRAVADO: sem concessionária Premium. Dessaturado, escurecido, só um cadeado pequeno no canto. */
+.vip__cell.is-locked {
+  --r: 0;
+  background:
+    repeating-linear-gradient(135deg, color-mix(in srgb, #fff 3%, transparent) 0 6px, transparent 6px 14px),
+    #0f0e15;
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, #fff 7%, transparent);
+}
+.vip__cell.is-locked::before { display: none; }
+.vip__cell.is-locked > .vip__tag { color: color-mix(in srgb, var(--c-lavender) 62%, transparent); background: #2a2733; }
+.vip__cell.is-locked .vip__cell-art { opacity: .2; filter: grayscale(1); color: #c9bfdc; }
+.vip__cell.is-locked .vip__cell-name { color: color-mix(in srgb, var(--c-lavender) 38%, transparent); text-shadow: none; }
+.vip__cell.is-locked .vip__cell-name small { color: color-mix(in srgb, var(--c-lavender) 30%, transparent); }
+.vip__cell > .vip__lock {
+  position: absolute; right: 0; top: 0; z-index: 3;
+  display: grid; place-items: center;
+  width: 30px; height: 22px;
+  color: color-mix(in srgb, var(--c-lavender) 85%, transparent);
+  background: #2a2733;
+  clip-path: polygon(8px 0, 100% 0, 100% 100%, 0 100%);
+}
+.vip__lock .ico { width: 13px; height: 13px; transform: skewX(var(--unsk)); }
+
+/* não selecionados recuam um pouco */
+.vip__grid:has(.vip__radio:checked) .vip__row { filter: brightness(.84) saturate(.9); }
+.vip__grid .vip__radio:checked + .vip__row { filter: none; z-index: 2; }
+.vip__row:hover { filter: none !important; }
+.vip__radio:focus-visible + .vip__row { outline: 3px solid var(--c-lavender); outline-offset: 3px; }
+
+/* ---------- TILE DESTAQUE (plano selecionado) ---------- */
+.vip__radio:checked + .vip__row {
+  flex-grow: 2.7;
+  grid-template-rows: 30px minmax(0, 1fr);
+  padding: 0 8px 8px 0;
+  row-gap: 8px;
+}
+.vip__radio:checked + .vip__row::before {
+  /* moldura viva: magenta 2px, brilho interno e luz da cor do plano */
+  content: ""; position: absolute; z-index: 0; top: 0; bottom: 0; right: 0; left: 46px;
+  clip-path: polygon(14px 0, 100% 0, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0 100%, 0 14px);
+  background:
+    linear-gradient(135deg, transparent 9px, var(--v-act) 9px 11.5px, transparent 11.5px) 0 0 / 18px 18px no-repeat,
+    linear-gradient(315deg, transparent 9px, var(--v-act) 9px 11.5px, transparent 11.5px) 100% 100% / 18px 18px no-repeat,
+    radial-gradient(60% 70% at 32% 66%, color-mix(in oklab, var(--pc) 34%, transparent), transparent 75%),
+    linear-gradient(180deg, #221d33, #121019);
+  box-shadow:
+    inset 0 0 0 2px var(--v-act),
+    inset 0 0 34px color-mix(in srgb, var(--c-magenta) 34%, transparent);
+}
+.vip__radio:checked + .vip__row > .vip__cell { z-index: 1; }
+.vip__radio:checked + .vip__row > .vip__cell--badge { margin-left: 8px; }
+.vip__radio:checked + .vip__row .vip__call {
+  grid-column: 2 / 4; grid-row: 1;
+  position: relative; z-index: 2;
+  display: flex; align-items: center;
+  margin-left: 14px; margin-right: -8px;
+  padding: 0 16px;
+  background: linear-gradient(90deg, var(--v-act), color-mix(in srgb, var(--v-act) 70%, var(--c-violet)) 70%, transparent);
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 8px 100%, 0 calc(100% - 8px));
+}
+.vip__call > span {
+  display: inline-block; transform: skewX(var(--unsk));
+  font-weight: 800; font-style: italic; text-transform: uppercase; font-size: .9375rem; letter-spacing: .06em;
+  color: #120022;
+}
+.vip__radio:checked + .vip__row .vip__cell {
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, #fff 22%, transparent),
+    inset 0 1px 0 color-mix(in srgb, #fff 36%, transparent),
+    inset 0 0 30px color-mix(in oklab, var(--pc) 50%, transparent);
+}
+.vip__radio:checked + .vip__row .vip__cell-body { flex-direction: column; align-items: flex-start; justify-content: flex-end; gap: 4px; padding: 22px 12px 10px 16px; }
+.vip__radio:checked + .vip__row .vip__cell-art {
+  order: -1; align-self: center;
+  width: auto; height: auto; flex: 1 1 0; min-height: 0; max-height: 136px; aspect-ratio: 1;
+  margin: 0;
+}
+.vip__radio:checked + .vip__row .vip__cell-art--key { max-height: 96px; }
+.vip__radio:checked + .vip__row .vip__cell-name { font-size: clamp(1.5rem, 1rem + 1vw, 2rem); }
+.vip__radio:checked + .vip__row .vip__cell--prem .vip__cell-name { font-size: clamp(1rem, .8rem + .4vw, 1.2rem); }
+.vip__radio:checked + .vip__row .vip__cell-name small { font-size: 13px; }
+.vip__radio:checked + .vip__row .vip__lv b {
+  width: 36px; height: 36px; font-size: 1.375rem;
+  color: #fff; background: #2b2839;
+  box-shadow: inset 0 0 0 2px var(--v-act), 0 0 12px color-mix(in srgb, var(--c-magenta) 60%, transparent);
+}
+.vip__radio:checked + .vip__row .vip__lv::before {
+  /* seta do nível selecionado */
+  content: ""; position: absolute; left: -18px; top: 50%; width: 0; height: 0; margin-top: -8px; z-index: 1;
+  border: 8px solid transparent; border-left: 10px solid var(--v-act);
+}
+
+/* ---------------- Palco: o carro, iluminado e centrado no vão entre a trilha e a coluna de texto ---------------- */
+.vip__show {
+  grid-column: 2; grid-row: 2;
+  position: relative;
+  z-index: 1;
+  min-height: 0;
+  pointer-events: none;
+}
+.vip__show > * { position: absolute; }
+.vip__beam {
+  /* cone de luz de cima sobre o carro */
+  left: 50%; bottom: 14%; width: 70%; height: 120%;
+  transform: translateX(-50%);
+  /* a luz cresce até ~70% e se dissolve antes da base: sem degrau no chão onde o carro pisa */
+  background: linear-gradient(180deg, transparent, color-mix(in srgb, var(--c-lavender) 16%, transparent) 55%, color-mix(in srgb, var(--c-lavender) 22%, transparent) 72%, transparent 100%);
+  clip-path: polygon(38% 0, 62% 0, 100% 100%, 0 100%);
+  -webkit-mask-image: linear-gradient(180deg, #000 70%, transparent 100%);
+  mask-image: linear-gradient(180deg, #000 70%, transparent 100%);
+  filter: blur(8px);
+  mix-blend-mode: screen;
+}
+.vip__plinth {
+  /* chão refletivo: disco de luz sob o carro */
+  left: 50%; bottom: 3%; width: 120%; height: 22%;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background:
+    radial-gradient(50% 50% at 50% 50%, color-mix(in srgb, var(--c-lavender) 34%, transparent), color-mix(in srgb, #8f7bff 26%, transparent) 40%, transparent 72%);
+  filter: blur(6px);
+}
+.vip__contact { display: none; }
+.vip__halo {
+  left: 50%; top: 52%;
+  width: 120%; height: 90%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: radial-gradient(50% 50% at 50% 50%, color-mix(in srgb, var(--c-lavender) 30%, transparent), color-mix(in srgb, var(--c-blue) 34%, transparent) 45%, transparent 72%);
+  filter: blur(26px);
+}
+.vip__car { left: 46%; width: 118%; bottom: 10%; aspect-ratio: 800 / 360; transform: translateX(-50%); filter: brightness(1.28) saturate(1.08) contrast(1.05); }
+.vip__car::after {
+  /* oclusão no chão, colada nas rodas */
+  content: ""; position: absolute; left: 10%; right: 4%; top: 79%; height: 14%;
+  border-radius: 50%;
+  background: radial-gradient(50% 50% at 50% 50%, rgba(3, 1, 8, .95) 0 38%, rgba(3, 1, 8, .5) 62%, transparent 78%);
+  filter: blur(4px);
+}
+.vip__car-img, .vip__car-ref { position: absolute; z-index: 1; left: 0; width: 100%; height: 100%; overflow: visible; }
+.vip__car-img {
+  top: 0;
+  /* rim light forte: fio claro na borda de cima e contraluz rosa, preenchimento frio do outro lado */
+  filter:
+    drop-shadow(0 -2px 0 color-mix(in srgb, #fff 80%, transparent))
+    drop-shadow(3px -3px 6px color-mix(in srgb, var(--c-pink) 75%, transparent))
+    drop-shadow(-10px 0 20px color-mix(in srgb, var(--c-blue) 70%, transparent));
+}
+.vip__car-ref {
+  top: 85.6%;
+  transform: scaleY(-1);
+  z-index: 0;
+  opacity: .5;
+  filter: blur(2px);
+  mask-image: linear-gradient(0deg, #000 0%, transparent 55%);
+}
+.vip__gem { left: 50%; top: 4%; width: min(70%, 300px); aspect-ratio: 1; transform: translateX(-50%); display: none; }
+.vip__gem-art {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: contain; opacity: 0;
+  filter: drop-shadow(0 0 24px color-mix(in oklab, var(--plan) 50%, transparent)) drop-shadow(0 30px 20px rgba(0, 0, 0, .6));
+}
+
+/* ---------------- Zona 3: prévia ---------------- */
+.vip__side {
+  grid-column: 3; grid-row: 1;
+  align-self: start;
+  position: relative; z-index: 2;
+  display: flex; justify-content: flex-end;
+  padding-top: 8px;
+}
+.vip__prev {
+  position: relative;
+  width: 220px; height: 124px;
+  padding: 1px;
+  background: var(--v-stroke-hi);
+  clip-path: polygon(14px 0, 100% 0, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0 100%, 0 14px);
+}
+.vip__prev-scene {
+  filter: saturate(.45) brightness(.8);
+  display: block; width: 100%; height: calc(100% - 26px);
+  clip-path: polygon(13px 0, 100% 0, 100% 100%, 0 100%, 0 13px);
+}
+.vip__prev-play {
+  position: absolute; left: 50%; top: 38%;
+  width: 34px; height: 34px; transform: translate(-50%, -50%);
+  display: grid; place-items: center;
+  color: var(--c-lavender); background: color-mix(in srgb, #0e0d13 70%, transparent);
+  border-radius: 50%;
+  outline: 1px solid var(--v-stroke-hi);
+}
+.vip__prev-play svg { width: 18px; height: 18px; margin-left: 2px; }
+.vip__prev-label {
+  position: absolute; left: 2px; right: 2px; bottom: 2px;
+  height: 26px; display: grid; place-items: center;
+  font-weight: 600; text-transform: uppercase; font-size: var(--fs-md); letter-spacing: var(--track-ui);
+  color: var(--c-lavender);
+  background: #121019;
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%);
+}
+
+/* ---------------- Zona 3: informações + CTA ---------------- */
+.vip__info {
+  grid-column: 3; grid-row: 2;
+  align-self: end;
+  position: relative; z-index: 2;
+  padding-bottom: 18px;
+}
+.vip__info::before {
+  /* sombra local atrás do texto: o carro fica de cenário sem atrapalhar a leitura */
+  content: ""; position: absolute; z-index: -1;
+  inset: -10% -30% -4% -24%;
+  background: radial-gradient(60% 56% at 56% 46%, color-mix(in srgb, #0a0910 78%, transparent), transparent 76%);
+  pointer-events: none;
+}
+.vip__detail { display: none; }
+/* rótulo de categoria em itálico ACIMA do display */
+.vip__d-cat {
+  display: flex; align-items: center; gap: 8px;
+  margin: 0 0 6px;
+  font-weight: 600; font-style: italic; text-transform: uppercase; font-size: var(--fs-md); letter-spacing: .06em;
+  color: color-mix(in srgb, var(--c-lavender) 80%, transparent);
+}
+.vip__d-name {
+  margin: 0;
+  font-weight: 900; font-style: italic; text-transform: uppercase;
+  font-size: clamp(3.2rem, 1.8rem + 3vw, 4.8rem); line-height: .88; letter-spacing: -.01em;
+  color: #fff;
+  text-shadow: 4px 4px 0 #1a1550;
+}
+.vip__d-sub {
+  margin: 10px 0 0;
+  font-weight: 600; text-transform: uppercase; font-size: var(--fs-sm); letter-spacing: .05em;
+  color: color-mix(in srgb, var(--c-lavender) 72%, transparent);
+}
+.vip__d-sub i { font-style: normal; color: var(--c-pink); margin: 0 3px; }
+.vip__d-mini { width: 20px; height: 20px; color: color-mix(in oklab, var(--plan) 80%, #8f899e); flex: none; }
+.vip__d-text {
+  margin: 14px 0 0; padding-top: 14px;
+  border-top: 1px solid var(--v-stroke-hi);
+  max-width: 36ch;
+  font-weight: 500; font-size: var(--fs-md); line-height: 1.4;
+  color: color-mix(in srgb, var(--c-lavender) 86%, transparent);
+}
+.vip__d-by {
+  margin: 8px 0 0;
+  font-weight: 500; font-style: italic; font-size: 13px; letter-spacing: .02em;
+  color: color-mix(in srgb, var(--c-lavender) 50%, transparent);
+}
+
+/* CTA: BLOCO ÚNICO chanfrado. A faixa de requisito encaixa em cima do botão, com a mesma inclinação (skew no bloco).
+   Magenta cheio só no botão. */
+.vip__cta {
+  position: relative;
+  margin-top: clamp(22px, 5vh, 48px); margin-right: calc(var(--v-pad) * -1 + 30px); margin-left: 14px;
+  transform: skewX(-14deg);
+  filter: drop-shadow(0 6px 0 rgba(4, 2, 10, .75)) drop-shadow(0 10px 22px rgba(0, 0, 0, .5));
+}
+.vip__cta-req {
+  position: relative;
+  display: none; align-items: center; gap: 10px;
+  width: 88%; margin: 0;
+  min-height: 42px; padding: 2px 18px 2px 20px;
+  font-weight: 700; font-style: italic; font-size: 1rem; letter-spacing: .02em; text-transform: uppercase;
+  color: color-mix(in srgb, var(--c-lavender) 90%, transparent);
+  background: linear-gradient(180deg, #34304a, #252136);
+  box-shadow: inset 0 1px 0 color-mix(in srgb, #fff 26%, transparent), inset 3px 0 0 var(--v-act);
+  clip-path: polygon(12px 0, 100% 0, 100% 100%, 0 100%, 0 12px);
+}
+.vip__cta-req > * { transform: skewX(14deg); }
+.vip__cta-req > span:first-child { display: inline-flex; align-items: center; gap: 9px; white-space: nowrap; }
+.vip__cta-req b { font-weight: 900; color: #fff; }
+.vip__cta-price { font-weight: 600; color: color-mix(in srgb, var(--c-lavender) 66%, transparent); white-space: nowrap; }
+.vip__cta-req .ico { width: 20px; height: 20px; color: var(--c-pink); }
+.vip__btn-wrap { position: relative; width: 100%; }
+.vip__btn {
+  position: relative; isolation: isolate;
+  display: flex; align-items: center; justify-content: center; gap: 12px;
+  width: 100%; min-height: 66px;
+  padding: 0 28px;
+  border: 0;
+  font: inherit; font-weight: 900; font-style: italic; text-transform: uppercase;
+  font-size: clamp(1.6rem, 1rem + 1vw, 2rem); letter-spacing: var(--track-ui);
+  color: var(--c-ink);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--v-act) 82%, #fff) 0%, var(--v-act) 40%, var(--v-act-lo) 100%);
+  box-shadow: inset 0 2px 0 color-mix(in srgb, #fff 60%, transparent), inset 0 -4px 0 color-mix(in srgb, var(--c-violet) 60%, var(--v-act));
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 16px), calc(100% - 16px) 100%, 0 100%);
+  opacity: 1;
+  cursor: not-allowed;
+}
+.vip__btn > * { transform: skewX(14deg); }
+.vip__btn .sr-only { transform: none; }
+.vip__btn::before {
+  /* filete claro interno */
+  content: ""; position: absolute; z-index: -1; pointer-events: none;
+  inset: 6px 7px; border: 1px solid color-mix(in srgb, #fff 55%, transparent);
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 11px), calc(100% - 11px) 100%, 0 100%);
+}
+.vip__btn .ico { width: .8em; height: .8em; }
+.vip__cta:hover .vip__btn::before { border-color: #fff; }
+
+.vip:has(#vip-p-bronze:checked) .vip__detail--bronze,
+.vip:has(#vip-p-prata:checked) .vip__detail--prata,
+.vip:has(#vip-p-ouro:checked) .vip__detail--ouro,
+.vip:has(#vip-p-esmeralda:checked) .vip__detail--esmeralda,
+.vip:has(#vip-p-rubi:checked) .vip__detail--rubi,
+.vip:has(#vip-p-diamante:checked) .vip__detail--diamante { display: block; animation: vip-in var(--t-med) var(--ease); }
+.vip:has(#vip-p-bronze:checked) .vip__cta-req--bronze,
+.vip:has(#vip-p-prata:checked) .vip__cta-req--prata,
+.vip:has(#vip-p-ouro:checked) .vip__cta-req--ouro,
+.vip:has(#vip-p-esmeralda:checked) .vip__cta-req--esmeralda,
+.vip:has(#vip-p-rubi:checked) .vip__cta-req--rubi,
+.vip:has(#vip-p-diamante:checked) .vip__cta-req--diamante { display: flex; }
+.vip:has(#vip-p-bronze:checked) .vip__gem-art--bronze,
+.vip:has(#vip-p-prata:checked) .vip__gem-art--prata,
+.vip:has(#vip-p-ouro:checked) .vip__gem-art--ouro { opacity: 1; }
+/* planos de apoio: o cenário troca o carro pelo emblema grande */
+.vip:has(#vip-p-bronze:checked, #vip-p-prata:checked, #vip-p-ouro:checked) .vip__car { display: none; }
+.vip:has(#vip-p-bronze:checked, #vip-p-prata:checked, #vip-p-ouro:checked) .vip__gem { display: block; }
+
+@keyframes vip-in { from { opacity: 0; transform: translateX(14px); } to { opacity: 1; transform: none; } }
+
+/* ---------------- HUD de sistema ---------------- */
+.vip__hud {
+  grid-column: 1 / -1; grid-row: 3;
+  position: relative; z-index: 2;
+  display: flex; align-items: center; justify-content: space-between; gap: 20px;
+  min-height: 62px;
+  margin-inline: calc(var(--v-pad) * -1);
+  padding: 4px clamp(14px, 1.6vw, 24px);
+  background: linear-gradient(0deg, color-mix(in srgb, #0a090e 92%, transparent), transparent);
+  border-top: 1px solid color-mix(in srgb, #c9bfdc 8%, transparent);
+}
+/* esquerda: dicas de jogo com keycap + linha técnica discreta */
+.vip__sys { display: flex; flex-direction: column; align-items: flex-start; gap: 0; min-width: 0; }
+.vip__hints { display: flex; align-items: center; gap: 22px; }
+.vip__key--sm { min-height: 40px; font-size: var(--fs-sm); }
+.vip__key--sm kbd { min-width: 32px; height: 26px; padding: 0 8px; font-size: var(--fs-xs); }
+.vip__build {
+  margin: 0 0 4px;
+  font-weight: 500; font-size: 12px; letter-spacing: .04em; text-transform: uppercase;
+  color: color-mix(in srgb, var(--c-lavender) 50%, transparent);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.vip__build > span { margin: 0 6px; color: color-mix(in srgb, #c9bfdc 22%, transparent); }
+.vip__build b { font-weight: 700; color: color-mix(in srgb, var(--c-lavender) 72%, transparent); }
+.vip__keys { display: flex; align-items: center; gap: 22px; flex: none; }
+.vip__key {
+  display: inline-flex; align-items: center; gap: 4px;
+  min-height: 44px;
+  font-weight: 600; font-size: var(--fs-md); text-transform: uppercase; letter-spacing: var(--track-ui);
+  color: var(--c-lavender); text-decoration: none;
+}
+.vip__key > span { margin-left: 6px; }
+.vip__key kbd {
+  display: inline-grid; place-items: center;
+  min-width: 40px; height: 32px; padding: 0 10px;
+  font-family: inherit; font-weight: 800; font-size: var(--fs-md); text-transform: uppercase;
+  color: #15131d;
+  background: linear-gradient(180deg, #f6f0fb, #cfc6dc);
+  box-shadow: inset 0 -3px 0 rgba(0, 0, 0, .28), inset 0 1px 0 #fff;
+  clip-path: polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px);
+}
+a.vip__key:hover kbd { background: var(--c-lavender); }
+
+/* ---------------- Telas menores ---------------- */
+@media (max-width: 1280px) {
+  .vip__wrap { grid-template-columns: minmax(420px, 42%) 1fr minmax(300px, 340px); }
+  .vip__prev { width: 190px; height: 110px; }
+  .vip__cta-req { width: 100%; font-size: .875rem; gap: 6px; padding-inline: 16px 10px; }
+  .vip__cta-req .ico { width: 17px; height: 17px; }
+  .vip__cell-name { font-size: 1.0625rem; }
+  .vip__cell--prem .vip__cell-name { font-size: .9375rem; }
+}
+
+@media (max-width: 1080px), (max-height: 700px) {
+  .vip { height: auto; min-height: 0; padding-block: 20px 0; --sk: 0deg; --unsk: 0deg; }
+  .vip__wrap {
+    height: auto;
+    display: flex; flex-direction: column; gap: 20px;
+    padding-top: 0;
+  }
+  .vip__top { padding-left: 0; order: -2; }
+  .vip__glow { bottom: auto !important; height: 620px; }
+  .vip__beams { inset: -80px -10% auto 0 !important; height: 640px; }
+  .vip__city { bottom: auto !important; top: 130px !important; height: 260px; }
+  .vip__horizon { top: 420px !important; }
+  .vip__floor, .vip__wet { top: 420px !important; bottom: auto !important; height: 420px; }
+  .vip__stage { padding: 0; }
+  .vip__track { width: 100%; margin-left: 0; height: auto; transform: none; }
+  .vip__row { flex: none; height: calc(var(--g) * 92px); }
+  .vip__radio:checked + .vip__row { height: 230px; }
+  .vip__radio:checked + .vip__row .vip__cell-art { flex: none; width: 92px; height: 92px; }
+  .vip__radio:checked + .vip__row .vip__cell-art--key { width: 76px; height: 76px; }
+  .vip__show { position: relative; left: auto; right: auto; top: auto; bottom: auto; order: -1; height: 240px; margin-top: 4px; }
+  .vip__car { left: 50%; width: 84%; bottom: 14%; }
+  .vip__gem { left: 50%; top: 4%; width: 200px; }
+  .vip__side { align-self: stretch; justify-content: flex-start; padding-top: 0; }
+  .vip__prev { height: 96px; }
+  .vip__info { padding-bottom: 0; }
+  .vip__cta { margin-right: 0; }
+  .vip__cta { margin-left: 10px; transform: skewX(-8deg); }
+  .vip__cta-req, .vip__btn { width: 100%; }
+  .vip__cta-req > *, .vip__btn > * { transform: skewX(8deg); }
+  .vip__btn-wrap { width: 100%; }
+  .vip__hud { margin-inline: calc(var(--v-pad) * -1); flex-direction: column; align-items: flex-start; gap: 4px; padding-block: 10px; }
+}
+
+@media (max-width: 560px) {
+  .vip { --v-pad: 16px; }
+  .vip__title { font-size: 1.5rem; flex-wrap: wrap; }
+  .vip__show { height: 190px; }
+  .vip__track { padding: 0 8px 8px 6px; }
+  .vip__track-bar { margin: 0 -8px 10px -6px; }
+  .vip__row { grid-template-columns: 30px minmax(0, 1fr) minmax(0, 1fr); gap: 6px; }
+  .vip__grid::before, .vip__lv::after { left: 13px; }
+  .vip__radio:checked + .vip__row::before { left: 36px; }
+  .vip__lv b { width: 28px; height: 28px; font-size: 1.05rem; }
+  .vip__cell-body { padding: 24px 4px 6px 8px; }
+  .vip__cell-name { font-size: .9375rem; }
+  .vip__cell--prem .vip__cell-name { font-size: .8125rem; }
+  .vip__cell-art, .vip__cell-art--key { width: 42px; height: 42px; }
+  .vip__prev { flex: 1; width: auto; }
+  .vip__d-name { font-size: 2.8rem; }
+  .vip__cta-req { font-size: var(--fs-sm); padding-inline: 18px 16px; flex-wrap: wrap; gap: 0 8px; }
+  .vip__radio:checked + .vip__row .vip__cell-name { font-size: 1.25rem; }
+  .vip__radio:checked + .vip__row .vip__cell--prem .vip__cell-name { font-size: .875rem; }
+  .vip__radio:checked + .vip__row .vip__call > span { font-size: .8125rem; }
+  .vip__radio:checked + .vip__row .vip__cell-body { padding: 22px 6px 8px 10px; }
+  .vip__build { white-space: normal; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vip__row, .vip__detail { transition: none; animation: none !important; }
+  .vip__dust--far, .vip__dust--near, .vip__fog--drift, .vip__beams, .vip__bokeh--big { animation: none; }
+}

@@ -1,0 +1,386 @@
+/* ==========================================================================
+   02-components.css  (dono: Fundação, não editar; sobrescreva no seu CSS)
+   Componentes com linguagem de MENU DE JOGO. Ícones: <svg class="ico"><use href="#i-NOME"/></svg>
+   (sprite em src/partials/shared/icons.html).
+
+   .ico           Ícone SVG 1em. Modificador: .ico--lg
+   .g-head        Cabeçalho de seção:
+                  <header class="g-head"><h2 class="g-head__title">TÍTULO</h2><p class="g-sub" lang="en">Subtitle</p></header>
+                  .g-head--stack (legenda embaixo) · .g-head--center
+   .g-sub         Legenda em inglês: pequena, itálica, caixa alta, roxa.
+   .g-panel       Paralelogramo com borda neon e cantos chanfrados (camadas ::before/::after).
+                  Cores: (padrão roxo) --pink --blue --violet --lavender. Preenchimento: --fill (roxo cheio),
+                  --solid (rosa cheio, texto escuro). --flat (sem inclinação). Ajuste fino: --panel-line, --panel-bg.
+                  .g-panel__title, .g-panel__corner (selo no canto superior direito)
+   .g-btn         Botão de jogo inclinado. .g-btn--primary (rosa, grande: Discord) · .g-btn--ghost (contorno)
+                  .g-btn--soon (desabilitado; use aria-disabled="true") · .g-btn--sm · .g-btn--block
+                  Dentro: <span class="g-btn__label">TEXTO<small class="g-btn__hint">dica</small></span>
+   .g-tag         Selo inclinado. .g-tag--new (NOVO) .g-tag--soon (EM BREVE) .g-tag--beta (BETA) .g-tag--live .g-tag--line
+   .g-chip-time   Chip escuro com relógio: <span class="g-chip-time"><svg class="ico"><use href="#i-clock"/></svg>Texto</span>
+   .g-key         Dica de tecla: <span class="g-key"><kbd>ESC</kbd>Voltar</span> (também em <a>)
+   .g-ph          Placeholder listrado: <div class="g-ph" data-placeholder="o quê"><span class="g-ph__label">[PRINT — HOSPITAL]</span></div>
+                  .g-ph--tall (3/4) .g-ph--square .g-ph--free (sem proporção). Padrão 16/9.
+   .g-timeline    Linha tracejada com etiquetas: <ol class="g-timeline" style="--steps:4"><li class="g-timeline__step is-done|is-now|is-next"><span>PASSO 1</span></li></ol>
+   .g-tab         Aba inclinada; ativa (.is-active, aria-current ou aria-selected) vira bloco destacado.
+   .g-burst       Selo estrelado. .g-burst--pink
+   .g-num         Número de passo gigante.
+   .g-link        Link de ação sublinhado (COMPRAR JOGO ›).
+   .g-stripes     Listras diagonais sutis como fundo.
+   ========================================================================== */
+
+/* ---- Ícones ---- */
+.ico { width: 1em; height: 1em; flex: none; fill: currentColor; vertical-align: -0.125em; }
+.ico--lg { width: 1.5em; height: 1.5em; }
+
+/* ---- Cabeçalho de seção ---- */
+.g-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  column-gap: var(--sp-4);
+  row-gap: var(--sp-2);
+  margin-bottom: var(--sp-7);
+}
+.g-head--stack { flex-direction: column; align-items: flex-start; }
+.g-head--center { justify-content: center; text-align: center; }
+.g-head--center.g-head--stack { align-items: center; }
+.g-head__title {
+  font-size: var(--fs-head);
+  font-weight: 900;
+  font-style: italic;
+  text-transform: uppercase;
+  line-height: 0.9;
+  letter-spacing: 0;
+  color: var(--c-text-strong);
+  text-shadow: var(--shadow-title);
+  padding-right: 0.12em;
+}
+.g-head__title em, .g-head__title .hl { font-style: inherit; color: var(--c-pink); }
+.g-sub {
+  font-size: clamp(1rem, 0.85rem + 0.6vw, 1.375rem);
+  font-weight: 600;
+  font-style: italic;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--c-purple);
+}
+.g-lead { max-width: 62ch; color: var(--c-text-dim); font-size: var(--fs-lg); }
+
+/* ---- Painel paralelogramo ---- */
+.g-panel {
+  --panel-line: var(--c-purple);
+  --panel-bg: var(--c-surface-1);
+  position: relative;
+  isolation: isolate;
+  padding: var(--sp-5) calc(var(--lean) + var(--sp-5));
+  color: var(--c-text);
+}
+.g-panel::before,
+.g-panel::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  clip-path: polygon(calc(var(--lean) + var(--cut)) 0, 100% 0, calc(100% - var(--lean)) calc(100% - var(--cut)), calc(100% - var(--lean) - var(--cut)) 100%, 0 100%, var(--lean) var(--cut));
+}
+.g-panel::before { inset: 0; background: var(--panel-line); }
+.g-panel::after { inset: var(--bw); background: var(--stripes), var(--panel-bg); }
+.g-panel--pink     { --panel-line: var(--c-magenta); }
+.g-panel--blue     { --panel-line: var(--c-blue); }
+.g-panel--violet   { --panel-line: var(--c-violet); }
+.g-panel--lavender { --panel-line: var(--c-lavender); }
+.g-panel--fill     { --panel-bg: var(--c-surface-3); --panel-line: var(--c-surface-3); }
+.g-panel--solid    { --panel-bg: var(--c-pink); --panel-line: var(--c-pink); color: var(--c-ink); }
+.g-panel--flat { padding-inline: var(--sp-5); }
+.g-panel--flat::before,
+.g-panel--flat::after { clip-path: polygon(var(--cut) 0, 100% 0, 100% calc(100% - var(--cut)), calc(100% - var(--cut)) 100%, 0 100%, 0 var(--cut)); }
+.g-panel__title {
+  font-size: var(--fs-2xl);
+  font-weight: 900;
+  font-style: italic;
+  text-transform: uppercase;
+  color: var(--c-text-strong);
+  text-shadow: var(--shadow-title-sm);
+  padding-right: 0.1em;
+}
+.g-panel--solid .g-panel__title { color: var(--c-ink); text-shadow: none; }
+.g-panel__corner {
+  position: absolute;
+  top: 0;
+  right: calc(var(--lean) + var(--sp-4));
+  z-index: 1;
+}
+
+/* ---- Botão de jogo ---- */
+.g-btn {
+  --btn-bg: var(--c-surface-2);
+  --btn-line: var(--c-purple);
+  --btn-fg: var(--c-lavender);
+  position: relative;
+  isolation: isolate;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-3);
+  min-height: 48px;
+  padding: var(--sp-2) calc(var(--sp-5) + var(--lean-sm) * 2);
+  color: var(--btn-fg);
+  font-weight: 700;
+  font-size: var(--fs-lg);
+  line-height: 1;
+  text-transform: uppercase;
+  text-decoration: none;
+  letter-spacing: 0.03em;
+  cursor: pointer;
+  transition: transform var(--t-fast) var(--ease), filter var(--t-fast) var(--ease);
+  -webkit-tap-highlight-color: transparent;
+}
+.g-btn::before,
+.g-btn::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  clip-path: polygon(calc(var(--lean-sm) * 2) 0, 100% 0, calc(100% - var(--lean-sm) * 2) 100%, 0 100%);
+}
+.g-btn::before { inset: 0; background: var(--btn-line); }
+.g-btn::after { inset: var(--bw); background: var(--btn-bg); }
+.g-btn:hover { transform: translateY(-2px); filter: drop-shadow(0 0 14px color-mix(in srgb, var(--btn-line) 55%, transparent)); }
+.g-btn:active { transform: translateY(0); }
+.g-btn__label { display: flex; flex-direction: column; align-items: center; gap: 0.25em; }
+.g-btn__hint { font-size: max(0.45em, 0.8125rem); font-weight: 600; text-transform: none; letter-spacing: 0.02em; }
+
+.g-btn--primary {
+  --btn-bg: var(--c-pink);
+  --btn-line: var(--c-pink);
+  --btn-fg: var(--c-ink);
+  min-height: 72px;
+  padding-inline: calc(var(--sp-7) + var(--lean-sm) * 2);
+  font-size: clamp(1.5rem, 1.1rem + 1.6vw, 2.5rem);
+}
+.g-btn--primary:hover { --btn-bg: var(--c-lavender); --btn-line: var(--c-lavender); }
+.g-btn--ghost { --btn-bg: color-mix(in srgb, var(--c-ink) 85%, transparent); --btn-line: var(--c-purple); }
+.g-btn--ghost:hover { --btn-line: var(--c-pink); }
+.g-btn--soon,
+.g-btn[aria-disabled="true"] {
+  --btn-bg: var(--c-surface-1);
+  --btn-line: color-mix(in srgb, var(--c-lavender) 28%, transparent);
+  --btn-fg: var(--c-text-dim);
+  cursor: not-allowed;
+  pointer-events: none;
+}
+.g-btn--sm { min-height: 44px; font-size: var(--fs-md); padding-inline: calc(var(--sp-4) + var(--lean-sm) * 2); }
+.g-btn--block { display: flex; width: 100%; }
+
+/* ---- Selos ---- */
+.g-tag {
+  display: inline-block;
+  padding: 0.22em 0.7em;
+  font-size: 0.75rem;
+  font-weight: 800;
+  font-style: italic;
+  line-height: 1.1;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--c-ink);
+  background: var(--c-pink);
+  clip-path: polygon(5px 0, 100% 0, calc(100% - 5px) 100%, 0 100%);
+}
+.g-tag--new  { background: var(--c-pink); }
+.g-tag--soon { background: var(--c-lavender); }
+.g-tag--beta { background: var(--c-violet); color: var(--c-text-strong); }
+.g-tag--live { background: var(--c-magenta); }
+.g-tag--line { background: color-mix(in srgb, var(--c-purple) 18%, transparent); color: var(--c-lavender); }
+
+/* ---- Chip de tempo ---- */
+.g-chip-time {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45em;
+  padding: 0.3em 1em;
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--c-lavender);
+  background: color-mix(in srgb, var(--c-ink) 90%, transparent);
+  clip-path: polygon(8px 0, 100% 0, calc(100% - 8px) 100%, 0 100%);
+  white-space: nowrap;
+}
+.g-chip-time .ico { color: var(--c-pink); }
+
+/* ---- Dica de tecla ---- */
+.g-key {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-3);
+  font-weight: 700;
+  font-size: var(--fs-lg);
+  text-transform: uppercase;
+  color: var(--c-text-strong);
+  text-decoration: none;
+}
+.g-key kbd {
+  display: inline-grid;
+  place-items: center;
+  min-width: 2.8em;
+  padding: 0.25em 0.8em;
+  font-size: 0.7em;
+  font-weight: 800;
+  font-style: italic;
+  color: var(--c-ink);
+  background: var(--c-lavender);
+  clip-path: polygon(8px 0, 100% 0, calc(100% - 8px) 100%, 0 100%);
+}
+a.g-key { min-height: 44px; }
+a.g-key:hover kbd { background: var(--c-pink); }
+
+/* ---- Placeholder listrado ---- */
+.g-ph {
+  position: relative;
+  display: grid;
+  place-items: center;
+  aspect-ratio: 16 / 9;
+  padding: var(--sp-4);
+  background:
+    repeating-linear-gradient(-55deg, color-mix(in srgb, var(--c-purple) 9%, transparent) 0 12px, transparent 12px 24px),
+    color-mix(in srgb, var(--c-ink) 70%, var(--c-deep));
+  outline: 1px dashed color-mix(in srgb, var(--c-purple) 40%, transparent);
+  outline-offset: -1px;
+  color: var(--c-text-mute);
+  text-align: center;
+  overflow: hidden;
+}
+.g-ph__label {
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  letter-spacing: var(--track-wide);
+  text-transform: uppercase;
+}
+.g-ph--tall { aspect-ratio: 3 / 4; }
+.g-ph--square { aspect-ratio: 1; }
+.g-ph--free { aspect-ratio: auto; }
+
+/* ---- Linha do tempo ---- */
+.g-timeline {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(var(--steps, 4), minmax(0, 1fr));
+  gap: var(--sp-5);
+  padding: 0;
+  margin-top: var(--sp-5);
+  list-style: none;
+}
+.g-timeline::before {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; top: 50%;
+  border-top: 2px dashed color-mix(in srgb, var(--c-purple) 45%, transparent);
+}
+.g-timeline__step { position: relative; display: flex; justify-content: center; }
+.g-timeline__step > span {
+  display: inline-block;
+  padding: 0.3em 1.1em;
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  font-style: italic;
+  text-transform: uppercase;
+  color: var(--c-lavender);
+  background: var(--c-surface-2);
+  clip-path: polygon(8px 0, 100% 0, calc(100% - 8px) 100%, 0 100%);
+  white-space: nowrap;
+}
+.g-timeline__step.is-done > span { background: var(--c-deep); }
+.g-timeline__step.is-now > span { background: var(--c-violet); color: #fff; /* lavanda no violeta dava 4.4:1; branco passa no AA */ }
+.g-timeline__step.is-next > span { background: var(--c-lavender); color: var(--c-ink); }
+
+/* ---- Abas ---- */
+.g-tab {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0 var(--sp-5);
+  font-weight: 600;
+  font-size: var(--fs-lg);
+  text-transform: uppercase;
+  color: var(--c-lavender);
+  text-decoration: none;
+  white-space: nowrap;
+  isolation: isolate;
+  transition: color var(--t-fast) var(--ease);
+}
+.g-tab::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: transparent;
+  transform: skewX(var(--skew));
+  transition: background-color var(--t-fast) var(--ease);
+}
+.g-tab:hover { color: var(--c-pink); }
+.g-tab:hover::before { background: color-mix(in srgb, var(--c-purple) 12%, transparent); }
+.g-tab.is-active,
+.g-tab[aria-current="page"],
+.g-tab[aria-selected="true"] { color: var(--c-text-strong); font-weight: 800; font-style: italic; }
+.g-tab.is-active::before,
+.g-tab[aria-current="page"]::before,
+.g-tab[aria-selected="true"]::before { background: linear-gradient(180deg, var(--c-surface-3), var(--c-deep)); }
+
+/* ---- Selo estrelado ---- */
+.g-burst {
+  display: inline-grid;
+  place-items: center;
+  width: 5.5em;
+  aspect-ratio: 1;
+  flex: none;
+  font-size: var(--fs-md);
+  font-weight: 900;
+  font-style: italic;
+  line-height: 1;
+  text-transform: uppercase;
+  color: var(--c-ink);
+  background: var(--c-purple);
+  clip-path: polygon(50% 0, 59% 17%, 77% 8%, 76% 27%, 95% 28%, 84% 44%, 100% 55%, 82% 63%, 88% 82%, 69% 79%, 62% 98%, 50% 85%, 36% 98%, 31% 79%, 11% 83%, 17% 64%, 0 55%, 15% 44%, 5% 27%, 24% 27%, 23% 8%, 41% 17%);
+}
+.g-burst--pink { background: var(--c-magenta); }
+
+/* ---- Número gigante ---- */
+.g-num {
+  display: block;
+  font-size: clamp(3.5rem, 2.5rem + 4vw, 6rem);
+  font-weight: 900;
+  font-style: italic;
+  line-height: 0.85;
+  letter-spacing: -0.02em;
+  color: var(--c-violet);
+}
+
+/* ---- Link de ação ---- */
+.g-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25em;
+  min-height: 44px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--c-pink);
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+}
+.g-link:hover { color: var(--c-text-strong); }
+
+/* ---- Fundo listrado ---- */
+.g-stripes { background-image: var(--stripes); }
+
+@media (max-width: 760px) {
+  .g-head { margin-bottom: var(--sp-6); }
+  /* leads de seção usam margin-top negativa: no celular garante respiro abaixo da sombra do título */
+  .g-head + .g-lead { margin-top: calc(var(--sp-4) - var(--sp-6)); }
+  /* linha do tempo vira vertical, com tracejado à esquerda */
+  .g-timeline { grid-template-columns: minmax(0, 1fr); row-gap: var(--sp-3); padding-left: var(--sp-5); }
+  .g-timeline::before { left: 5px; right: auto; top: 0; bottom: 0; border-top: 0; border-left: 2px dashed color-mix(in srgb, var(--c-purple) 45%, transparent); }
+  .g-timeline__step { justify-content: flex-start; }
+  .g-timeline__step::before { content: ""; position: absolute; left: calc(var(--sp-5) * -1 + 5px); top: 50%; width: calc(var(--sp-5) - 5px); border-top: 2px dashed color-mix(in srgb, var(--c-purple) 45%, transparent); }
+  .g-btn--primary { padding-inline: calc(var(--sp-5) + var(--lean-sm) * 2); }
+}

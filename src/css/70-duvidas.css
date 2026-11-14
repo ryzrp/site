@@ -1,0 +1,825 @@
+/* ==========================================================================
+   70-duvidas.css  (dono: construtor de DÚVIDAS)  ·  rodada 15
+   Parte da r14 (placa à esquerda, cena livre, RAI·ZI à direita, CTA) e
+   acrescenta MATERIAL e OBJETOS, com disciplina:
+     cena  = 3 profundidades: céu + raios, skyline distante (janelas),
+             skyline próxima (janelas e letreiros), névoa, bokeh, vinheta;
+     herói = medalhão de metal NÍTIDO com o wordmark RYZ (sem coroa), luz de
+             borda rosa, halo e estilhaços em 3 profundidades;
+     lista = placa de VIDRO escuro (backdrop-filter) em perspectiva única,
+             com aresta lateral e sombra; 7 cartões com glifo próprio;
+     ação  = UM bloco lavanda quase branco com texto escuro (a CTA).
+   Brilho só em 2 pontos: item ativo e CTA.
+   ========================================================================== */
+.duv {
+  --duv-ink: #120022;
+  --duv-w: #ffffff;
+  --duv-t90: rgba(255, 255, 255, 0.92);
+  --duv-t80: rgba(255, 255, 255, 0.84);
+  --duv-t60: rgba(255, 255, 255, 0.64);
+  --duv-t40: rgba(255, 255, 255, 0.44);
+  --duv-line: rgba(220, 210, 255, 0.14);
+  --duv-pad: clamp(16px, 4.4vw, 64px);
+  --px: 0; --py: 0;
+  position: relative;
+  isolation: isolate;
+  overflow: clip;
+  display: flex;
+  flex-direction: column;
+  /* quadro = janela menos a barra fixa (46px + sub-abas 28px no desktop) */
+  min-height: calc(100vh - 74px);
+  min-height: calc(100svh - 74px);
+  padding: 0;
+  background: #07051a;
+}
+
+/* ---------- Cena: 3 profundidades, atrás de tudo ---------- */
+.duv__scene { position: absolute; inset: 0; z-index: -2; overflow: hidden; pointer-events: none; }
+.duv__scene > * { position: absolute; }
+.duv__sky {
+  inset: 0;
+  background:
+    radial-gradient(46% 30% at 50% 64%, rgba(255, 214, 255, 0.42), transparent 70%),
+    radial-gradient(70% 40% at 52% 66%, rgba(122, 44, 255, 0.5), transparent 74%),
+    radial-gradient(40% 32% at 12% 72%, rgba(75, 35, 255, 0.4), transparent 76%),
+    radial-gradient(34% 28% at 92% 60%, rgba(190, 107, 255, 0.28), transparent 76%),
+    linear-gradient(180deg, #050314 0%, #0f0a32 28%, #24136a 54%, #3a1a86 64%, #160c40 80%, #06041a 100%);
+}
+/* raios de luz descendo do alto, atrás do medalhão */
+.duv__rays {
+  left: 22%; right: 14%; top: -10%; height: 90%;
+  background:
+    linear-gradient(100deg, transparent 0 22%, rgba(214, 190, 255, 0.2) 25%, transparent 30%),
+    linear-gradient(80deg, transparent 0 50%, rgba(255, 190, 255, 0.18) 54%, transparent 59%),
+    linear-gradient(94deg, transparent 0 38%, rgba(190, 170, 255, 0.15) 41%, transparent 47%),
+    linear-gradient(72deg, transparent 0 66%, rgba(214, 190, 255, 0.13) 69%, transparent 74%);
+  -webkit-mask: linear-gradient(180deg, #000 0%, #000 40%, transparent 92%);
+  mask: linear-gradient(180deg, #000 0%, #000 40%, transparent 92%);
+  filter: blur(6px);
+  mix-blend-mode: screen;
+}
+/* skyline: SVG com prédios, janelas e letreiros; pouco desfocada para ser legível */
+.duv__city { left: -2%; width: 104%; height: auto; }
+.duv__city--far {
+  bottom: 18%;
+  height: 44%;
+  filter: blur(2.6px);
+  opacity: 0.95;
+  transform: translate3d(calc(var(--px) * -4px), 0, 0);
+  transition: transform 0.6s var(--ease);
+}
+.duv__city--far .b { fill: #1b1350; }
+.duv__city--far .t { fill: #8f7cf0; opacity: 0.5; }
+.duv__city--far .w { fill: #d9c8ff; opacity: 0.7; }
+.duv__city--near {
+  bottom: 0;
+  height: 40%;
+  filter: blur(1.2px);
+  transform: translate3d(calc(var(--px) * -10px), 0, 0);
+  transition: transform 0.6s var(--ease);
+}
+.duv__city--near .b { fill: #0a0722; }
+.duv__city--near .t { fill: #c9a8ff; opacity: 0.45; }
+.duv__city--near .w { fill: #ffc8ff; opacity: 0.62; }
+.duv__city--near .n { fill: #FF9DFF; filter: drop-shadow(0 0 6px #FF4DFF); opacity: 0.85; }
+.duv__fog { left: -10%; width: 120%; }
+.duv__fog--a {
+  top: 50%; height: 30%;
+  background:
+    radial-gradient(40% 40% at 50% 50%, rgba(214, 196, 255, 0.24), transparent 72%),
+    radial-gradient(30% 30% at 20% 60%, rgba(122, 90, 255, 0.22), transparent 72%),
+    radial-gradient(30% 30% at 84% 46%, rgba(255, 157, 255, 0.14), transparent 72%);
+  filter: blur(14px);
+  animation: duv-fog 40s ease-in-out infinite alternate;
+}
+.duv__fog--b {
+  bottom: -4%; height: 28%;
+  background: linear-gradient(180deg, transparent, rgba(80, 60, 180, 0.32) 50%, rgba(6, 4, 26, 0.92));
+}
+@keyframes duv-fog { from { transform: translateX(-3%); } to { transform: translateX(3%); } }
+.duv__motes {
+  inset: 0;
+  opacity: 0.8;
+  background:
+    radial-gradient(2px 2px at 44% 22%, #fff, transparent),
+    radial-gradient(2.4px 2.4px at 58% 36%, #F3D6FF, transparent),
+    radial-gradient(3px 3px at 66% 18%, #FF9DFF, transparent),
+    radial-gradient(2px 2px at 40% 60%, #F3D6FF, transparent),
+    radial-gradient(3px 3px at 72% 12%, #fff, transparent),
+    radial-gradient(2px 2px at 36% 42%, #FF9DFF, transparent),
+    radial-gradient(2.4px 2.4px at 86% 54%, #F3D6FF, transparent),
+    radial-gradient(2px 2px at 52% 8%, #fff, transparent);
+}
+.duv__vignette {
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(4, 2, 14, 0.7) 0%, rgba(4, 2, 14, 0.25) 28%, transparent 44%, transparent 70%, rgba(4, 2, 14, 0.45) 100%),
+    linear-gradient(180deg, rgba(3, 2, 12, 0.66) 0%, transparent 18%, transparent 84%, rgba(3, 2, 12, 0.7) 100%),
+    radial-gradient(110% 100% at 52% 48%, transparent 56%, rgba(3, 2, 12, 0.55) 100%);
+}
+/* grão fino no topo da cena */
+.duv__scene::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0.07;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+/* bokeh de primeiro plano nos cantos (desfoque já no gradiente) */
+.duv__bokeh {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  background:
+    radial-gradient(circle at 3% 94%, rgba(255, 157, 255, 0.22) 0, rgba(255, 157, 255, 0.08) 60px, transparent 110px),
+    radial-gradient(circle at 99% 92%, rgba(190, 107, 255, 0.26) 0, rgba(190, 107, 255, 0.08) 80px, transparent 140px),
+    radial-gradient(circle at 98% 8%, rgba(75, 35, 255, 0.34) 0, transparent 130px),
+    radial-gradient(circle at 46% 100%, rgba(243, 214, 255, 0.14) 0, transparent 70px),
+    radial-gradient(circle at 64% 4%, rgba(255, 157, 255, 0.1) 0, transparent 60px);
+}
+
+/* ---------- Objeto-herói: medalhão nítido em plano médio ---------- */
+.duv__hero {
+  position: absolute;
+  z-index: -1;
+  left: 46.5%;
+  top: 52%;
+  width: min(31vw, 450px);
+  aspect-ratio: 520 / 560;
+  transform: translate(-50%, -48%) translate3d(calc(var(--px) * -10px), calc(var(--py) * -6px), 0);
+  transition: transform 0.6s var(--ease);
+  pointer-events: none;
+  perspective: 1200px;
+}
+.duv__halo {
+  position: absolute;
+  inset: -40%;
+  border-radius: 50%;
+  background:
+    radial-gradient(closest-side, rgba(255, 236, 255, 0.9) 0%, rgba(255, 220, 255, 0.8) 56%, rgba(230, 160, 255, 0.5) 66%, rgba(150, 90, 255, 0.22) 82%, transparent 100%);
+  mix-blend-mode: screen;
+  filter: blur(12px);
+}
+.duv__medal {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  transform: rotateY(-16deg) rotateX(4deg) rotateZ(-3deg);
+  animation: duv-float 9s ease-in-out infinite alternate;
+}
+@keyframes duv-float { to { transform: rotateY(-11deg) rotateX(3deg) rotateZ(-2deg) translateY(-8px); } }
+/* espessura do medalhão: a mesma forma, escura, recuada (vira a aresta) */
+.duv__medal-side {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, #0d0a26, #2a2160 70%, #FF9DFF);
+  clip-path: polygon(28.8% 1.4%, 71.2% 1.4%, 98.5% 26.8%, 98.5% 65%, 71.2% 98.6%, 28.8% 98.6%, 1.5% 65%, 1.5% 26.8%);
+  transform: translateZ(-26px) translateX(6px);
+  filter: brightness(0.7);
+}
+.duv__medal-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  filter:
+    drop-shadow(10px 0 14px rgba(255, 77, 255, 0.35))
+    drop-shadow(0 30px 40px rgba(0, 0, 0, 0.6));
+}
+.duv__medal-mark { filter: saturate(0.18) brightness(1.3) contrast(1.08) drop-shadow(0 6px 0 rgba(6, 4, 20, 0.8)); }
+
+/* ---------- Quadro ---------- */
+.duv__wrap {
+  flex: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 500px) minmax(0, 1fr) minmax(0, 540px);
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  grid-template-areas:
+    "head . detail"
+    "menu . detail"
+    "foot foot foot";
+  width: 100%;
+  max-width: 1600px;
+  margin-inline: auto;
+  padding: 22px var(--duv-pad) 0 0;
+}
+
+/* ---------- Cabeçalho: rebaixado (não é o herói) ---------- */
+.duv__head {
+  grid-area: head;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding-left: var(--duv-pad);
+  margin-bottom: 16px;
+}
+.duv__head-ico {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 48px; height: 48px;
+  color: var(--duv-t90);
+  background: linear-gradient(160deg, #2c2560, #120e30);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3), inset 0 0 0 1px rgba(220, 210, 255, 0.18);
+  clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+}
+.duv__head-ico svg { width: 28px; height: 28px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; }
+.duv__title {
+  font-size: clamp(2.25rem, 1.5rem + 2vw, 3.25rem);
+  font-weight: 700;
+  font-style: normal;
+  line-height: 0.92;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+  color: #e4def8;
+}
+.duv__sub {
+  margin-top: 4px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  color: var(--duv-t60);
+  white-space: nowrap;
+}
+
+/* ---------- Placa da lista: VIDRO escuro, perspectiva única ---------- */
+.duv__menu {
+  grid-area: menu;
+  position: relative;
+  align-self: start;
+  padding-left: clamp(8px, 2.2vw, 34px);
+  perspective: 1200px;
+  perspective-origin: 0% 40%;
+}
+.duv__slab {
+  position: relative;
+  transform-origin: 0 50%;
+  transform: rotateY(14deg);
+  transform-style: preserve-3d;
+}
+/* sombra projetada no "chão" atrás da placa */
+.duv__cast {
+  position: absolute;
+  left: 6%; right: -10%; top: 8%; bottom: -8%;
+  background: rgba(2, 1, 10, 0.72);
+  filter: blur(28px);
+  transform: translateZ(-60px);
+}
+/* aresta lateral (espessura): plano girado 90° na borda direita */
+.duv__edge {
+  position: absolute;
+  top: 14px; bottom: 0; right: 0;
+  width: 16px;
+  transform-origin: 100% 50%;
+  transform: rotateY(90deg);
+  background: linear-gradient(180deg, #3a3170, #15112e);
+  box-shadow: inset 1px 0 0 rgba(220, 210, 255, 0.35);
+}
+/* vidro: o backdrop-filter fica NO PRÓPRIO elemento (que tem o clip-path) */
+.duv__glass {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.07) 0%, transparent 18%),
+    repeating-linear-gradient(-55deg, transparent 0 16px, rgba(220, 210, 255, 0.025) 16px 18px),
+    linear-gradient(165deg, rgba(30, 20, 66, 0.82) 0%, rgba(16, 10, 40, 0.78) 60%, rgba(10, 6, 28, 0.86) 100%);
+  -webkit-backdrop-filter: blur(16px) saturate(1.2);
+  backdrop-filter: blur(16px) saturate(1.2);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.42), inset 0 0 0 1px rgba(220, 210, 255, 0.12);
+  clip-path: polygon(0 0, calc(100% - 22px) 0, 100% 22px, 100% 100%, 22px 100%, 0 calc(100% - 22px));
+}
+.duv__bar {
+  position: relative;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  margin: 0 0 4px;
+  padding: 12px 40px 11px 24px;
+  color: var(--duv-w);
+  font-size: 1.25rem;
+  font-weight: 700;
+  font-style: italic;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  background: linear-gradient(90deg, rgba(75, 35, 255, 0.34), rgba(75, 35, 255, 0.08));
+  box-shadow: inset 0 -2px 0 rgba(243, 214, 255, 0.5);
+  clip-path: polygon(0 0, calc(100% - 22px) 0, 100% 22px, 100% 100%, 0 100%);
+}
+.duv__bar-n { font-size: 1.5rem; font-weight: 600; color: var(--duv-t60); font-variant-numeric: tabular-nums; }
+.duv__bar-n b { font-weight: 800; color: var(--duv-w); }
+.duv__list { position: relative; display: flex; flex-direction: column; gap: 4px; padding: 6px 14px 18px; transform-style: preserve-3d; }
+
+/* cartão de pergunta: célula de glifo chanfrada, número, texto, estado */
+.duv-q {
+  position: relative;
+  display: grid;
+  grid-template-columns: 44px 28px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  min-height: 64px;
+  padding: 8px 14px 8px 10px;
+  border: 0;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.015));
+  box-shadow: inset 0 0 0 1px var(--duv-line);
+  color: var(--duv-t90);
+  font-family: inherit;
+  text-align: left;
+  cursor: pointer;
+  clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 0 100%);
+  transition: background-color var(--t-fast) var(--ease), transform var(--t-fast) var(--ease);
+}
+.duv-q__g {
+  display: grid;
+  place-items: center;
+  width: 44px; height: 44px;
+  color: rgba(236, 228, 255, 0.82);
+  background: linear-gradient(160deg, #2a2358, #120e2e);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.22), inset 0 0 0 1px rgba(220, 210, 255, 0.16);
+  clip-path: polygon(9px 0, 100% 0, 100% calc(100% - 9px), calc(100% - 9px) 100%, 0 100%, 0 9px);
+}
+.duv-q__g svg { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.duv-q__n {
+  font-size: 1.0625rem;
+  font-weight: 700;
+  font-style: italic;
+  font-variant-numeric: tabular-nums;
+  color: var(--duv-t40);
+}
+.duv-q__t {
+  font-size: 1.3125rem;
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: 0.005em;
+}
+.duv-q > .ico { width: 18px; height: 18px; color: var(--duv-t40); }
+.duv-q__ok { visibility: hidden; }
+.duv-q.is-seen .duv-q__ok { visibility: visible; }
+.duv-q:hover { background-color: rgba(255, 255, 255, 0.06); }
+.duv-q:hover .duv-q__g { color: var(--duv-w); }
+.duv-q:focus-visible { outline: 2px solid var(--c-lavender); outline-offset: -2px; box-shadow: none; }
+/* bloqueadas: texto apagado + selo "EM BREVE" legível com cadeado */
+.duv-q--soon .duv-q__t { color: rgba(255, 255, 255, 0.56); }
+.duv-q--soon .duv-q__g { color: rgba(236, 228, 255, 0.42); }
+.duv-q__soon {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px 4px 8px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: rgba(243, 214, 255, 0.86);
+  background: rgba(10, 6, 28, 0.7);
+  box-shadow: inset 0 0 0 1px rgba(220, 210, 255, 0.28);
+  clip-path: polygon(6px 0, 100% 0, calc(100% - 6px) 100%, 0 100%);
+}
+.duv-q__soon .ico { width: 14px; height: 14px; }
+/* ativo: ÚNICA moldura de acento e brilho. Maior e avançando para fora da placa (mesmo plano 3D) */
+.duv-q.is-active {
+  z-index: 2;
+  width: calc(100% + 30px);
+  min-height: 74px;
+  transform: translateZ(28px);
+  background: linear-gradient(90deg, #2a0a4a 0%, #170530 60%, #12002a 100%);
+  box-shadow:
+    inset 4px 0 0 var(--c-magenta),
+    inset 0 0 0 2px rgba(255, 120, 255, 0.85),
+    inset 0 0 26px rgba(255, 77, 255, 0.28);
+  color: var(--duv-w);
+  filter: drop-shadow(0 0 14px rgba(255, 77, 255, 0.5)) drop-shadow(0 12px 14px rgba(0, 0, 0, 0.55));
+}
+.duv-q.is-active .duv-q__g {
+  color: var(--duv-w);
+  background: linear-gradient(160deg, #6a1aa0, #2a0748);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), inset 0 0 0 1px rgba(255, 157, 255, 0.8);
+}
+.duv-q.is-active .duv-q__n { color: var(--c-pink); }
+.duv-q.is-active .duv-q__t { font-size: 1.5rem; font-weight: 800; font-style: italic; text-transform: uppercase; color: var(--duv-w); }
+.duv-q.is-active > .ico { color: var(--duv-t80); }
+.duv-q.is-active .duv-q__soon { color: var(--duv-w); }
+
+/* ---------- Detalhe: texto solto sobre a cena ---------- */
+.duv__detail {
+  grid-area: detail;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 24px;
+  min-width: 0;
+  padding-top: clamp(40px, 13vh, 130px);
+  padding-bottom: 18px;
+}
+.duv__panels { min-width: 0; }
+.duv-p[hidden] { display: none; }
+.duv-p:focus-visible { outline: 2px solid var(--c-lavender); outline-offset: 12px; box-shadow: none; }
+.duv.is-ready .duv-p { animation: duv-in 0.32s var(--ease) both; }
+@keyframes duv-in { from { opacity: 0; transform: translateX(18px); } to { opacity: 1; transform: none; } }
+.duv:not(.is-ready) .duv-p + .duv-p { margin-top: 40px; }
+
+/* herói: a pergunta aberta (ou RAI·ZI na primeira). Único black itálico gigante. */
+.duv-p__title {
+  font-size: clamp(2.75rem, 1.4rem + 3.4vw, 4.5rem);
+  font-weight: 900;
+  font-style: italic;
+  line-height: 0.92;
+  text-transform: uppercase;
+  color: var(--duv-w);
+  text-shadow: 0 5px 0 rgba(18, 0, 34, 0.6), 0 14px 40px rgba(0, 0, 0, 0.7);
+  padding-right: 0.1em;
+}
+.duv-p__en {
+  display: block;
+  margin-top: 14px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  font-style: normal;
+  line-height: 1.2;
+  letter-spacing: 0.18em;
+  color: var(--duv-t60);
+  text-shadow: none;
+}
+.duv-p--say .duv-p__title {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 14px;
+  font-size: 1.3125rem;
+  font-weight: 600;
+  font-style: normal;
+  line-height: 1.2;
+  letter-spacing: 0.06em;
+  color: var(--duv-t80);
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.7);
+}
+.duv-p--say .duv-p__en { display: inline; margin: 0; }
+.duv-p--say .duv-p__en::before { content: "/"; margin-right: 14px; color: var(--duv-t40); }
+.duv-p__phon {
+  margin: 2px 0 0 -0.03em;
+  font-size: clamp(5.5rem, 1rem + 12.2vw, 12.25rem);
+  font-weight: 900;
+  font-style: italic;
+  line-height: 0.86;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--duv-w);
+  text-shadow: 0 7px 0 rgba(18, 0, 34, 0.75), 0 24px 60px rgba(0, 0, 0, 0.75);
+}
+.duv-p__phon i { font-style: inherit; margin-inline: 0.02em; color: var(--c-pink); }
+
+/* widget OUVIR: moldura de vidro escuro, tecla F em cápsula, onda grossa */
+.duv-voice {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 22px;
+  max-width: 440px;
+  padding: 8px 18px 8px 8px;
+  background: linear-gradient(90deg, rgba(22, 14, 52, 0.82), rgba(14, 8, 36, 0.66));
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.28), inset 0 0 0 1px rgba(220, 210, 255, 0.16);
+  clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 14px 100%, 0 calc(100% - 14px));
+}
+.duv-voice__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 48px;
+  padding: 0 6px 0 0;
+  border: 0;
+  background: none;
+  color: var(--duv-w);
+  font: inherit;
+  font-size: 1.125rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+}
+.duv-voice__btn kbd {
+  display: grid;
+  place-items: center;
+  width: 48px; height: 42px;
+  font: inherit;
+  font-size: 1.25rem;
+  font-weight: 800;
+  font-style: italic;
+  color: var(--duv-ink);
+  background: linear-gradient(180deg, #fff 0 2px, #e4def6 2px);
+  clip-path: polygon(9px 0, 100% 0, calc(100% - 9px) 100%, 0 100%);
+}
+.duv-voice__btn:hover kbd { background: var(--duv-w); }
+.duv-voice__btn:focus-visible { outline: 2px solid var(--c-lavender); outline-offset: 2px; box-shadow: none; }
+.duv-voice__wave { flex: 1; min-width: 0; height: 40px; }
+.duv-voice__bars rect { fill: #f3eaff; transform-box: fill-box; transform-origin: 50% 50%; }
+.duv-voice__bars rect:nth-child(n+14) { fill: rgba(206, 200, 236, 0.36); }
+.duv-voice__head { fill: var(--duv-w); }
+.duv-voice.is-playing .duv-voice__bars rect { fill: #f3eaff; animation: duv-bar 0.5s var(--ease) infinite alternate; }
+.duv-voice.is-playing .duv-voice__bars rect:nth-child(3n) { animation-delay: -0.2s; }
+.duv-voice.is-playing .duv-voice__bars rect:nth-child(3n+1) { animation-delay: -0.35s; }
+@keyframes duv-bar { to { transform: scaleY(0.45); } }
+
+/* resposta: largura máx. ~420px */
+.duv-p__body {
+  margin-top: 20px;
+  max-width: 420px;
+  font-size: 1.1875rem;
+  font-weight: 500;
+  line-height: 1.32;
+  color: var(--duv-t80);
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.8);
+}
+.duv-p__body p + p { margin-top: 8px; }
+.duv-p__body b, .duv-p__body strong { font-weight: 700; color: var(--duv-w); }
+.duv-p__facts { display: flex; flex-wrap: wrap; gap: 6px 0; margin: 18px 0 0; }
+.duv-p__facts div { display: flex; align-items: baseline; gap: 8px; }
+.duv-p__facts div + div::before { content: "/"; margin-inline: 16px; color: var(--duv-t40); }
+.duv-p__facts dt { font-size: 0.8125rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.12em; color: var(--duv-t60); }
+.duv-p__facts dd { margin: 0; font-size: 1.125rem; font-weight: 700; text-transform: uppercase; color: var(--duv-w); }
+.duv .duv-ph {
+  display: block;
+  min-height: 0;
+  margin-top: 18px;
+  padding: 10px 14px;
+  max-width: 420px;
+  text-align: left;
+  background: repeating-linear-gradient(-55deg, rgba(255, 255, 255, 0.06) 0 10px, transparent 10px 20px), rgba(8, 6, 28, 0.7);
+  outline: 1px dashed rgba(255, 255, 255, 0.3);
+  color: var(--duv-t60);
+}
+
+/* ---------- CTA: a única cor de ação. Chanfro diagonal, borda interna, aba encostada ---------- */
+.duv__cta {
+  align-self: flex-end;
+  width: min(100%, 460px);
+}
+.duv__req {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  margin: 0 0 0 26px;
+  padding: 7px 26px 6px 16px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--duv-t90);
+  background: rgba(14, 8, 36, 0.88);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3), inset 0 0 0 1px rgba(220, 210, 255, 0.2);
+  clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 100%, 0 100%);
+}
+.duv__req .ico { width: 14px; height: 14px; color: var(--c-pink); }
+.duv__btn {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  min-height: 68px;
+  padding: 8px 40px 8px 34px;
+  color: var(--duv-ink);
+  text-decoration: none;
+  background:
+    repeating-linear-gradient(-55deg, transparent 0 12px, rgba(18, 0, 34, 0.04) 12px 14px),
+    linear-gradient(180deg, #fff 0 2px, #f7e8ff 2px, #e9cdfb 100%);
+  clip-path: polygon(22px 0, 100% 0, calc(100% - 22px) 100%, 0 100%);
+  filter: drop-shadow(0 0 18px rgba(243, 214, 255, 0.4));
+  transition: transform var(--t-fast) var(--ease);
+}
+/* borda interna de 1px acompanhando o chanfro */
+.duv__btn::before {
+  content: "";
+  position: absolute;
+  inset: 5px 7px;
+  background: linear-gradient(#120022, #120022) top / 100% 1px no-repeat, linear-gradient(#120022, #120022) bottom / 100% 1px no-repeat;
+  opacity: 0.28;
+  clip-path: polygon(18px 0, 100% 0, calc(100% - 18px) 100%, 0 100%);
+  pointer-events: none;
+}
+.duv__btn-ico { width: 30px; height: 30px; }
+.duv__btn-label {
+  font-size: clamp(1.5rem, 1.1rem + 1vw, 2rem);
+  font-weight: 800;
+  font-style: italic;
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+}
+.duv__btn:hover { transform: translateX(4px); }
+.duv__btn:focus-visible { outline: 3px solid var(--duv-ink); outline-offset: -8px; box-shadow: none; }
+
+/* ---------- Rodapé de HUD: faixa escura contínua com separadores ---------- */
+.duv__foot {
+  grid-area: foot;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px 28px;
+  margin-right: calc(var(--duv-pad) * -1);
+  padding: 4px var(--duv-pad) 6px var(--duv-pad);
+  background: linear-gradient(180deg, rgba(4, 2, 14, 0.4), rgba(4, 2, 14, 0.85));
+  box-shadow: inset 0 1px 0 rgba(220, 210, 255, 0.1);
+}
+.duv__sys {
+  font-family: ui-monospace, "Cascadia Mono", Consolas, monospace;
+  font-size: 0.6875rem;
+  letter-spacing: 0.02em;
+  color: rgba(255, 255, 255, 0.4);
+  white-space: nowrap;
+}
+.duv__keys { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 0; margin-left: auto; }
+.duv__keys > * + *::before { content: ""; width: 1px; height: 20px; margin: 0 22px 0 0; background: rgba(220, 210, 255, 0.2); }
+.duv__keys > * + * { padding-left: 22px; }
+.duv .g-key { gap: 10px; font-size: 1.0625rem; font-weight: 600; letter-spacing: 0.04em; color: var(--duv-t80); min-height: 44px; }
+.duv .g-key kbd { min-width: 36px; height: 26px; padding: 0 9px; font-size: 0.875rem; background: #d9d4ee; }
+.duv a.g-key:hover { color: var(--duv-w); }
+.duv a.g-key:hover kbd { background: var(--duv-w); }
+
+/* ---------- Telas médias ---------- */
+@media (max-width: 1360px) {
+  .duv__wrap { grid-template-columns: minmax(0, 440px) minmax(0, 1fr) minmax(0, 480px); }
+  .duv-q { min-height: 58px; gap: 10px; grid-template-columns: 40px 24px minmax(0, 1fr) auto; }
+  .duv-q__g { width: 40px; height: 40px; }
+  .duv-q.is-active { min-height: 66px; }
+  .duv-q__t { font-size: 1.125rem; }
+  .duv-q.is-active .duv-q__t { font-size: 1.25rem; }
+  .duv-q__soon { padding-inline: 6px 8px; font-size: 0.6875rem; letter-spacing: 0.06em; }
+  .duv-p__phon { font-size: clamp(5.5rem, 12.6vw, 10.5rem); }
+  .duv__hero { left: 45%; width: min(30vw, 400px); }
+}
+
+/* ---------- Tablet / celular: uma coluna, sem perspectiva ---------- */
+@media (max-width: 900px) {
+  .duv { min-height: 0; }
+  .duv__wrap {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto;
+    grid-template-areas: "head" "menu" "detail" "foot";
+    padding: 28px var(--duv-pad) 0;
+  }
+  .duv__head { padding-left: 0; }
+  .duv__menu { padding-left: 0; perspective: none; }
+  .duv__slab { transform: none; transform-style: flat; }
+  .duv__cast, .duv__edge { display: none; }
+  .duv__list { transform-style: flat; padding-inline: 10px; }
+  .duv-q { grid-template-columns: 40px 22px minmax(0, 1fr) auto; gap: 10px; padding-right: 10px; }
+  .duv-q.is-active { width: 100%; transform: none; }
+  .duv-q__soon { padding: 4px 6px; }
+  .duv__detail { position: relative; padding-top: 48px; gap: 32px; }
+  .duv__cta { align-self: stretch; width: auto; }
+  .duv__foot { flex-direction: column-reverse; align-items: flex-start; margin-inline: calc(var(--duv-pad) * -1); padding: 8px var(--duv-pad) 20px; }
+  .duv__keys { margin-left: 0; }
+  .duv__keys > span.g-key { display: none; }
+  .duv__keys > span.g-key + *::before { content: none; }
+  .duv__keys > span.g-key + * { padding-left: 0; }
+  .duv__sys { white-space: normal; }
+  .duv__hero { left: auto; right: -30%; top: auto; bottom: 12%; width: 78vw; max-width: 420px; transform: none; opacity: 0.4; }
+  .duv__city--far { height: 22%; bottom: 10%; }
+  .duv__city--near { height: 18%; }
+  .duv__rays { left: 0; right: 0; top: 40%; height: 50%; }
+  .duv__vignette {
+    background:
+      linear-gradient(180deg, rgba(3, 2, 12, 0.7) 0%, rgba(3, 2, 12, 0.35) 40%, rgba(3, 2, 12, 0.1) 62%, rgba(3, 2, 12, 0.35) 82%, rgba(3, 2, 12, 0.8) 100%);
+  }
+}
+@media (max-width: 480px) {
+  .duv__title { font-size: 2.25rem; }
+  .duv__sub { font-size: 0.75rem; letter-spacing: 0.16em; }
+  .duv-q { grid-template-columns: 38px minmax(0, 1fr) auto; }
+  .duv-q__g { width: 38px; height: 38px; }
+  .duv-q__n { display: none; }
+  .duv-q__t { font-size: 1.0625rem; }
+  .duv-q.is-active .duv-q__t { font-size: 1.125rem; }
+  .duv-p__phon { font-size: clamp(5rem, 27vw, 7.5rem); }
+  .duv-p__body { font-size: 1.125rem; }
+  .duv-p--say .duv-p__title { font-size: 1.125rem; }
+  .duv-p--say .duv-p__en::before { content: none; }
+  .duv-voice { gap: 10px; }
+  .duv__btn { padding-inline: 26px 30px; gap: 12px; }
+  .duv__btn-ico { width: 26px; height: 26px; }
+  .duv__btn-label { font-size: 1.375rem; }
+  .duv__req { margin-left: 18px; font-size: 0.75rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .duv.is-ready .duv-p { animation: none; }
+  .duv-voice.is-playing .duv-voice__bars rect { animation: none; }
+  .duv__medal, .duv__fog--a { animation: none; }
+  .duv__hero, .duv__city { transition: none; }
+  .duv__btn:hover { transform: none; }
+}
+
+
+/* =====================================================================
+   RODA DA SORTE (pergunta 01). Camadas separadas dentro do medalhão:
+   moldura de trás | roda (gira sozinha na GPU) + cópia desfocada (borrão
+   de velocidade) | moldura da frente (vidro, aro, cubo) | luzes | ponteiro | faíscas.
+   Motor em js/30-duvidas.js. No celular o medalhão entra no painel 01.
+   ===================================================================== */
+.duv__medal > svg, .duv-wheel, .duv-wheel__fx { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.duv-wheel { transform-origin: 50% 50%; will-change: transform; }
+.duv-wheel__svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.duv-wheel__blur { filter: blur(3.5px); opacity: 0; will-change: opacity; }
+.duv-wheel__layer { pointer-events: none; }
+
+/* fatias */
+.duv-wheel__slice path { fill: #241a5c; }
+.duv-wheel__slice.is-alt path { fill: #3b2a8a; }
+.duv-wheel__slice.is-hot path { fill: #c13ad8; }
+.duv-wheel__slice.is-win path { animation: duv-win 0.8s ease-in-out 4 alternate both; }
+@keyframes duv-win { from { filter: brightness(1.15); } to { filter: brightness(1.85) saturate(1.25); } }
+.duv-wheel__sep { stroke: #dcd2ff; stroke-opacity: 0.4; stroke-width: 1.5; }
+.duv-wheel__pin { fill: #f3eaff; stroke: #2a2160; stroke-width: 1.5; }
+.duv-wheel__v, .duv-wheel__t { fill: #f6f0ff; font-family: inherit; font-style: italic; }
+.duv-wheel__v { font-size: 25px; font-weight: 900; letter-spacing: 0.01em; paint-order: stroke; stroke: rgba(10, 6, 30, 0.55); stroke-width: 3px; }
+.duv-wheel__t { font-size: 11.5px; font-weight: 700; letter-spacing: 0.14em; fill: rgba(240, 232, 255, 0.78); }
+.duv-wheel__slice.is-hot .duv-wheel__t { fill: #fff; }
+
+/* vidro por cima da roda: brilho no topo-esquerda e borda escurecida (dá volume) */
+.duv-wheel__glass { fill: url(#duv-m-gloss); }
+
+/* luzes do aro: piscam devagar à espera, correm em sequência girando, piscam juntas no prêmio */
+.duv-wheel__bulbs circle { fill: #f3d6ff; opacity: 0.55; }
+.duv__hero.is-ready .duv-wheel__bulbs circle { animation: duv-bulb-idle 1.4s ease-in-out infinite alternate; animation-delay: calc(var(--i) * -0.18s); }
+.duv__hero.is-spinning .duv-wheel__bulbs circle { animation: duv-bulb-run 0.5s linear infinite; animation-delay: calc(var(--i) * -0.0208s); }
+.duv__hero.is-used .duv-wheel__bulbs circle { animation: duv-bulb-win 0.22s steps(1) 8; }
+@keyframes duv-bulb-idle { from { opacity: 0.25; } to { opacity: 1; fill: #ff9dff; } }
+@keyframes duv-bulb-run { 0% { opacity: 1; fill: #fff; } 25% { opacity: 0.2; } 100% { opacity: 0.2; } }
+@keyframes duv-bulb-win { 50% { opacity: 0.15; } }
+
+/* ponteiro: a mola é feita no JS (gira pelo pino de cima) */
+.duv-wheel__ptr-l { transform-origin: 50% 14.29%; will-change: transform; }
+.duv-wheel__ptr { fill: #ff9dff; stroke: #fff; stroke-width: 3; stroke-linejoin: round; filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.6)); }
+
+/* halo atrás do medalhão acende com a velocidade (--spd vem do JS) */
+.duv__halo { opacity: calc(0.82 + var(--spd, 0) * 0.18); }
+
+/* faíscas e anel do prêmio */
+.duv-wheel__fx { pointer-events: none; }
+.duv-spark {
+  position: absolute; left: 50%; top: 19%;
+  width: 8px; height: 8px; margin: -4px 0 0 -4px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 0 10px 3px var(--c, #ff9dff);
+  pointer-events: none;
+}
+.duv-spark.is-d { border-radius: 1px; width: 7px; height: 12px; background: var(--c, #ff9dff); }
+.duv-ring {
+  position: absolute; left: 50%; top: 50%;
+  width: 68%; aspect-ratio: 1;
+  border-radius: 50%;
+  border: 3px solid #ff9dff;
+  box-shadow: 0 0 34px #ff9dff, inset 0 0 34px rgba(255, 157, 255, 0.6);
+  pointer-events: none;
+}
+
+/* inclinação 3D mais suave que a do medalhão antigo, para a roda ser lida */
+.duv__medal { transform: rotateY(-9deg) rotateX(3deg) rotateZ(-2deg); }
+@keyframes duv-float { to { transform: rotateY(-6deg) rotateX(2deg) rotateZ(-1deg) translateY(-8px); } }
+
+/* painel 01: título menor (frase mais longa que RAI·ZI) + botão GIRAR */
+.duv-p__phon--wheel { font-size: clamp(3.5rem, 0.6rem + 6.4vw, 7.25rem); }
+.duv-spin__btn[disabled] { cursor: default; }
+.duv-spin.is-spinning .duv-spin__btn { opacity: 0.8; }
+.duv-spin.is-used .duv-spin__btn { opacity: 0.55; }
+.duv-spin.is-ready .duv-spin__btn kbd { animation: duv-ready 1.6s ease-in-out infinite; }
+@keyframes duv-ready { 50% { box-shadow: 0 0 0 4px rgba(255, 157, 255, 0.35), 0 0 22px rgba(255, 157, 255, 0.55); } }
+.duv-spin__out {
+  flex: 1; min-width: 0; margin: 0;
+  font-size: 0.9375rem; font-weight: 600; line-height: 1.3; letter-spacing: 0.04em;
+  color: var(--duv-t60);
+}
+.duv-spin__out b { color: var(--duv-w); font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; }
+.duv-spin__out span { color: var(--duv-t80); }
+.duv-spin__out small { display: block; margin-top: 3px; font-size: 0.8125rem; color: var(--duv-t40); }
+.duv-spin__out time { color: var(--c-pink); font-weight: 700; font-variant-numeric: tabular-nums; }
+.duv-spin__out.is-new { animation: duv-reveal 0.6s var(--ease) both; }
+@keyframes duv-reveal { from { opacity: 0; transform: translateY(8px); } }
+.duv-spin__note { font-size: 0.8125rem; color: var(--duv-t40); letter-spacing: 0.02em; }
+
+/* notebook: roda um pouco menor e mais à esquerda, longe do texto do painel */
+@media (max-width: 1600px) and (min-width: 901px) {
+  .duv__hero { left: 44%; width: min(26vw, 380px); }
+}
+/* celular: o medalhão-roda dentro do painel, nítido e centralizado */
+.duv__hero.is-docked {
+  position: relative; z-index: auto;
+  left: auto; right: auto; top: auto; bottom: auto;
+  width: min(84vw, 380px); max-width: none;
+  margin: 18px auto 4px;
+  transform: none; opacity: 1;
+}
+.duv__hero.is-docked .duv__halo { inset: -12%; }
+@media (prefers-reduced-motion: reduce) {
+  .duv__hero .duv-wheel__bulbs circle, .duv-wheel__slice.is-win path, .duv-spin.is-ready .duv-spin__btn kbd { animation: none !important; }
+}

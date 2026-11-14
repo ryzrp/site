@@ -1,0 +1,211 @@
+<!-- DÚVIDAS (dono: construtor de DÚVIDAS).
+     Tela de menu de jogo (rodada 15):
+       cena     = 3 profundidades: céu com horizonte claro e raios de luz, skyline distante com janelas,
+                  skyline próxima com letreiros, névoa, bokeh e vinheta;
+       meio     = objeto-herói: medalhão de metal NÍTIDO com o wordmark RYZ (só letras, sem coroa),
+                  luz de borda rosa, halo e estilhaços em 3 profundidades;
+       esquerda = placa de VIDRO escuro em perspectiva com 7 cartões de pergunta (glifo próprio, número, estado);
+       direita  = RAI·ZI (único texto gigante), widget OUVIR, resposta curta e a CTA.
+     Sem JS: todas as respostas aparecem empilhadas. Respostas que faltam: [RESPOSTA — ...] (ver PLACEHOLDERS.md). -->
+<section id="duvidas" class="section duv" aria-labelledby="duvidas-title" data-faq>
+  <div class="duv__scene" aria-hidden="true">
+    <span class="duv__sky"></span>
+    <span class="duv__rays"></span>
+    <svg class="duv__city duv__city--far" viewBox="0 0 1600 420" preserveAspectRatio="xMidYMax slice" focusable="false"><path class="b" d="M-20 420V134h40V420ZM-5 134v-36h3V134ZM23 420V186h100V420ZM125 420V259h44V420ZM172 420V124h107V420ZM283 420V186h80V420ZM368 420V162h104V420ZM472 420V208h51V420ZM527 420V235h45V420ZM575 420V277h78V420ZM654 420V249h85V420ZM742 420V231h65V420ZM812 420V174h45V420ZM863 420V145h42V420ZM907 420V129h96V420ZM964 129v-39h3V129ZM1005 420V259h46V420ZM1055 420V157h85V420ZM1145 420V163h88V420ZM1233 420V174h54V420ZM1258 174v-33h3V174ZM1290 420V126h106V420ZM1361 126v-17h3V126ZM1396 420V253h83V420ZM1483 420V221h72V420ZM1520 221v-20h3V221ZM1559 420V268h46V420ZM1610 420V162h81V420Z"/><path class="t" d="M-20 134h40v2h-40ZM23 186h100v2h-100ZM125 259h44v2h-44ZM172 124h107v2h-107ZM283 186h80v2h-80ZM368 162h104v2h-104ZM472 208h51v2h-51ZM527 235h45v2h-45ZM575 277h78v2h-78ZM654 249h85v2h-85ZM742 231h65v2h-65ZM812 174h45v2h-45ZM863 145h42v2h-42ZM907 129h96v2h-96ZM1005 259h46v2h-46ZM1055 157h85v2h-85ZM1145 163h88v2h-88ZM1233 174h54v2h-54ZM1290 126h106v2h-106ZM1396 253h83v2h-83ZM1483 221h72v2h-72ZM1559 268h46v2h-46ZM1610 162h81v2h-81Z"/><path class="w" d="M4 172h4v6h-4ZM-14 200h4v6h-4ZM4 214h4v6h-4ZM4 270h4v6h-4ZM-14 284h4v6h-4ZM4 284h4v6h-4ZM-5 312h4v6h-4ZM4 312h4v6h-4ZM-14 340h4v6h-4ZM4 340h4v6h-4ZM4 368h4v6h-4ZM-5 382h4v6h-4ZM-5 410h4v6h-4ZM83 196h4v6h-4ZM56 210h4v6h-4ZM74 210h4v6h-4ZM92 210h4v6h-4ZM101 210h4v6h-4ZM29 224h4v6h-4ZM47 224h4v6h-4ZM74 224h4v6h-4ZM47 238h4v6h-4ZM56 238h4v6h-4ZM65 238h4v6h-4ZM74 238h4v6h-4ZM83 238h4v6h-4ZM101 238h4v6h-4ZM47 252h4v6h-4ZM65 252h4v6h-4ZM92 252h4v6h-4ZM110 252h4v6h-4ZM56 266h4v6h-4ZM74 266h4v6h-4ZM110 266h4v6h-4ZM29 280h4v6h-4ZM38 280h4v6h-4ZM56 280h4v6h-4ZM101 280h4v6h-4ZM110 280h4v6h-4ZM38 294h4v6h-4ZM65 294h4v6h-4ZM38 308h4v6h-4ZM74 308h4v6h-4ZM74 322h4v6h-4ZM83 322h4v6h-4ZM47 336h4v6h-4ZM65 336h4v6h-4ZM29 350h4v6h-4ZM47 350h4v6h-4ZM29 364h4v6h-4ZM38 364h4v6h-4ZM56 364h4v6h-4ZM74 364h4v6h-4ZM83 364h4v6h-4ZM110 364h4v6h-4ZM83 378h4v6h-4ZM38 392h4v6h-4ZM47 392h4v6h-4ZM56 392h4v6h-4ZM65 392h4v6h-4ZM74 392h4v6h-4ZM83 392h4v6h-4ZM110 392h4v6h-4ZM29 406h4v6h-4ZM38 406h4v6h-4ZM56 406h4v6h-4ZM140 269h4v6h-4ZM131 283h4v6h-4ZM140 283h4v6h-4ZM158 283h4v6h-4ZM131 297h4v6h-4ZM140 297h4v6h-4ZM149 311h4v6h-4ZM131 325h4v6h-4ZM140 325h4v6h-4ZM149 325h4v6h-4ZM131 339h4v6h-4ZM140 339h4v6h-4ZM178 134h4v6h-4ZM241 134h4v6h-4ZM250 134h4v6h-4ZM268 134h4v6h-4ZM259 148h4v6h-4ZM196 162h4v6h-4ZM214 162h4v6h-4ZM268 162h4v6h-4ZM178 176h4v6h-4ZM196 176h4v6h-4ZM205 176h4v6h-4ZM223 176h4v6h-4ZM250 176h4v6h-4ZM259 176h4v6h-4ZM187 190h4v6h-4ZM196 190h4v6h-4ZM214 190h4v6h-4ZM250 190h4v6h-4ZM241 204h4v6h-4ZM250 204h4v6h-4ZM268 204h4v6h-4ZM187 218h4v6h-4ZM196 218h4v6h-4ZM232 218h4v6h-4ZM250 218h4v6h-4ZM205 232h4v6h-4ZM196 246h4v6h-4ZM214 246h4v6h-4ZM223 246h4v6h-4ZM250 246h4v6h-4ZM259 246h4v6h-4ZM268 246h4v6h-4ZM205 260h4v6h-4ZM214 260h4v6h-4ZM223 260h4v6h-4ZM250 260h4v6h-4ZM178 274h4v6h-4ZM187 274h4v6h-4ZM196 274h4v6h-4ZM205 274h4v6h-4ZM241 288h4v6h-4ZM250 288h4v6h-4ZM214 302h4v6h-4ZM223 302h4v6h-4ZM232 302h4v6h-4ZM259 302h4v6h-4ZM178 316h4v6h-4ZM187 316h4v6h-4ZM196 316h4v6h-4ZM223 316h4v6h-4ZM241 316h4v6h-4ZM178 330h4v6h-4ZM196 330h4v6h-4ZM223 330h4v6h-4ZM232 330h4v6h-4ZM259 330h4v6h-4ZM187 344h4v6h-4ZM205 344h4v6h-4ZM214 344h4v6h-4ZM214 358h4v6h-4ZM250 358h4v6h-4ZM214 372h4v6h-4ZM223 372h4v6h-4ZM232 372h4v6h-4ZM241 372h4v6h-4ZM205 386h4v6h-4ZM187 400h4v6h-4ZM214 400h4v6h-4ZM223 400h4v6h-4ZM268 400h4v6h-4ZM289 196h4v6h-4ZM298 196h4v6h-4ZM307 196h4v6h-4ZM307 210h4v6h-4ZM316 210h4v6h-4ZM325 210h4v6h-4ZM352 210h4v6h-4ZM316 224h4v6h-4ZM334 224h4v6h-4ZM343 224h4v6h-4ZM352 224h4v6h-4ZM289 238h4v6h-4ZM307 238h4v6h-4ZM307 252h4v6h-4ZM289 266h4v6h-4ZM307 266h4v6h-4ZM316 266h4v6h-4ZM325 266h4v6h-4ZM298 280h4v6h-4ZM325 280h4v6h-4ZM298 294h4v6h-4ZM307 294h4v6h-4ZM289 308h4v6h-4ZM343 308h4v6h-4ZM307 322h4v6h-4ZM343 322h4v6h-4ZM316 336h4v6h-4ZM325 336h4v6h-4ZM352 336h4v6h-4ZM316 350h4v6h-4ZM325 350h4v6h-4ZM352 350h4v6h-4ZM289 364h4v6h-4ZM298 364h4v6h-4ZM298 392h4v6h-4ZM307 392h4v6h-4ZM316 392h4v6h-4ZM334 392h4v6h-4ZM343 392h4v6h-4ZM289 406h4v6h-4ZM298 406h4v6h-4ZM307 406h4v6h-4ZM325 406h4v6h-4ZM352 406h4v6h-4ZM374 172h4v6h-4ZM383 172h4v6h-4ZM392 172h4v6h-4ZM419 172h4v6h-4ZM374 186h4v6h-4ZM383 186h4v6h-4ZM410 186h4v6h-4ZM419 186h4v6h-4ZM374 200h4v6h-4ZM419 200h4v6h-4ZM437 200h4v6h-4ZM428 214h4v6h-4ZM437 214h4v6h-4ZM446 214h4v6h-4ZM401 228h4v6h-4ZM428 228h4v6h-4ZM374 242h4v6h-4ZM383 242h4v6h-4ZM410 242h4v6h-4ZM428 242h4v6h-4ZM401 256h4v6h-4ZM428 256h4v6h-4ZM437 256h4v6h-4ZM446 256h4v6h-4ZM455 256h4v6h-4ZM383 270h4v6h-4ZM392 270h4v6h-4ZM419 270h4v6h-4ZM428 270h4v6h-4ZM383 284h4v6h-4ZM392 284h4v6h-4ZM419 298h4v6h-4ZM392 312h4v6h-4ZM455 312h4v6h-4ZM374 326h4v6h-4ZM401 326h4v6h-4ZM428 326h4v6h-4ZM401 340h4v6h-4ZM437 340h4v6h-4ZM455 340h4v6h-4ZM374 354h4v6h-4ZM392 354h4v6h-4ZM410 354h4v6h-4ZM455 354h4v6h-4ZM401 368h4v6h-4ZM410 368h4v6h-4ZM428 368h4v6h-4ZM437 368h4v6h-4ZM455 368h4v6h-4ZM401 382h4v6h-4ZM428 382h4v6h-4ZM446 382h4v6h-4ZM374 396h4v6h-4ZM383 396h4v6h-4ZM392 396h4v6h-4ZM419 396h4v6h-4ZM437 396h4v6h-4ZM446 396h4v6h-4ZM410 410h4v6h-4ZM419 410h4v6h-4ZM428 410h4v6h-4ZM455 410h4v6h-4ZM478 218h4v6h-4ZM505 218h4v6h-4ZM514 232h4v6h-4ZM496 246h4v6h-4ZM505 246h4v6h-4ZM487 274h4v6h-4ZM487 302h4v6h-4ZM505 302h4v6h-4ZM496 316h4v6h-4ZM514 316h4v6h-4ZM487 330h4v6h-4ZM496 330h4v6h-4ZM514 358h4v6h-4ZM478 372h4v6h-4ZM487 372h4v6h-4ZM496 372h4v6h-4ZM478 386h4v6h-4ZM487 386h4v6h-4ZM496 386h4v6h-4ZM533 273h4v6h-4ZM542 273h4v6h-4ZM533 287h4v6h-4ZM542 287h4v6h-4ZM551 287h4v6h-4ZM560 287h4v6h-4ZM542 315h4v6h-4ZM551 329h4v6h-4ZM533 343h4v6h-4ZM542 343h4v6h-4ZM560 343h4v6h-4ZM551 357h4v6h-4ZM533 371h4v6h-4ZM551 371h4v6h-4ZM542 385h4v6h-4ZM551 413h4v6h-4ZM560 413h4v6h-4ZM581 287h4v6h-4ZM626 287h4v6h-4ZM635 287h4v6h-4ZM644 287h4v6h-4ZM581 301h4v6h-4ZM626 301h4v6h-4ZM581 315h4v6h-4ZM635 315h4v6h-4ZM644 315h4v6h-4ZM608 329h4v6h-4ZM581 343h4v6h-4ZM590 343h4v6h-4ZM599 343h4v6h-4ZM599 371h4v6h-4ZM626 371h4v6h-4ZM644 371h4v6h-4ZM590 385h4v6h-4ZM635 385h4v6h-4ZM590 399h4v6h-4ZM617 399h4v6h-4ZM626 399h4v6h-4ZM635 399h4v6h-4ZM608 413h4v6h-4ZM626 413h4v6h-4ZM644 413h4v6h-4ZM660 259h4v6h-4ZM669 259h4v6h-4ZM705 259h4v6h-4ZM714 259h4v6h-4ZM669 287h4v6h-4ZM687 287h4v6h-4ZM660 301h4v6h-4ZM669 329h4v6h-4ZM705 329h4v6h-4ZM723 329h4v6h-4ZM678 343h4v6h-4ZM696 343h4v6h-4ZM714 343h4v6h-4ZM723 343h4v6h-4ZM660 357h4v6h-4ZM696 357h4v6h-4ZM705 357h4v6h-4ZM723 357h4v6h-4ZM714 371h4v6h-4ZM678 385h4v6h-4ZM696 385h4v6h-4ZM660 399h4v6h-4ZM669 399h4v6h-4ZM714 413h4v6h-4ZM723 413h4v6h-4ZM766 241h4v6h-4ZM775 241h4v6h-4ZM793 241h4v6h-4ZM784 255h4v6h-4ZM793 255h4v6h-4ZM775 269h4v6h-4ZM793 269h4v6h-4ZM748 297h4v6h-4ZM748 311h4v6h-4ZM748 325h4v6h-4ZM757 325h4v6h-4ZM784 325h4v6h-4ZM748 339h4v6h-4ZM757 339h4v6h-4ZM766 353h4v6h-4ZM784 353h4v6h-4ZM793 367h4v6h-4ZM775 381h4v6h-4ZM784 395h4v6h-4ZM784 409h4v6h-4ZM827 184h4v6h-4ZM836 184h4v6h-4ZM827 198h4v6h-4ZM836 198h4v6h-4ZM827 212h4v6h-4ZM818 226h4v6h-4ZM836 226h4v6h-4ZM818 254h4v6h-4ZM845 268h4v6h-4ZM827 282h4v6h-4ZM818 296h4v6h-4ZM818 310h4v6h-4ZM818 338h4v6h-4ZM818 352h4v6h-4ZM818 366h4v6h-4ZM818 380h4v6h-4ZM845 380h4v6h-4ZM845 394h4v6h-4ZM818 408h4v6h-4ZM827 408h4v6h-4ZM869 155h4v6h-4ZM878 155h4v6h-4ZM869 169h4v6h-4ZM896 169h4v6h-4ZM887 183h4v6h-4ZM896 183h4v6h-4ZM878 211h4v6h-4ZM896 211h4v6h-4ZM896 225h4v6h-4ZM896 239h4v6h-4ZM896 253h4v6h-4ZM878 267h4v6h-4ZM887 267h4v6h-4ZM887 281h4v6h-4ZM887 295h4v6h-4ZM896 309h4v6h-4ZM878 323h4v6h-4ZM887 323h4v6h-4ZM878 337h4v6h-4ZM869 351h4v6h-4ZM887 351h4v6h-4ZM869 365h4v6h-4ZM896 365h4v6h-4ZM869 379h4v6h-4ZM878 379h4v6h-4ZM869 393h4v6h-4ZM878 407h4v6h-4ZM994 139h4v6h-4ZM922 153h4v6h-4ZM931 153h4v6h-4ZM922 167h4v6h-4ZM931 167h4v6h-4ZM967 167h4v6h-4ZM922 181h4v6h-4ZM940 181h4v6h-4ZM949 181h4v6h-4ZM958 181h4v6h-4ZM985 181h4v6h-4ZM922 195h4v6h-4ZM940 195h4v6h-4ZM949 195h4v6h-4ZM976 195h4v6h-4ZM985 195h4v6h-4ZM994 195h4v6h-4ZM913 209h4v6h-4ZM958 209h4v6h-4ZM967 209h4v6h-4ZM976 209h4v6h-4ZM994 209h4v6h-4ZM913 223h4v6h-4ZM922 223h4v6h-4ZM949 223h4v6h-4ZM976 223h4v6h-4ZM985 223h4v6h-4ZM994 223h4v6h-4ZM958 237h4v6h-4ZM967 237h4v6h-4ZM976 237h4v6h-4ZM985 237h4v6h-4ZM922 251h4v6h-4ZM958 251h4v6h-4ZM976 251h4v6h-4ZM985 251h4v6h-4ZM913 265h4v6h-4ZM958 265h4v6h-4ZM967 265h4v6h-4ZM976 265h4v6h-4ZM985 265h4v6h-4ZM922 279h4v6h-4ZM931 293h4v6h-4ZM940 293h4v6h-4ZM949 293h4v6h-4ZM976 293h4v6h-4ZM985 293h4v6h-4ZM994 293h4v6h-4ZM913 307h4v6h-4ZM931 307h4v6h-4ZM958 307h4v6h-4ZM967 307h4v6h-4ZM922 321h4v6h-4ZM940 321h4v6h-4ZM949 321h4v6h-4ZM976 321h4v6h-4ZM985 321h4v6h-4ZM940 335h4v6h-4ZM958 335h4v6h-4ZM976 335h4v6h-4ZM985 335h4v6h-4ZM922 349h4v6h-4ZM949 349h4v6h-4ZM976 349h4v6h-4ZM940 363h4v6h-4ZM976 363h4v6h-4ZM922 377h4v6h-4ZM931 377h4v6h-4ZM949 377h4v6h-4ZM994 377h4v6h-4ZM913 391h4v6h-4ZM940 391h4v6h-4ZM958 391h4v6h-4ZM976 391h4v6h-4ZM985 391h4v6h-4ZM922 405h4v6h-4ZM931 405h4v6h-4ZM1011 283h4v6h-4ZM1020 283h4v6h-4ZM1011 311h4v6h-4ZM1029 325h4v6h-4ZM1029 339h4v6h-4ZM1020 367h4v6h-4ZM1029 367h4v6h-4ZM1011 409h4v6h-4ZM1020 409h4v6h-4ZM1038 409h4v6h-4ZM1061 167h4v6h-4ZM1079 167h4v6h-4ZM1088 167h4v6h-4ZM1097 181h4v6h-4ZM1061 195h4v6h-4ZM1070 195h4v6h-4ZM1106 195h4v6h-4ZM1124 195h4v6h-4ZM1061 209h4v6h-4ZM1106 223h4v6h-4ZM1115 223h4v6h-4ZM1070 237h4v6h-4ZM1115 237h4v6h-4ZM1124 251h4v6h-4ZM1106 265h4v6h-4ZM1061 279h4v6h-4ZM1079 279h4v6h-4ZM1106 279h4v6h-4ZM1115 279h4v6h-4ZM1061 293h4v6h-4ZM1088 293h4v6h-4ZM1115 293h4v6h-4ZM1079 307h4v6h-4ZM1106 307h4v6h-4ZM1088 321h4v6h-4ZM1124 321h4v6h-4ZM1070 335h4v6h-4ZM1124 335h4v6h-4ZM1079 349h4v6h-4ZM1106 349h4v6h-4ZM1088 363h4v6h-4ZM1097 363h4v6h-4ZM1124 363h4v6h-4ZM1106 377h4v6h-4ZM1061 391h4v6h-4ZM1097 391h4v6h-4ZM1124 391h4v6h-4ZM1097 405h4v6h-4ZM1115 405h4v6h-4ZM1196 173h4v6h-4ZM1178 187h4v6h-4ZM1187 187h4v6h-4ZM1205 187h4v6h-4ZM1214 187h4v6h-4ZM1151 201h4v6h-4ZM1160 201h4v6h-4ZM1214 201h4v6h-4ZM1178 215h4v6h-4ZM1160 229h4v6h-4ZM1169 229h4v6h-4ZM1178 229h4v6h-4ZM1187 229h4v6h-4ZM1214 229h4v6h-4ZM1151 243h4v6h-4ZM1169 243h4v6h-4ZM1178 243h4v6h-4ZM1205 243h4v6h-4ZM1169 257h4v6h-4ZM1223 257h4v6h-4ZM1178 271h4v6h-4ZM1214 271h4v6h-4ZM1214 285h4v6h-4ZM1187 299h4v6h-4ZM1214 299h4v6h-4ZM1223 299h4v6h-4ZM1169 313h4v6h-4ZM1187 313h4v6h-4ZM1205 327h4v6h-4ZM1169 341h4v6h-4ZM1178 341h4v6h-4ZM1196 341h4v6h-4ZM1205 341h4v6h-4ZM1151 355h4v6h-4ZM1160 355h4v6h-4ZM1187 355h4v6h-4ZM1205 355h4v6h-4ZM1223 355h4v6h-4ZM1169 369h4v6h-4ZM1187 369h4v6h-4ZM1214 369h4v6h-4ZM1160 383h4v6h-4ZM1187 383h4v6h-4ZM1196 383h4v6h-4ZM1223 383h4v6h-4ZM1160 411h4v6h-4ZM1178 411h4v6h-4ZM1187 411h4v6h-4ZM1239 198h4v6h-4ZM1248 198h4v6h-4ZM1239 226h4v6h-4ZM1248 226h4v6h-4ZM1266 226h4v6h-4ZM1257 240h4v6h-4ZM1239 268h4v6h-4ZM1248 268h4v6h-4ZM1257 268h4v6h-4ZM1266 268h4v6h-4ZM1257 282h4v6h-4ZM1266 282h4v6h-4ZM1275 282h4v6h-4ZM1239 296h4v6h-4ZM1257 296h4v6h-4ZM1266 296h4v6h-4ZM1239 310h4v6h-4ZM1248 310h4v6h-4ZM1248 324h4v6h-4ZM1257 324h4v6h-4ZM1275 324h4v6h-4ZM1248 338h4v6h-4ZM1257 338h4v6h-4ZM1239 352h4v6h-4ZM1248 352h4v6h-4ZM1248 366h4v6h-4ZM1257 380h4v6h-4ZM1266 394h4v6h-4ZM1275 394h4v6h-4ZM1239 408h4v6h-4ZM1248 408h4v6h-4ZM1257 408h4v6h-4ZM1266 408h4v6h-4ZM1314 136h4v6h-4ZM1341 136h4v6h-4ZM1350 136h4v6h-4ZM1359 136h4v6h-4ZM1386 136h4v6h-4ZM1296 150h4v6h-4ZM1314 150h4v6h-4ZM1341 150h4v6h-4ZM1350 150h4v6h-4ZM1368 150h4v6h-4ZM1386 150h4v6h-4ZM1314 164h4v6h-4ZM1332 164h4v6h-4ZM1377 164h4v6h-4ZM1386 164h4v6h-4ZM1341 178h4v6h-4ZM1314 192h4v6h-4ZM1341 192h4v6h-4ZM1296 206h4v6h-4ZM1350 206h4v6h-4ZM1368 206h4v6h-4ZM1323 220h4v6h-4ZM1332 220h4v6h-4ZM1350 220h4v6h-4ZM1368 220h4v6h-4ZM1386 220h4v6h-4ZM1305 234h4v6h-4ZM1314 234h4v6h-4ZM1305 248h4v6h-4ZM1332 248h4v6h-4ZM1368 248h4v6h-4ZM1386 248h4v6h-4ZM1296 262h4v6h-4ZM1323 262h4v6h-4ZM1332 262h4v6h-4ZM1341 262h4v6h-4ZM1350 262h4v6h-4ZM1377 262h4v6h-4ZM1386 262h4v6h-4ZM1314 276h4v6h-4ZM1323 276h4v6h-4ZM1332 276h4v6h-4ZM1359 276h4v6h-4ZM1377 276h4v6h-4ZM1296 290h4v6h-4ZM1323 290h4v6h-4ZM1386 290h4v6h-4ZM1305 304h4v6h-4ZM1314 304h4v6h-4ZM1332 304h4v6h-4ZM1341 304h4v6h-4ZM1350 304h4v6h-4ZM1359 304h4v6h-4ZM1368 304h4v6h-4ZM1296 318h4v6h-4ZM1305 318h4v6h-4ZM1368 318h4v6h-4ZM1377 318h4v6h-4ZM1350 332h4v6h-4ZM1377 332h4v6h-4ZM1386 332h4v6h-4ZM1314 346h4v6h-4ZM1359 346h4v6h-4ZM1368 346h4v6h-4ZM1386 346h4v6h-4ZM1296 360h4v6h-4ZM1314 360h4v6h-4ZM1377 360h4v6h-4ZM1296 374h4v6h-4ZM1341 374h4v6h-4ZM1368 374h4v6h-4ZM1296 388h4v6h-4ZM1332 388h4v6h-4ZM1341 388h4v6h-4ZM1359 388h4v6h-4ZM1368 388h4v6h-4ZM1332 402h4v6h-4ZM1341 402h4v6h-4ZM1350 402h4v6h-4ZM1411 263h4v6h-4ZM1420 263h4v6h-4ZM1411 277h4v6h-4ZM1420 277h4v6h-4ZM1438 277h4v6h-4ZM1456 277h4v6h-4ZM1402 291h4v6h-4ZM1420 291h4v6h-4ZM1438 291h4v6h-4ZM1456 291h4v6h-4ZM1429 305h4v6h-4ZM1438 305h4v6h-4ZM1402 319h4v6h-4ZM1411 319h4v6h-4ZM1420 319h4v6h-4ZM1447 319h4v6h-4ZM1411 333h4v6h-4ZM1447 333h4v6h-4ZM1465 333h4v6h-4ZM1402 375h4v6h-4ZM1447 375h4v6h-4ZM1465 375h4v6h-4ZM1402 389h4v6h-4ZM1420 389h4v6h-4ZM1438 403h4v6h-4ZM1456 403h4v6h-4ZM1525 231h4v6h-4ZM1543 231h4v6h-4ZM1489 259h4v6h-4ZM1516 259h4v6h-4ZM1534 259h4v6h-4ZM1489 273h4v6h-4ZM1516 273h4v6h-4ZM1489 301h4v6h-4ZM1498 301h4v6h-4ZM1507 315h4v6h-4ZM1543 315h4v6h-4ZM1498 329h4v6h-4ZM1507 343h4v6h-4ZM1525 357h4v6h-4ZM1498 371h4v6h-4ZM1543 371h4v6h-4ZM1507 385h4v6h-4ZM1489 399h4v6h-4ZM1507 399h4v6h-4ZM1534 399h4v6h-4ZM1543 399h4v6h-4ZM1534 413h4v6h-4ZM1565 278h4v6h-4ZM1574 278h4v6h-4ZM1592 278h4v6h-4ZM1574 306h4v6h-4ZM1592 306h4v6h-4ZM1574 320h4v6h-4ZM1592 320h4v6h-4ZM1565 334h4v6h-4ZM1583 334h4v6h-4ZM1574 362h4v6h-4ZM1574 390h4v6h-4ZM1565 404h4v6h-4ZM1574 404h4v6h-4ZM1625 172h4v6h-4ZM1643 186h4v6h-4ZM1670 186h4v6h-4ZM1679 186h4v6h-4ZM1616 200h4v6h-4ZM1625 200h4v6h-4ZM1652 200h4v6h-4ZM1625 214h4v6h-4ZM1643 214h4v6h-4ZM1652 214h4v6h-4ZM1661 214h4v6h-4ZM1616 228h4v6h-4ZM1652 228h4v6h-4ZM1661 228h4v6h-4ZM1670 228h4v6h-4ZM1625 242h4v6h-4ZM1652 242h4v6h-4ZM1661 242h4v6h-4ZM1670 242h4v6h-4ZM1616 256h4v6h-4ZM1634 256h4v6h-4ZM1643 256h4v6h-4ZM1616 270h4v6h-4ZM1634 270h4v6h-4ZM1670 270h4v6h-4ZM1625 284h4v6h-4ZM1634 284h4v6h-4ZM1661 284h4v6h-4ZM1670 284h4v6h-4ZM1634 298h4v6h-4ZM1652 298h4v6h-4ZM1661 298h4v6h-4ZM1661 312h4v6h-4ZM1625 326h4v6h-4ZM1625 340h4v6h-4ZM1643 340h4v6h-4ZM1679 340h4v6h-4ZM1616 354h4v6h-4ZM1652 354h4v6h-4ZM1679 354h4v6h-4ZM1643 382h4v6h-4ZM1679 382h4v6h-4ZM1643 396h4v6h-4ZM1661 396h4v6h-4ZM1670 396h4v6h-4ZM1616 410h4v6h-4ZM1652 410h4v6h-4Z"/></svg>
+    <svg class="duv__city duv__city--near" viewBox="0 0 1600 420" preserveAspectRatio="xMidYMax slice" focusable="false"><path class="b" d="M-20 420V233h80V420ZM31 233v-29h3V233ZM62 420V239h141V420ZM206 420V262h148V420ZM359 420V182h110V420ZM471 420V187h99V420ZM572 420V306h80V420ZM614 306v-39h3V306ZM654 420V272h109V420ZM764 420V334h75V420ZM806 334v-33h3V334ZM843 420V345h118V420ZM907 345v-37h3V345ZM964 420V254h116V420ZM1085 420V325h154V420ZM1244 420V198h158V420ZM1404 420V200h105V420ZM1513 420V305h121V420Z"/><path class="t" d="M-20 233h80v2h-80ZM62 239h141v2h-141ZM206 262h148v2h-148ZM359 182h110v2h-110ZM471 187h99v2h-99ZM572 306h80v2h-80ZM654 272h109v2h-109ZM764 334h75v2h-75ZM843 345h118v2h-118ZM964 254h116v2h-116ZM1085 325h154v2h-154ZM1244 198h158v2h-158ZM1404 200h105v2h-105ZM1513 305h121v2h-121Z"/><path class="w" d="M14 243h6v9h-6ZM14 285h6v9h-6ZM28 285h6v9h-6ZM28 306h6v9h-6ZM0 327h6v9h-6ZM0 348h6v9h-6ZM0 369h6v9h-6ZM42 369h6v9h-6ZM-14 390h6v9h-6ZM0 390h6v9h-6ZM28 390h6v9h-6ZM42 390h6v9h-6ZM124 249h6v9h-6ZM180 249h6v9h-6ZM110 270h6v9h-6ZM96 291h6v9h-6ZM138 291h6v9h-6ZM152 291h6v9h-6ZM68 312h6v9h-6ZM166 312h6v9h-6ZM180 312h6v9h-6ZM68 333h6v9h-6ZM82 333h6v9h-6ZM110 333h6v9h-6ZM180 333h6v9h-6ZM166 354h6v9h-6ZM68 375h6v9h-6ZM96 375h6v9h-6ZM282 272h6v9h-6ZM324 272h6v9h-6ZM226 293h6v9h-6ZM282 293h6v9h-6ZM310 293h6v9h-6ZM282 314h6v9h-6ZM324 314h6v9h-6ZM226 335h6v9h-6ZM310 335h6v9h-6ZM324 335h6v9h-6ZM240 356h6v9h-6ZM254 356h6v9h-6ZM282 356h6v9h-6ZM296 356h6v9h-6ZM240 377h6v9h-6ZM324 377h6v9h-6ZM240 398h6v9h-6ZM282 398h6v9h-6ZM296 398h6v9h-6ZM324 398h6v9h-6ZM379 192h6v9h-6ZM365 213h6v9h-6ZM365 234h6v9h-6ZM379 234h6v9h-6ZM393 234h6v9h-6ZM407 276h6v9h-6ZM449 276h6v9h-6ZM421 297h6v9h-6ZM435 297h6v9h-6ZM393 318h6v9h-6ZM407 318h6v9h-6ZM435 318h6v9h-6ZM379 339h6v9h-6ZM407 339h6v9h-6ZM421 339h6v9h-6ZM435 360h6v9h-6ZM393 402h6v9h-6ZM435 402h6v9h-6ZM505 197h6v9h-6ZM519 218h6v9h-6ZM547 218h6v9h-6ZM491 260h6v9h-6ZM547 260h6v9h-6ZM477 281h6v9h-6ZM491 281h6v9h-6ZM505 281h6v9h-6ZM491 302h6v9h-6ZM505 302h6v9h-6ZM547 302h6v9h-6ZM533 323h6v9h-6ZM477 344h6v9h-6ZM505 344h6v9h-6ZM519 344h6v9h-6ZM477 365h6v9h-6ZM592 316h6v9h-6ZM620 337h6v9h-6ZM620 358h6v9h-6ZM592 400h6v9h-6ZM660 303h6v9h-6ZM744 303h6v9h-6ZM674 324h6v9h-6ZM730 324h6v9h-6ZM674 345h6v9h-6ZM688 345h6v9h-6ZM716 345h6v9h-6ZM674 366h6v9h-6ZM702 366h6v9h-6ZM716 366h6v9h-6ZM730 366h6v9h-6ZM660 387h6v9h-6ZM702 387h6v9h-6ZM730 387h6v9h-6ZM702 408h6v9h-6ZM730 408h6v9h-6ZM770 365h6v9h-6ZM812 386h6v9h-6ZM863 355h6v9h-6ZM919 355h6v9h-6ZM849 376h6v9h-6ZM891 376h6v9h-6ZM877 397h6v9h-6ZM919 397h6v9h-6ZM947 397h6v9h-6ZM1012 264h6v9h-6ZM1012 285h6v9h-6ZM1026 285h6v9h-6ZM1068 306h6v9h-6ZM970 327h6v9h-6ZM984 327h6v9h-6ZM1012 327h6v9h-6ZM984 369h6v9h-6ZM1012 369h6v9h-6ZM1054 369h6v9h-6ZM1091 335h6v9h-6ZM1105 335h6v9h-6ZM1119 335h6v9h-6ZM1133 335h6v9h-6ZM1161 335h6v9h-6ZM1203 335h6v9h-6ZM1105 356h6v9h-6ZM1147 356h6v9h-6ZM1189 356h6v9h-6ZM1105 377h6v9h-6ZM1119 377h6v9h-6ZM1161 377h6v9h-6ZM1189 377h6v9h-6ZM1203 377h6v9h-6ZM1091 398h6v9h-6ZM1105 398h6v9h-6ZM1217 398h6v9h-6ZM1320 208h6v9h-6ZM1334 208h6v9h-6ZM1250 229h6v9h-6ZM1278 250h6v9h-6ZM1320 271h6v9h-6ZM1278 292h6v9h-6ZM1320 292h6v9h-6ZM1334 292h6v9h-6ZM1348 292h6v9h-6ZM1278 313h6v9h-6ZM1334 313h6v9h-6ZM1264 334h6v9h-6ZM1390 334h6v9h-6ZM1250 355h6v9h-6ZM1306 376h6v9h-6ZM1320 376h6v9h-6ZM1390 376h6v9h-6ZM1264 397h6v9h-6ZM1376 397h6v9h-6ZM1410 210h6v9h-6ZM1438 210h6v9h-6ZM1410 231h6v9h-6ZM1494 231h6v9h-6ZM1410 252h6v9h-6ZM1424 273h6v9h-6ZM1438 273h6v9h-6ZM1494 294h6v9h-6ZM1438 315h6v9h-6ZM1494 336h6v9h-6ZM1452 378h6v9h-6ZM1480 378h6v9h-6ZM1561 315h6v9h-6ZM1589 336h6v9h-6ZM1533 357h6v9h-6ZM1589 357h6v9h-6ZM1603 357h6v9h-6ZM1575 378h6v9h-6ZM1533 399h6v9h-6ZM1603 399h6v9h-6Z"/><path class="n" d="M500 236h7v59h-7ZM607 365h7v105h-7ZM674 295h71v9h-77ZM894 385h7v52h-7ZM1120 352h69v9h-48ZM1554 354h63v9h-70Z"/></svg>
+    <span class="duv__fog duv__fog--a"></span>
+    <span class="duv__fog duv__fog--b"></span>
+    <span class="duv__motes"></span>
+    <span class="duv__vignette"></span>
+  </div>
+
+  <!-- Objeto-herói: medalhão octogonal que é a RODA DA SORTE (decorativo para leitor de tela;
+       o resultado é anunciado no painel 01). Camadas separadas para a roda girar só na GPU:
+       moldura de trás | roda (+ cópia desfocada para o borrão de velocidade) | moldura da frente | luzes | ponteiro | faíscas -->
+  <div class="duv__hero" aria-hidden="true">
+    <span class="duv__halo"></span>
+    <div class="duv__medal">
+      <span class="duv__medal-side"></span>
+      <svg class="duv__medal-svg duv__medal-back" viewBox="0 0 520 560" focusable="false">
+        <defs>
+          <linearGradient id="duv-m-metal" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e9e2ff"/><stop offset=".18" stop-color="#8f86c4"/><stop offset=".46" stop-color="#2a2458"/><stop offset=".72" stop-color="#4a3f8e"/><stop offset="1" stop-color="#15112e"/></linearGradient>
+          <linearGradient id="duv-m-inner" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2b2266"/><stop offset=".55" stop-color="#130f36"/><stop offset="1" stop-color="#0a0820"/></linearGradient>
+          <radialGradient id="duv-m-glow" cx=".5" cy=".42" r=".55"><stop offset="0" stop-color="#7a5cff" stop-opacity=".55"/><stop offset="1" stop-color="#7a5cff" stop-opacity="0"/></radialGradient>
+          <linearGradient id="duv-m-rim" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#FF9DFF" stop-opacity="0"/><stop offset=".62" stop-color="#FF9DFF" stop-opacity="0"/><stop offset="1" stop-color="#FF9DFF"/></linearGradient>
+          <linearGradient id="duv-m-top" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".9"/><stop offset=".3" stop-color="#fff" stop-opacity="0"/></linearGradient>
+          <radialGradient id="duv-m-gloss" cx=".34" cy=".18" r=".85"><stop offset="0" stop-color="#fff" stop-opacity=".2"/><stop offset=".45" stop-color="#fff" stop-opacity=".04"/><stop offset=".7" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#05030f" stop-opacity=".45"/></radialGradient>
+          <filter id="duv-m-soft" x="-30%" y="-60%" width="160%" height="220%"><feGaussianBlur stdDeviation="22"/></filter>
+        </defs>
+        <!-- aro externo de metal (escudo chanfrado de 8 lados) -->
+        <path d="M150 8h220l142 142v214L370 552H150L8 364V150z" fill="url(#duv-m-metal)"/>
+        <path d="M150 8h220l142 142v214L370 552H150L8 364V150z" fill="none" stroke="url(#duv-m-top)" stroke-width="2"/>
+        <!-- bisel interno escuro -->
+        <path d="M162 36h196l126 126v190L358 524H162L36 352V162z" fill="#0c0a22"/>
+        <!-- face de vidro -->
+        <path d="M172 54h176l118 118v178L348 506H172L54 350V172z" fill="url(#duv-m-inner)"/>
+        <path d="M172 54h176l118 118v178L348 506H172L54 350V172z" fill="url(#duv-m-glow)"/>
+        <!-- linhas de chanfro (luz no topo-esquerda, sombra embaixo) -->
+        <path d="M54 172L172 54h176" fill="none" stroke="#dcd2ff" stroke-opacity=".7" stroke-width="2"/>
+        <path d="M466 350L348 506H172" fill="none" stroke="#000" stroke-opacity=".6" stroke-width="3"/>
+        <circle cx="260" cy="280" r="186" fill="#0c0a22"/>
+      </svg>
+      <!-- RODA: fatias geradas em js/30-duvidas.js a partir da lista PREMIOS -->
+      <div class="duv-wheel" data-wheel-rot>
+        <svg class="duv-wheel__svg" viewBox="0 0 520 560" focusable="false"><g data-wheel></g></svg>
+        <svg class="duv-wheel__svg duv-wheel__blur" viewBox="0 0 520 560" focusable="false" data-wheel-blur></svg>
+      </div>
+      <svg class="duv__medal-svg duv__medal-front" viewBox="0 0 520 560" focusable="false">
+        <circle class="duv-wheel__glass" cx="260" cy="280" r="171"/>
+        <circle cx="260" cy="280" r="177" fill="none" stroke="url(#duv-m-metal)" stroke-width="12"/>
+        <circle cx="260" cy="280" r="183.5" fill="none" stroke="#dcd2ff" stroke-opacity=".35" stroke-width="1.5"/>
+        <circle cx="260" cy="280" r="50" fill="url(#duv-m-inner)" stroke="url(#duv-m-metal)" stroke-width="5"/>
+        <image class="duv__medal-mark" href="assets/img/ryz-wordmark-600.webp" x="216" y="266" width="88" height="28" preserveAspectRatio="xMidYMid meet"/>
+        <!-- luz de borda rosa (lado direito) -->
+        <path d="M370 8l142 142v214L370 552" fill="none" stroke="url(#duv-m-rim)" stroke-width="5"/>
+      </svg>
+      <svg class="duv-wheel__layer duv-wheel__bulbs" viewBox="0 0 520 560" focusable="false" data-wheel-bulbs></svg>
+      <svg class="duv-wheel__layer duv-wheel__ptr-l" viewBox="0 0 520 560" focusable="false" data-wheel-ptr>
+        <circle cx="260" cy="80" r="9" fill="url(#duv-m-metal)"/>
+        <path class="duv-wheel__ptr" d="M244 76h32l-16 48z"/>
+      </svg>
+      <div class="duv-wheel__fx" data-wheel-fx></div>
+    </div>
+  </div>
+
+  <span class="duv__bokeh" aria-hidden="true"></span>
+
+  <div class="duv__wrap" data-faq-wrap>
+
+    <header class="duv__head">
+      <span class="duv__head-ico" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M9 9a3 3 0 1 1 4.2 2.75c-.75.33-1.2 1.07-1.2 1.9V15"/><circle cx="12" cy="18.5" r=".6" fill="currentColor"/></svg></span>
+      <div>
+        <h2 id="duvidas-title" class="duv__title">Dúvidas</h2>
+        <p class="duv__sub" lang="en">FAQ · Questions</p>
+      </div>
+    </header>
+
+    <!-- Placa da lista: vidro escuro, uma peça só em perspectiva (borda esquerda perto, direita afundando) -->
+    <div class="duv__menu">
+      <div class="duv__slab">
+        <span class="duv__cast" aria-hidden="true"></span>
+        <span class="duv__edge" aria-hidden="true"></span>
+        <span class="duv__glass" aria-hidden="true"></span>
+        <div class="duv__bar" aria-hidden="true">
+          <span class="duv__bar-l">Perguntas</span>
+          <span class="duv__bar-n"><b data-faq-cur>01</b>/07</span>
+        </div>
+        <div class="duv__list" role="tablist" aria-orientation="vertical" aria-label="Perguntas frequentes">
+        <button class="duv-q is-active is-seen" role="tab" id="dq-1" aria-controls="dp-1" aria-selected="true" type="button" data-faq-tab>
+          <span class="duv-q__g" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><circle cx="12" cy="13" r="8"/><path d="M12 5v16M4 13h16M6.3 7.3l11.4 11.4M17.7 7.3 6.3 18.7"/><path d="M10 2h4l-2 3z" fill="currentColor"/></svg></span>
+          <span class="duv-q__n" aria-hidden="true">01</span>
+          <span class="duv-q__t">Roda da sorte</span><svg class="ico duv-q__ok" aria-hidden="true"><use href="#i-check"/></svg>
+        </button>
+        <button class="duv-q" role="tab" id="dq-2" aria-controls="dp-2" aria-selected="false" tabindex="-1" type="button" data-faq-tab>
+          <span class="duv-q__g" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M3 7.5h18v3a2 2 0 0 0 0 3v3H3v-3a2 2 0 0 0 0-3z"/><path d="M15 7.5v9" stroke-dasharray="1.6 1.8"/></svg></span>
+          <span class="duv-q__n" aria-hidden="true">02</span>
+          <span class="duv-q__t">Como eu entro no beta?</span><svg class="ico duv-q__ok" aria-hidden="true"><use href="#i-check"/></svg>
+        </button>
+        <button class="duv-q duv-q--soon" role="tab" id="dq-3" aria-controls="dp-3" aria-selected="false" tabindex="-1" type="button" data-faq-tab>
+          <span class="duv-q__g" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M7 8h10a4 4 0 0 1 3.9 4.9l-.8 3.4a2 2 0 0 1-3.4.9L14.5 15h-5l-2.2 2.2a2 2 0 0 1-3.4-.9l-.8-3.4A4 4 0 0 1 7 8z"/><path d="M8 10.5v3M6.5 12h3"/><circle cx="16" cy="11" r=".7" fill="currentColor"/><circle cx="17.5" cy="13" r=".7" fill="currentColor"/></svg></span>
+          <span class="duv-q__n" aria-hidden="true">03</span>
+          <span class="duv-q__t">Preciso do GTA V original?</span><span class="duv-q__soon"><svg class="ico" aria-hidden="true"><use href="#i-lock"/></svg>Em breve</span>
+        </button>
+        <button class="duv-q duv-q--soon" role="tab" id="dq-4" aria-controls="dp-4" aria-selected="false" tabindex="-1" type="button" data-faq-tab>
+          <span class="duv-q__g" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M4 6h16v14H4z"/><path d="M4 10h16M8 3.5V7.5M16 3.5V7.5"/><path d="M8 13.5h2.5v2.5H8z" fill="currentColor"/></svg></span>
+          <span class="duv-q__n" aria-hidden="true">04</span>
+          <span class="duv-q__t">Quando a cidade abre?</span><span class="duv-q__soon"><svg class="ico" aria-hidden="true"><use href="#i-lock"/></svg>Em breve</span>
+        </button>
+        <button class="duv-q duv-q--soon" role="tab" id="dq-5" aria-controls="dp-5" aria-selected="false" tabindex="-1" type="button" data-faq-tab>
+          <span class="duv-q__g" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M7 4h10l4 5-9 11L3 9z"/><path d="M3 9h18M9.5 4L8 9l4 11 4-11-1.5-5"/></svg></span>
+          <span class="duv-q__n" aria-hidden="true">05</span>
+          <span class="duv-q__t">Como vai ser o VIP?</span><span class="duv-q__soon"><svg class="ico" aria-hidden="true"><use href="#i-lock"/></svg>Em breve</span>
+        </button>
+        <button class="duv-q" role="tab" id="dq-6" aria-controls="dp-6" aria-selected="false" tabindex="-1" type="button" data-faq-tab>
+          <span class="duv-q__g" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><circle cx="9" cy="8.5" r="3.2"/><path d="M3 19.5a6 6 0 0 1 12 0"/><path d="M15.5 5.6a3.2 3.2 0 0 1 0 5.8M17.5 14a6 6 0 0 1 3.5 5.5"/></svg></span>
+          <span class="duv-q__n" aria-hidden="true">06</span>
+          <span class="duv-q__t">Quem faz a RYZ?</span><svg class="ico duv-q__ok" aria-hidden="true"><use href="#i-check"/></svg>
+        </button>
+        <button class="duv-q" role="tab" id="dq-7" aria-controls="dp-7" aria-selected="false" tabindex="-1" type="button" data-faq-tab>
+          <span class="duv-q__g" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M4 5h16v11H11l-5 4v-4H4z"/><path d="M10 9a2 2 0 1 1 2.8 1.8c-.5.2-.8.7-.8 1.2"/><circle cx="12" cy="13.7" r=".6" fill="currentColor"/></svg></span>
+          <span class="duv-q__n" aria-hidden="true">07</span>
+          <span class="duv-q__t">Onde tiro outras dúvidas?</span><svg class="ico duv-q__ok" aria-hidden="true"><use href="#i-check"/></svg>
+        </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Detalhe: texto solto sobre a cena, um herói só -->
+    <div class="duv__detail">
+      <div class="duv__panels">
+        <div class="duv-p duv-p--say duv-p--wheel" role="tabpanel" id="dp-1" aria-labelledby="dq-1" tabindex="0">
+          <h3 class="duv-p__title">Gire a roda da sorte <span class="duv-p__en" lang="en">Spin the wheel</span></h3>
+          <p class="duv-p__phon duv-p__phon--wheel">Gire<i aria-hidden="true">·</i>Ganhe</p>
+          <!-- Vitrine: a roda gira e sorteia um prêmio da lista PREMIOS (js/30-duvidas.js), mas nada é entregue de verdade. -->
+          <div class="duv-voice duv-spin" data-spin>
+            <button class="duv-voice__btn duv-spin__btn" type="button" data-spin-btn><kbd aria-hidden="true">F</kbd><span data-spin-label>Girar a roda</span></button>
+            <p class="duv-spin__out" data-spin-out aria-live="polite">Descontos · carros · diamantes · VIP</p>
+          </div>
+          <div class="duv-p__body">
+            <p>Você tem <b>um giro por dia</b>. Gire e veja o que a cidade tem pra você: <b>descontos de 10% a 50%</b>, aluguel de carros, diamantes e tempo de VIP.</p>
+            <p class="duv-spin__note" data-placeholder="Roda de demonstração: prêmios e resgate reais ainda não existem">Giro de demonstração. A roda valendo prêmio chega com a abertura da cidade.</p>
+          </div>
+        </div>
+
+        <div class="duv-p" role="tabpanel" id="dp-2" aria-labelledby="dq-2" tabindex="0">
+          <h3 class="duv-p__title">Como eu entro no beta? <span class="duv-p__en" lang="en">How to join the beta</span></h3>
+          <div class="duv-p__body"><p>O beta é fechado, <b>por convite</b>, e tudo começa no Discord. Quem entra agora vira <strong>Beta Tester</strong>.</p></div>
+          <dl class="duv-p__facts"><div><dt>Acesso</dt><dd>Por convite</dd></div><div><dt>Onde</dt><dd>Discord</dd></div></dl>
+          <p class="g-ph g-ph--free duv-ph" data-placeholder="Resposta: passo a passo do convite do beta"><span class="g-ph__label">[RESPOSTA — PASSO A PASSO DO CONVITE]</span></p>
+        </div>
+        <div class="duv-p" role="tabpanel" id="dp-3" aria-labelledby="dq-3" tabindex="0">
+          <h3 class="duv-p__title">Preciso do GTA V original? <span class="duv-p__en" lang="en">Do I need the original game</span></h3>
+          <div class="duv-p__body"><p>A resposta oficial sai <b>em breve</b>, primeiro no Discord.</p></div>
+          <dl class="duv-p__facts"><div><dt>Status</dt><dd>Em breve</dd></div><div><dt>Sai onde</dt><dd>Discord</dd></div></dl>
+          <p class="g-ph g-ph--free duv-ph" data-placeholder="Resposta: precisa do GTA V original?"><span class="g-ph__label">[RESPOSTA — PRECISA DO GTA V ORIGINAL?]</span></p>
+        </div>
+        <div class="duv-p" role="tabpanel" id="dp-4" aria-labelledby="dq-4" tabindex="0">
+          <h3 class="duv-p__title">Quando a cidade abre? <span class="duv-p__en" lang="en">When does it open</span></h3>
+          <div class="duv-p__body"><p>Em breve. A data sai <b>primeiro no Discord</b>, então fica de olho nos avisos.</p></div>
+          <dl class="duv-p__facts"><div><dt>Abertura</dt><dd>Em breve</dd></div><div><dt>Agora</dt><dd>Beta fechado</dd></div></dl>
+          <p class="g-ph g-ph--free duv-ph" data-placeholder="Resposta: data de abertura"><span class="g-ph__label">[RESPOSTA — DATA DE ABERTURA]</span></p>
+        </div>
+        <div class="duv-p" role="tabpanel" id="dp-5" aria-labelledby="dq-5" tabindex="0">
+          <h3 class="duv-p__title">Como vai ser o VIP? <span class="duv-p__en" lang="en">About VIP plans</span></h3>
+          <div class="duv-p__body"><p>Seis planos, todos <b>em breve</b>: Bronze, Prata, Ouro, Esmeralda, Rubi e Diamante.</p></div>
+          <dl class="duv-p__facts"><div><dt>Planos</dt><dd>6</dd></div><div><dt>Preço</dt><dd>Em breve</dd></div></dl>
+          <p class="g-ph g-ph--free duv-ph" data-placeholder="Resposta: como vai funcionar o VIP"><span class="g-ph__label">[RESPOSTA — COMO VAI FUNCIONAR O VIP]</span></p>
+        </div>
+        <div class="duv-p" role="tabpanel" id="dp-6" aria-labelledby="dq-6" tabindex="0">
+          <h3 class="duv-p__title">Quem faz a RYZ? <span class="duv-p__en" lang="en">Who is behind it</span></h3>
+          <div class="duv-p__body"><p>A RYZ é feita pela <b>ryz.group™</b>, o nome que assina o servidor, o site e o Discord.</p></div>
+          <dl class="duv-p__facts"><div><dt>Criadores</dt><dd>ryz.group™</dd></div><div><dt>Fala com</dt><dd>Discord</dd></div></dl>
+        </div>
+        <div class="duv-p" role="tabpanel" id="dp-7" aria-labelledby="dq-7" tabindex="0">
+          <h3 class="duv-p__title">Onde tiro outras dúvidas? <span class="duv-p__en" lang="en">Ask us anything</span></h3>
+          <div class="duv-p__body"><p>No <b>Discord</b>. Convite do beta, avisos e a data de abertura saem lá primeiro. Entra em <b>discord.gg/jogueryz</b> e chama a staff.</p></div>
+          <dl class="duv-p__facts"><div><dt>Servidor</dt><dd>jogueryz</dd></div><div><dt>Staff</dt><dd>No chat</dd></div></dl>
+        </div>
+      </div>
+
+      <!-- CTA: a única cor de ação da tela (bloco lavanda quase branco, texto escuro), com a aba "Beta fechado" encostada -->
+      <div class="duv__cta">
+        <p class="duv__req"><svg class="ico" aria-hidden="true"><use href="#i-clock"/></svg>Faça sua WL agora</p>
+        <a class="duv__btn" href="https://discord.gg/jogueryz" data-discord target="_blank" rel="noopener">
+          <svg class="ico duv__btn-ico" aria-hidden="true"><use href="#i-discord"/></svg>
+          <span class="duv__btn-label">Chamar no Discord<span class="sr-only"> e pedir seu convite do beta</span></span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Rodapé de HUD: faixa escura contínua; linha de sistema apagada à esquerda, teclas à direita -->
+    <div class="duv__foot">
+      <p class="duv__sys">RYZ-CLIENT v0.1 · beta | ryz.group™ | Servidor: <span data-players>Offline</span></p>
+      <div class="duv__keys">
+        <span class="g-key" aria-hidden="true"><kbd>↑↓</kbd>Navegar</span>
+        <a class="g-key duv__key-link" href="regras.html"><kbd>R</kbd>Regras</a>
+        <a class="g-key duv__key-link" href="https://discord.gg/jogueryz" data-discord target="_blank" rel="noopener"><kbd>D</kbd>Discord</a>
+      </div>
+    </div>
+
+  </div>
+</section>

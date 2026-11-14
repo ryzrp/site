@@ -1,0 +1,288 @@
+<!-- VIP (dono: construtor do VIP). Tudo "Em breve". Emblemas em SVG inline, sem coroa.
+     Tela de passe de batalha: cena de fundo (céu frio, horizonte, chão), trilha inclinada à esquerda,
+     vitrine do item selecionado no centro (carro da concessionária Premium ou emblema) e coluna de informações à direita.
+     Cada card é um rádio; tudo troca só com CSS (:has), sem JS. -->
+<section id="vip" class="section vip" aria-labelledby="vip-kick vip-title">
+  <svg class="vip__defs" aria-hidden="true" focusable="false">
+    <symbol id="vip-e-bronze" viewBox="0 0 64 64"><path d="M32 4 56 13v19c0 14-10 23-24 28C18 55 8 46 8 32V13z" fill="currentColor" fill-opacity=".16" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/><path d="M32 10 50 17v15c0 10-7 17-18 21" fill="none" stroke="currentColor" stroke-opacity=".45" stroke-width="2"/><path d="m19 28 13 9 13-9v8l-13 9-13-9z" fill="currentColor"/></symbol>
+    <symbol id="vip-e-prata" viewBox="0 0 64 64"><path d="M32 4 56 13v19c0 14-10 23-24 28C18 55 8 46 8 32V13z" fill="currentColor" fill-opacity=".16" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/><path d="M32 10 50 17v15c0 10-7 17-18 21" fill="none" stroke="currentColor" stroke-opacity=".45" stroke-width="2"/><path d="m19 21 13 9 13-9v7l-13 9-13-9zm0 13 13 9 13-9v7l-13 9-13-9z" fill="currentColor"/></symbol>
+    <symbol id="vip-e-ouro" viewBox="0 0 64 64"><path d="M32 4 56 13v19c0 14-10 23-24 28C18 55 8 46 8 32V13z" fill="currentColor" fill-opacity=".16" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/><path d="m32 14 4.2 8.6 9.4 1.4-6.8 6.6 1.6 9.4L32 35.6 23.6 40l1.6-9.4-6.8-6.6 9.4-1.4z" fill="currentColor"/><path d="m19 42 13 8 13-8v5l-13 8-13-8z" fill="currentColor" fill-opacity=".8"/></symbol>
+    <symbol id="vip-e-esmeralda" viewBox="0 0 64 64"><path d="M22 5h20l15 15v24L42 59H22L7 44V20z" fill="currentColor" fill-opacity=".16" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/><path d="M26 17h12l9 9v12l-9 9H26l-9-9V26z" fill="currentColor"/><path d="M22 5l4 12M42 5l-4 12M57 20l-10 6M57 44l-10-6M42 59l-4-12M22 59l4-12M7 44l10-6M7 20l10 6" stroke="currentColor" stroke-opacity=".6" stroke-width="2"/><path d="M27 22h7l-9 9v-5z" fill="#fff" fill-opacity=".45"/></symbol>
+    <symbol id="vip-e-rubi" viewBox="0 0 64 64"><path d="M32 5 56 19v26L32 59 8 45V19z" fill="currentColor" fill-opacity=".16" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/><path d="M32 15 47 24v16l-15 9-15-9V24z" fill="currentColor"/><path d="M32 5v10M56 19l-9 5M56 45l-9-5M32 59V49M8 45l9-5M8 19l9 5" stroke="currentColor" stroke-opacity=".6" stroke-width="2"/><path d="M32 15 47 24 32 32 17 24z" fill="#fff" fill-opacity=".3"/></symbol>
+    <symbol id="vip-e-diamante" viewBox="0 0 64 64"><path d="M17 9h30l13 15-28 33L4 24z" fill="currentColor" fill-opacity=".2" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/><path d="M4 24h56M25 9l-7 15 14 33 14-33-7-15M18 24l7-15 7 15 7-15 7 15" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/><path d="M18 24h28L32 57z" fill="currentColor" fill-opacity=".55"/><path d="M25 9h7l-7 15h-7z" fill="#fff" fill-opacity=".45"/></symbol>
+    <symbol id="vip-r-bronze" viewBox="0 0 200 200"><path d="M70 120 52 190l24-12 14 20 14-66z" fill="currentColor" fill-opacity=".55"/><path d="M130 120l18 70-24-12-14 20-14-66z" fill="currentColor" fill-opacity=".4"/><circle cx="100" cy="88" r="78" fill="currentColor"/><path d="M22 88a78 78 0 0 1 156 0z" fill="#fff" fill-opacity=".28"/><path d="M178 88a78 78 0 0 1-78 78V88z" fill="#000" fill-opacity=".34"/><path d="M100 10a78 78 0 0 0-70 44l70 34z" fill="#fff" fill-opacity=".22"/><circle cx="100" cy="88" r="78" fill="none" stroke="#fff" stroke-opacity=".6" stroke-width="2"/><circle cx="100" cy="88" r="56" fill="#120022" fill-opacity=".28" stroke="#fff" stroke-opacity=".45" stroke-width="2" stroke-dasharray="6 5"/><path d="m66 82 34 22 34-22v18l-34 22-34-22z" fill="#120022" fill-opacity=".55"/><path d="m66 82 34 22 34-22" fill="none" stroke="#fff" stroke-opacity=".7" stroke-width="2.5"/><path d="m80 62 20 13 20-13" fill="none" stroke="#fff" stroke-opacity=".5" stroke-width="2"/></symbol>
+    <symbol id="vip-r-prata" viewBox="0 0 200 200"><polygon points="100 10 172 36 172 98 162 134 136 162 100 188 64 162 38 134 28 98 28 36" fill="currentColor"/><polygon points="100 10 172 36 150.4 54 100 35.8" fill="#fff" fill-opacity="0.47600000000000003"/><polygon points="172 36 172 98 150.4 97.4 150.4 54" fill="#000" fill-opacity="0.355"/><polygon points="172 98 162 134 143.4 122.6 150.4 97.4" fill="#000" fill-opacity="0.456"/><polygon points="162 134 136 162 125.2 142.2 143.4 122.6" fill="#000" fill-opacity="0.564"/><polygon points="136 162 100 188 100 160.4 125.2 142.2" fill="#000" fill-opacity="0.5770000000000001"/><polygon points="100 188 64 162 74.8 142.2 100 160.4" fill="#000" fill-opacity="0.255"/><polygon points="64 162 38 134 56.6 122.6 74.8 142.2" fill="#000" fill-opacity="0.161"/><polygon points="38 134 28 98 49.6 97.4 56.6 122.6" fill="#fff" fill-opacity="0.305"/><polygon points="28 98 28 36 49.6 54 49.6 97.4" fill="#fff" fill-opacity="0.45"/><polygon points="28 36 100 10 100 35.8 49.6 54" fill="#fff" fill-opacity="0.7"/><polygon points="100 35.8 150.4 54 150.4 97.4 143.4 122.6 125.2 142.2 100 160.4 74.8 142.2 56.6 122.6 49.6 97.4 49.6 54" fill="#fff" fill-opacity=".1"/><polygon points="49.6 54 100 35.8 100 96" fill="#fff" fill-opacity=".22"/><polygon points="100 10 172 36 172 98 162 134 136 162 100 188 64 162 38 134 28 98 28 36" fill="none" stroke="#fff" stroke-opacity=".55" stroke-width="2" stroke-linejoin="round"/><polygon points="100 35.8 150.4 54 150.4 97.4 143.4 122.6 125.2 142.2 100 160.4 74.8 142.2 56.6 122.6 49.6 97.4 49.6 54" fill="none" stroke="#fff" stroke-opacity=".3" stroke-width="1.2" stroke-linejoin="round"/><path d="m64 62 36 24 36-24v20l-36 24-36-24z" fill="#120022" fill-opacity=".5"/><path d="m64 62 36 24 36-24" fill="none" stroke="#fff" stroke-opacity=".55" stroke-width="2"/><path d="m64 104 36 24 36-24v20l-36 24-36-24z" fill="#120022" fill-opacity=".5"/><path d="m64 104 36 24 36-24" fill="none" stroke="#fff" stroke-opacity=".55" stroke-width="2"/></symbol>
+    <symbol id="vip-r-ouro" viewBox="0 0 200 200"><polygon points="100 10 123 44.6 163.6 36.4 155.4 77 190 100 155.4 123 163.6 163.6 123 155.4 100 190 77 155.4 36.4 163.6 44.6 123 10 100 44.6 77 36.4 36.4 77 44.6" fill="currentColor"/><polygon points="100 100 100 10 123 44.6" fill="#fff" fill-opacity="0.3"/><polygon points="100 100 123 44.6 163.6 36.4" fill="#fff" fill-opacity="0.1"/><polygon points="100 100 163.6 36.4 155.4 77" fill="#000" fill-opacity="0.1"/><polygon points="100 100 155.4 77 190 100" fill="#000" fill-opacity="0.3"/><polygon points="100 100 190 100 155.4 123" fill="#000" fill-opacity="0.4"/><polygon points="100 100 155.4 123 163.6 163.6" fill="#000" fill-opacity="0.5"/><polygon points="100 100 163.6 163.6 123 155.4" fill="#000" fill-opacity="0.5"/><polygon points="100 100 123 155.4 100 190" fill="#000" fill-opacity="0.4"/><polygon points="100 100 100 190 77 155.4" fill="#000" fill-opacity="0.3"/><polygon points="100 100 77 155.4 36.4 163.6" fill="#000" fill-opacity="0.1"/><polygon points="100 100 36.4 163.6 44.6 123" fill="#fff" fill-opacity="0.1"/><polygon points="100 100 44.6 123 10 100" fill="#fff" fill-opacity="0.4"/><polygon points="100 100 10 100 44.6 77" fill="#fff" fill-opacity="0.5"/><polygon points="100 100 44.6 77 36.4 36.4" fill="#fff" fill-opacity="0.6"/><polygon points="100 100 36.4 36.4 77 44.6" fill="#fff" fill-opacity="0.6"/><polygon points="100 100 77 44.6 100 10" fill="#fff" fill-opacity="0.5"/><polygon points="100 10 123 44.6 163.6 36.4 155.4 77 190 100 155.4 123 163.6 163.6 123 155.4 100 190 77 155.4 36.4 163.6 44.6 123 10 100 44.6 77 36.4 36.4 77 44.6" fill="none" stroke="#fff" stroke-opacity=".6" stroke-width="2" stroke-linejoin="round"/><circle cx="100" cy="100" r="34" fill="#120022" fill-opacity=".45" stroke="#fff" stroke-opacity=".55" stroke-width="2"/><path d="m100 78 6.5 13.2 14.5 2.1-10.5 10.2 2.5 14.5L100 111.2 87 118l2.5-14.5L79 93.3l14.5-2.1z" fill="currentColor" stroke="#fff" stroke-opacity=".7" stroke-width="1.5"/></symbol>
+    <symbol id="vip-r-key" viewBox="0 0 64 64"><path d="M10 34c0-2 1.3-3.4 3.6-3.9l6-1.3 4.6-4.6c1-1 2.4-1.5 3.8-1.5h8.6c1.6 0 3 .7 4 1.9l3.2 4 3 .8c1.6.4 2.8 1.9 2.8 3.6V40h-4a4.6 4.6 0 0 1-9 0H23a4.6 4.6 0 0 1-9 0h-4z" fill="currentColor"/><path d="M26 26.4l3.2-3.1h7.2l3 3.7z" fill="#120022" fill-opacity=".55"/><path d="M10 34c0-2 1.3-3.4 3.6-3.9l6-1.3 4.6-4.6c1-1 2.4-1.5 3.8-1.5h8.6c1.6 0 3 .7 4 1.9l3.2 4 3 .8" fill="none" stroke="#fff" stroke-opacity=".7" stroke-width="1.4"/><circle cx="18.5" cy="40" r="3.2" fill="#120022"/><circle cx="41.5" cy="40" r="3.2" fill="#120022"/><circle cx="20" cy="51" r="6" fill="none" stroke="currentColor" stroke-width="3"/><path d="M26 51h22l3 3-3 3-2-2-2 2-2-2-2 2-2-2h-10" fill="currentColor"/></symbol>
+    <symbol id="vip-r-esmeralda" viewBox="0 0 200 200"><polygon points="181.3 133.7 133.7 181.3 66.3 181.3 18.7 133.7 18.7 66.3 66.3 18.7 133.7 18.7 181.3 66.3" fill="currentColor"/><polygon points="181.3 133.7 133.7 181.3 119.5 147.2 147.2 119.5" fill="#000" fill-opacity="0.568"/><polygon points="133.7 181.3 66.3 181.3 80.5 147.2 119.5 147.2" fill="#000" fill-opacity="0.495"/><polygon points="66.3 181.3 18.7 133.7 52.8 119.5 80.5 147.2" fill="#000" fill-opacity="0.179"/><polygon points="18.7 133.7 18.7 66.3 52.8 80.5 52.8 119.5" fill="#fff" fill-opacity="0.45"/><polygon points="18.7 66.3 66.3 18.7 80.5 52.8 52.8 80.5" fill="#fff" fill-opacity="0.705"/><polygon points="66.3 18.7 133.7 18.7 119.5 52.8 80.5 52.8" fill="#fff" fill-opacity="0.618"/><polygon points="133.7 18.7 181.3 66.3 147.2 80.5 119.5 52.8" fill="#fff" fill-opacity="0.239"/><polygon points="181.3 66.3 181.3 133.7 147.2 119.5 147.2 80.5" fill="#000" fill-opacity="0.355"/><polygon points="147.2 119.5 119.5 147.2 80.5 147.2 52.8 119.5 52.8 80.5 80.5 52.8 119.5 52.8 147.2 80.5" fill="#fff" fill-opacity=".1"/><polygon points="147.2 80.5 147.2 119.5 100 100" fill="#fff" fill-opacity=".22"/><polygon points="181.3 133.7 133.7 181.3 66.3 181.3 18.7 133.7 18.7 66.3 66.3 18.7 133.7 18.7 181.3 66.3" fill="none" stroke="#fff" stroke-opacity=".55" stroke-width="2" stroke-linejoin="round"/><polygon points="147.2 119.5 119.5 147.2 80.5 147.2 52.8 119.5 52.8 80.5 80.5 52.8 119.5 52.8 147.2 80.5" fill="none" stroke="#fff" stroke-opacity=".3" stroke-width="1.2" stroke-linejoin="round"/></symbol>
+    <symbol id="vip-r-rubi" viewBox="0 0 200 200"><polygon points="100 10 177.9 55 177.9 145 100 190 22.1 145 22.1 55" fill="currentColor"/><polygon points="100 10 177.9 55 142.9 75.3 100 50.5" fill="#fff" fill-opacity="0.386"/><polygon points="177.9 55 177.9 145 142.9 124.8 142.9 75.3" fill="#000" fill-opacity="0.355"/><polygon points="177.9 145 100 190 100 149.5 142.9 124.8" fill="#000" fill-opacity="0.5770000000000001"/><polygon points="100 190 22.1 145 57.1 124.8 100 149.5" fill="#000" fill-opacity="0.302"/><polygon points="22.1 145 22.1 55 57.1 75.3 57.1 124.8" fill="#fff" fill-opacity="0.45"/><polygon points="22.1 55 100 10 100 50.5 57.1 75.3" fill="#fff" fill-opacity="0.716"/><polygon points="100 50.5 142.9 75.3 142.9 124.8 100 149.5 57.1 124.8 57.1 75.3" fill="#fff" fill-opacity=".1"/><polygon points="57.1 75.3 100 50.5 100 100" fill="#fff" fill-opacity=".22"/><polygon points="100 10 177.9 55 177.9 145 100 190 22.1 145 22.1 55" fill="none" stroke="#fff" stroke-opacity=".55" stroke-width="2" stroke-linejoin="round"/><polygon points="100 50.5 142.9 75.3 142.9 124.8 100 149.5 57.1 124.8 57.1 75.3" fill="none" stroke="#fff" stroke-opacity=".3" stroke-width="1.2" stroke-linejoin="round"/></symbol>
+    <symbol id="vip-r-diamante" viewBox="0 0 200 200"><polygon points="20 80 45 46 70 34 130 34 155 46 180 80 100 182" fill="currentColor"/><polygon points="20 80 45 46 60 80" fill="#fff" fill-opacity="0.18"/><polygon points="45 46 70 34 60 80" fill="#fff" fill-opacity="0.38"/><polygon points="70 34 100 80 60 80" fill="#fff" fill-opacity="0.55"/><polygon points="70 34 130 34 100 80" fill="#fff" fill-opacity="0.72"/><polygon points="130 34 140 80 100 80" fill="#fff" fill-opacity="0.3"/><polygon points="130 34 155 46 140 80" fill="#000" fill-opacity="0.08"/><polygon points="155 46 180 80 140 80" fill="#000" fill-opacity="0.25"/><polygon points="20 80 60 80 100 182" fill="#fff" fill-opacity="0.22"/><polygon points="60 80 100 80 100 182" fill="#fff" fill-opacity="0.42"/><polygon points="100 80 140 80 100 182" fill="#000" fill-opacity="0.15"/><polygon points="140 80 180 80 100 182" fill="#000" fill-opacity="0.38"/><polygon points="20 80 45 46 70 34 130 34 155 46 180 80 100 182" fill="none" stroke="#fff" stroke-opacity=".6" stroke-width="2" stroke-linejoin="round"/><path d="M20 80h160" stroke="#fff" stroke-opacity=".7" stroke-width="2"/><path d="M84 40l-10 30" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-opacity=".8"/></symbol>
+    <symbol id="vip-car3" viewBox="0 0 800 360">
+      <defs>
+        <linearGradient id="vip-c-side" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3f2fd0"/><stop offset=".28" stop-color="#26188a"/><stop offset=".7" stop-color="#120c44"/><stop offset="1" stop-color="#08000f"/></linearGradient>
+        <linearGradient id="vip-c-sideh" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#4B23FF" stop-opacity=".55"/><stop offset=".45" stop-color="#4B23FF" stop-opacity="0"/><stop offset=".8" stop-color="#FF9DFF" stop-opacity=".18"/><stop offset="1" stop-color="#F3D6FF" stop-opacity=".35"/></linearGradient>
+        <linearGradient id="vip-c-top" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F3D6FF" stop-opacity=".95"/><stop offset=".35" stop-color="#8f7bff"/><stop offset="1" stop-color="#26188a"/></linearGradient>
+        <linearGradient id="vip-c-hood" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#4B23FF"/><stop offset=".55" stop-color="#8f7bff"/><stop offset="1" stop-color="#F3D6FF"/></linearGradient>
+        <linearGradient id="vip-c-front" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3A0A66"/><stop offset="1" stop-color="#05000a"/></linearGradient>
+        <linearGradient id="vip-c-glass" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#4B23FF" stop-opacity=".9"/><stop offset=".5" stop-color="#120022"/><stop offset="1" stop-color="#050009"/></linearGradient>
+        <linearGradient id="vip-c-rim" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#4B23FF"/><stop offset=".5" stop-color="#BE6BFF"/><stop offset="1" stop-color="#F3D6FF"/></linearGradient>
+        <radialGradient id="vip-c-wheel" cx=".4" cy=".35" r=".7"><stop offset="0" stop-color="#F3D6FF"/><stop offset=".45" stop-color="#7A6A90"/><stop offset="1" stop-color="#1a1028"/></radialGradient>
+        <radialGradient id="vip-c-lamp"><stop offset="0" stop-color="#F3D6FF"/><stop offset=".3" stop-color="#F3D6FF" stop-opacity=".7"/><stop offset="1" stop-color="#BE6BFF" stop-opacity="0"/></radialGradient>
+        <radialGradient id="vip-c-shadow"><stop offset="0" stop-color="#000" stop-opacity=".95"/><stop offset=".6" stop-color="#000" stop-opacity=".55"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>
+      </defs>
+      <ellipse cx="420" cy="306" rx="380" ry="46" fill="url(#vip-c-shadow)"/>
+      <!-- roda dianteira do lado de lá -->
+      <ellipse cx="724" cy="262" rx="20" ry="34" fill="#05000a"/>
+      <!-- tampa traseira e teto -->
+      <polygon points="96,214 236,198 326,184 196,196" fill="url(#vip-c-top)" opacity=".75"/>
+      <polygon points="302,158 428,153 518,137 392,142" fill="url(#vip-c-top)"/>
+      <!-- lateral -->
+      <polygon points="96,214 236,198 536,200 640,230 632,298 104,268" fill="url(#vip-c-side)"/>
+      <polygon points="96,214 236,198 536,200 640,230 632,298 104,268" fill="url(#vip-c-sideh)"/>
+      <polygon points="100,217 236,202 536,204 640,233 640,240 536,212 236,210 100,225" fill="#F3D6FF" fill-opacity=".38"/>
+      <path d="M112 240 628 268" stroke="#F3D6FF" stroke-opacity=".3" stroke-width="2"/>
+      <polygon points="114,262 626,290 632,298 104,268" fill="#05000a"/>
+      <path d="M402 204 406 288" stroke="#05000a" stroke-opacity=".7" stroke-width="2"/>
+      <path d="M380 222h22" stroke="#F3D6FF" stroke-opacity=".5" stroke-width="2" stroke-linecap="round"/>
+      <!-- vidros -->
+      <polygon points="238,196 302,158 428,153 528,198" fill="url(#vip-c-glass)"/>
+      <path d="M400 156 396 197" stroke="#05000a" stroke-width="5"/>
+      <polygon points="300,170 330,158 360,157 316,196 286,196" fill="#F3D6FF" fill-opacity=".14"/>
+      <!-- capô, para-brisa e frente -->
+      <polygon points="536,200 428,153 518,137 652,180" fill="url(#vip-c-glass)"/>
+      <polygon points="470,160 500,149 560,170 528,184" fill="#F3D6FF" fill-opacity=".18"/>
+      <polygon points="536,200 640,230 760,206 652,180" fill="url(#vip-c-hood)"/>
+      <path d="M590 196 700 210" stroke="#3A0A66" stroke-opacity=".5" stroke-width="2"/>
+      <polygon points="640,230 760,206 752,266 632,298" fill="url(#vip-c-front)"/>
+      <polygon points="652,272 744,254 745,262 652,284" fill="#000"/>
+      <path d="M652 272 744 254" stroke="#BE6BFF" stroke-opacity=".7" stroke-width="1.5"/>
+      <!-- faróis -->
+      <ellipse cx="682" cy="238" rx="56" ry="18" fill="url(#vip-c-lamp)" opacity=".8"/>
+      <ellipse cx="742" cy="218" rx="34" ry="12" fill="url(#vip-c-lamp)" opacity=".7"/>
+      <polygon points="646,240 712,227 710,235 647,249" fill="#F3D6FF"/>
+      <polygon points="722,222 756,215 755,222 722,229" fill="#F3D6FF"/>
+      <!-- lanterna traseira e retrovisor -->
+      <polygon points="97,221 162,212 162,218 98,228" fill="#BE6BFF"/>
+      <ellipse cx="120" cy="222" rx="34" ry="8" fill="#BE6BFF" opacity=".4"/>
+      <polygon points="518,200 540,195 546,207 524,209" fill="#120022" stroke="#BE6BFF" stroke-opacity=".6"/>
+      <!-- caixas de roda -->
+      <ellipse cx="212" cy="262" rx="40" ry="46" fill="#05000a"/>
+      <ellipse cx="548" cy="280" rx="46" ry="52" fill="#05000a"/>
+      <!-- rodas -->
+      <g>
+        <ellipse cx="214" cy="268" rx="32" ry="39" fill="#0a0612"/>
+        <ellipse cx="216" cy="268" rx="21" ry="27" fill="url(#vip-c-wheel)"/>
+        <path d="M216 241v54M195 260l42 16M195 276l42-16" stroke="#120022" stroke-width="3"/>
+        <ellipse cx="216" cy="268" rx="6" ry="7" fill="#120022" stroke="#F3D6FF" stroke-opacity=".6"/>
+        <path d="M188 246a32 39 0 0 1 26-17" fill="none" stroke="#4B23FF" stroke-width="3" stroke-linecap="round"/>
+      </g>
+      <g>
+        <ellipse cx="550" cy="288" rx="38" ry="46" fill="#0a0612"/>
+        <ellipse cx="553" cy="288" rx="25" ry="32" fill="url(#vip-c-wheel)"/>
+        <path d="M553 256v64M528 278l50 20M528 298l50-20" stroke="#120022" stroke-width="3.5"/>
+        <ellipse cx="553" cy="288" rx="7" ry="8" fill="#120022" stroke="#F3D6FF" stroke-opacity=".6"/>
+        <path d="M583 262a38 46 0 0 1 4 50" fill="none" stroke="#F3D6FF" stroke-opacity=".8" stroke-width="3" stroke-linecap="round"/>
+      </g>
+      <!-- luz de contorno -->
+      <path d="M96 214 236 198 302 158 428 153 536 200 640 230 760 206" fill="none" stroke="url(#vip-c-rim)" stroke-width="3" stroke-linejoin="round"/>
+      <path d="M428 153 518 137 652 180 760 206" fill="none" stroke="#F3D6FF" stroke-opacity=".7" stroke-width="2" stroke-linejoin="round"/>
+      <path d="M640 230 632 298" stroke="#F3D6FF" stroke-opacity=".55" stroke-width="2"/>
+    </symbol>
+    <symbol id="vip-badge" viewBox="0 0 24 24"><path d="M12 1.5 20.5 5v6.5c0 5-3.6 9-8.5 11-4.9-2-8.5-6-8.5-11V5z" fill="none" stroke="currentColor" stroke-width="2"/><path d="m12 7 1.6 3.2 3.5.5-2.5 2.5.6 3.5L12 15l-3.2 1.7.6-3.5-2.5-2.5 3.5-.5z" fill="currentColor"/></symbol>
+    <symbol id="vip-carico" viewBox="0 0 24 24"><path d="M2 15.5c0-1.2.8-2 2.2-2.3l3.6-.8 2.6-2.6c.6-.5 1.3-.8 2.1-.8h3.2c.9 0 1.7.4 2.2 1.1l1.8 2.3 1.4.4c.8.2 1.4 1 1.4 1.8V18h-2.1a2.5 2.5 0 0 1-4.8 0H9.4a2.5 2.5 0 0 1-4.8 0H2z" fill="currentColor"/></symbol>
+    <symbol id="vip-coin" viewBox="0 0 24 24"><path d="M12 2 21 7v10l-9 5-9-5V7z" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="M12 7l4.5 2.5v5L12 17l-4.5-2.5v-5z" fill="currentColor"/></symbol>
+  </svg>
+
+  <!-- Zona 1: cena de fundo (sem imagem): foco de luz magenta/violeta atrás do carro, feixes diagonais, cidade noturna desfocada em SVG, névoa baixa, asfalto molhado com neon refletido, bokeh em 3 planos, partículas e vinheta -->
+  <div class="vip__scene" aria-hidden="true">
+    <span class="vip__sky"></span>
+    <span class="vip__glow"></span>
+    <span class="vip__beams"></span>
+    <span class="vip__city vip__city--far"><svg viewBox="0 0 1440 400" preserveAspectRatio="none"><defs><linearGradient id="vip-cf" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3a2a9a"/><stop offset="1" stop-color="#5b2fb0"/></linearGradient><pattern id="vip-wf" width="10" height="14" patternUnits="userSpaceOnUse"><rect x="3" y="4" width="3" height="4" fill="#F3D6FF" fill-opacity=".35"/></pattern><clipPath id="vip-kf"><path d="M0 400V242H50V400ZM50 400V70H84V400ZM86 400V266H153V400ZM154 400V258H186V400ZM186 400V257H231V400ZM231 400V249H297V400ZM302 400V131H372V400ZM376 400V179H398V162H420V179H443V400ZM443 400V246H464V232H485V246H508V400ZM512 400V134H549V400ZM555 400V234H579V206H603V234H628V400ZM633 400V185H647V173H661V185H675V400ZM679 400V122H690V95H701V122H712V400ZM715 400V200H794V400ZM797 400V204H814V189H831V204H850V400ZM855 400V218H881V199H907V218H934V400ZM938 400V193H999V400ZM1001 400V262H1023V239H1045V262H1069V400ZM1070 400V193H1096V168H1122V193H1148V400ZM1151 400V109H1161V82H1171V109H1183V400ZM1187 400V71H1267V400ZM1272 400V128H1324V400ZM1330 400V263H1389V400ZM1391 400V102H1451V400Z"/></clipPath></defs><path d="M0 400V242H50V400ZM50 400V70H84V400ZM86 400V266H153V400ZM154 400V258H186V400ZM186 400V257H231V400ZM231 400V249H297V400ZM302 400V131H372V400ZM376 400V179H398V162H420V179H443V400ZM443 400V246H464V232H485V246H508V400ZM512 400V134H549V400ZM555 400V234H579V206H603V234H628V400ZM633 400V185H647V173H661V185H675V400ZM679 400V122H690V95H701V122H712V400ZM715 400V200H794V400ZM797 400V204H814V189H831V204H850V400ZM855 400V218H881V199H907V218H934V400ZM938 400V193H999V400ZM1001 400V262H1023V239H1045V262H1069V400ZM1070 400V193H1096V168H1122V193H1148V400ZM1151 400V109H1161V82H1171V109H1183V400ZM1187 400V71H1267V400ZM1272 400V128H1324V400ZM1330 400V263H1389V400ZM1391 400V102H1451V400Z" fill="url(#vip-cf)" fill-opacity=".55"/><rect width="1440" height="400" fill="url(#vip-wf)" clip-path="url(#vip-kf)"/></svg></span>
+    <span class="vip__fog"></span>
+    <span class="vip__city vip__city--near"><svg viewBox="0 0 1440 300" preserveAspectRatio="none"><defs><linearGradient id="vip-cn" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1c0c4a"/><stop offset="1" stop-color="#0a0320"/></linearGradient><pattern id="vip-wn" width="14" height="18" patternUnits="userSpaceOnUse"><rect x="4" y="5" width="4" height="6" fill="#BE6BFF" fill-opacity=".55"/><rect x="4" y="5" width="4" height="2" fill="#F3D6FF" fill-opacity=".5"/></pattern><pattern id="vip-wn2" width="22" height="26" patternUnits="userSpaceOnUse"><rect x="12" y="6" width="5" height="7" fill="#4B23FF" fill-opacity=".9"/></pattern><clipPath id="vip-kn"><path d="M0 300V75H89V300ZM94 300V168H201V300ZM206 300V235H300V300ZM302 300V84H325V73H348V84H373V300ZM374 300V207H460V300ZM463 300V113H496V89H529V113H563V300ZM566 300V228H686V300ZM692 300V190H727V167H762V190H797V300ZM799 300V235H831V220H863V235H897V300ZM898 300V175H924V150H950V175H977V300ZM983 300V194H1024V184H1065V194H1108V300ZM1109 300V104H1212V300ZM1216 300V208H1306V300ZM1310 300V73H1439V300ZM1439 300V97H1547V300Z"/></clipPath><linearGradient id="vip-cr" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#BE6BFF" stop-opacity=".7"/><stop offset=".03" stop-color="#BE6BFF" stop-opacity="0"/></linearGradient></defs><path d="M0 300V75H89V300ZM94 300V168H201V300ZM206 300V235H300V300ZM302 300V84H325V73H348V84H373V300ZM374 300V207H460V300ZM463 300V113H496V89H529V113H563V300ZM566 300V228H686V300ZM692 300V190H727V167H762V190H797V300ZM799 300V235H831V220H863V235H897V300ZM898 300V175H924V150H950V175H977V300ZM983 300V194H1024V184H1065V194H1108V300ZM1109 300V104H1212V300ZM1216 300V208H1306V300ZM1310 300V73H1439V300ZM1439 300V97H1547V300Z" fill="url(#vip-cn)"/><g clip-path="url(#vip-kn)"><rect width="1440" height="300" fill="url(#vip-wn)" opacity=".7"/><rect width="1440" height="300" fill="url(#vip-wn2)"/></g><path d="M0 300V75H89V300ZM94 300V168H201V300ZM206 300V235H300V300ZM302 300V84H325V73H348V84H373V300ZM374 300V207H460V300ZM463 300V113H496V89H529V113H563V300ZM566 300V228H686V300ZM692 300V190H727V167H762V190H797V300ZM799 300V235H831V220H863V235H897V300ZM898 300V175H924V150H950V175H977V300ZM983 300V194H1024V184H1065V194H1108V300ZM1109 300V104H1212V300ZM1216 300V208H1306V300ZM1310 300V73H1439V300ZM1439 300V97H1547V300Z" fill="none" stroke="#BE6BFF" stroke-opacity=".35" stroke-width="1.5"/></svg></span>
+    <span class="vip__bokeh"></span>
+    <span class="vip__horizon"></span>
+    <span class="vip__floor"></span>
+    <span class="vip__wet"></span>
+    <span class="vip__bokeh vip__bokeh--mid"></span>
+    <span class="vip__dust vip__dust--far"></span>
+    <span class="vip__dust vip__dust--near"></span>
+    <span class="vip__fog vip__fog--drift"></span>
+    <span class="vip__bokeh vip__bokeh--big"></span>
+    <span class="vip__vig"></span>
+  </div>
+
+  <div class="vip__wrap">
+    <header class="vip__top">
+      <nav class="vip__ctx" aria-label="Seções do VIP">
+        <a class="vip__ctx-tab is-active" href="#vip" aria-current="true">Passe VIP</a>
+        <label class="vip__ctx-tab" for="vip-p-esmeralda">Premium</label>
+      </nav>
+      <p class="vip__kicker" id="vip-kick">Passe VIP <span lang="en">· Supporter plans</span></p>
+      <h2 id="vip-title" class="vip__title"><span>Trilha <b>Rise</b></span></h2>
+      <p class="vip__season"><svg class="ico" aria-hidden="true"><use href="#i-clock"/></svg>Beta fechado · planos chegam na abertura</p>
+    </header>
+
+    <!-- Zona 2: trilha plana inclinada (paralelogramo), uma linha por plano, duas colunas de recompensa -->
+    <div class="vip__stage">
+      <div class="vip__track">
+        <p class="vip__track-bar"><span>Passe VIP · 6 planos</span><span class="vip__lvls" aria-hidden="true"><b class="vip__lvl vip__lvl--bronze">Nível 01<i>/06</i></b><b class="vip__lvl vip__lvl--prata">Nível 02<i>/06</i></b><b class="vip__lvl vip__lvl--ouro">Nível 03<i>/06</i></b><b class="vip__lvl vip__lvl--esmeralda">Nível 04<i>/06</i></b><b class="vip__lvl vip__lvl--rubi">Nível 05<i>/06</i></b><b class="vip__lvl vip__lvl--diamante">Nível 06<i>/06</i></b></span></p>
+        <div class="vip__grid" role="radiogroup" aria-label="Planos VIP">
+          <input class="vip__radio" type="radio" name="vip-plano" id="vip-p-bronze" value="bronze">
+          <label class="vip__row vip__row--bronze" for="vip-p-bronze" style="--plan: var(--vip-bronze)">
+            <span class="vip__lv" aria-hidden="true"><b>1</b></span>
+            <span class="vip__call" aria-hidden="true"><span>Plano Bronze · Nível 01</span></span>
+            <span class="vip__cell vip__cell--badge"><span class="vip__tag">Distintivo</span><span class="vip__cell-body"><img class="vip__cell-art" src="assets/img/vip/vip-emblema-bronze.webp" width="300" height="300" alt="" loading="lazy" decoding="async"><span class="vip__cell-name">Bronze<small>Discord + site</small></span></span><span class="sr-only">: distintivo de membro Bronze no Discord e no site.</span></span>
+            <span class="vip__cell vip__cell--prem is-locked"><span class="vip__tag">Premium</span><span class="vip__lock" aria-hidden="true"><svg class="ico"><use href="#i-lock"/></svg></span><span class="vip__cell-body"><img class="vip__cell-art vip__cell-art--key" src="assets/img/vip/vip-premium-bronze.webp" width="200" height="200" alt="" loading="lazy" decoding="async"><span class="vip__cell-name">Concessionária<small>Premium</small></span></span><span class="sr-only">: concessionária Premium não inclusa, só a partir do Esmeralda.</span></span>
+          </label>
+          <input class="vip__radio" type="radio" name="vip-plano" id="vip-p-prata" value="prata">
+          <label class="vip__row vip__row--prata" for="vip-p-prata" style="--plan: var(--vip-prata)">
+            <span class="vip__lv" aria-hidden="true"><b>2</b></span>
+            <span class="vip__call" aria-hidden="true"><span>Plano Prata · Nível 02</span></span>
+            <span class="vip__cell vip__cell--badge"><span class="vip__tag">Distintivo</span><span class="vip__cell-body"><img class="vip__cell-art" src="assets/img/vip/vip-emblema-prata.webp" width="300" height="300" alt="" loading="lazy" decoding="async"><span class="vip__cell-name">Prata<small>Discord + site</small></span></span><span class="sr-only">: distintivo de membro Prata no Discord e no site.</span></span>
+            <span class="vip__cell vip__cell--prem is-locked"><span class="vip__tag">Premium</span><span class="vip__lock" aria-hidden="true"><svg class="ico"><use href="#i-lock"/></svg></span><span class="vip__cell-body"><img class="vip__cell-art vip__cell-art--key" src="assets/img/vip/vip-premium-prata.webp" width="200" height="200" alt="" loading="lazy" decoding="async"><span class="vip__cell-name">Concessionária<small>Premium</small></span></span><span class="sr-only">: concessionária Premium não inclusa, só a partir do Esmeralda.</span></span>
+          </label>
+          <input class="vip__radio" type="radio" name="vip-plano" id="vip-p-ouro" value="ouro">
+          <label class="vip__row vip__row--ouro" for="vip-p-ouro" style="--plan: var(--vip-ouro)">
+            <span class="vip__lv" aria-hidden="true"><b>3</b></span>
+            <span class="vip__call" aria-hidden="true"><span>Plano Ouro · Nível 03</span></span>
+            <span class="vip__cell vip__cell--badge"><span class="vip__tag">Distintivo</span><span class="vip__cell-body"><img class="vip__cell-art" src="assets/img/vip/vip-emblema-ouro.webp" width="300" height="300" alt="" loading="lazy" decoding="async"><span class="vip__cell-name">Ouro<small>Discord + site</small></span></span><span class="sr-only">: distintivo de membro Ouro no Discord e no site.</span></span>
+            <span class="vip__cell vip__cell--prem is-locked"><span class="vip__tag">Premium</span><span class="vip__lock" aria-hidden="true"><svg class="ico"><use href="#i-lock"/></svg></span><span class="vip__cell-body"><img class="vip__cell-art vip__cell-art--key" src="assets/img/vip/vip-premium-ouro.webp" width="200" height="200" alt="" loading="lazy" decoding="async"><span class="vip__cell-name">Concessionária<small>Premium</small></span></span><span class="sr-only">: concessionária Premium não inclusa, só a partir do Esmeralda.</span></span>
+          </label>
+          <input class="vip__radio" type="radio" name="vip-plano" id="vip-p-esmeralda" value="esmeralda">
+          <label class="vip__row vip__row--esmeralda" for="vip-p-esmeralda" style="--plan: var(--vip-esmeralda)">
+            <span class="vip__lv" aria-hidden="true"><b>4</b></span>
+            <span class="vip__call" aria-hidden="true"><span>Plano Esmeralda · Nível 04</span></span>
+            <span class="vip__cell vip__cell--badge"><span class="vip__tag">Distintivo</span><span class="vip__cell-body"><img class="vip__cell-art" src="assets/img/vip/vip-emblema-esmeralda.webp" width="300" height="300" alt="" loading="lazy" decoding="async"><span class="vip__cell-name">Esmeralda<small>Discord + site</small></span></span><span class="sr-only">: distintivo de membro Esmeralda no Discord e no site.</span></span>
+            <span class="vip__cell vip__cell--prem"><span class="vip__tag">Premium</span><span class="vip__cell-body"><img class="vip__cell-art vip__cell-art--key" src="assets/img/vip/vip-premium-esmeralda.webp" width="200" height="200" alt="" loading="lazy" decoding="async"><span class="vip__cell-name">Concessionária<small>Premium</small></span></span><span class="sr-only">: acesso à concessionária Premium.</span></span>
+          </label>
+          <input class="vip__radio" type="radio" name="vip-plano" id="vip-p-rubi" value="rubi">
+          <label class="vip__row vip__row--rubi" for="vip-p-rubi" style="--plan: var(--vip-rubi)">
+            <span class="vip__lv" aria-hidden="true"><b>5</b></span>
+            <span class="vip__call" aria-hidden="true"><span>Plano Rubi · Nível 05</span></span>
+            <span class="vip__cell vip__cell--badge"><span class="vip__tag">Distintivo</span><span class="vip__cell-body"><img class="vip__cell-art" src="assets/img/vip/vip-emblema-rubi.webp" width="300" height="300" alt="" loading="lazy" decoding="async"><span class="vip__cell-name">Rubi<small>Discord + site</small></span></span><span class="sr-only">: distintivo de membro Rubi no Discord e no site.</span></span>
+            <span class="vip__cell vip__cell--prem"><span class="vip__tag">Premium</span><span class="vip__cell-body"><img class="vip__cell-art vip__cell-art--key" src="assets/img/vip/vip-premium-rubi.webp" width="200" height="200" alt="" loading="lazy" decoding="async"><span class="vip__cell-name">Concessionária<small>Premium</small></span></span><span class="sr-only">: acesso à concessionária Premium.</span></span>
+          </label>
+          <input class="vip__radio" type="radio" name="vip-plano" id="vip-p-diamante" value="diamante" checked>
+          <label class="vip__row vip__row--diamante" for="vip-p-diamante" style="--plan: var(--vip-diamante)">
+            <span class="vip__lv" aria-hidden="true"><b>6</b></span>
+            <span class="vip__call" aria-hidden="true"><span>Plano Diamante · Topo da trilha</span></span>
+            <span class="vip__cell vip__cell--badge"><span class="vip__tag">Distintivo</span><span class="vip__cell-body"><img class="vip__cell-art" src="assets/img/vip/vip-emblema-diamante.webp" width="400" height="400" alt="" loading="lazy" decoding="async"><span class="vip__cell-name">Diamante<small>Discord + site</small></span></span><span class="sr-only">: distintivo de membro Diamante no Discord e no site.</span></span>
+            <span class="vip__cell vip__cell--prem"><span class="vip__tag">Premium</span><span class="vip__cell-body"><img class="vip__cell-art vip__cell-art--key" src="assets/img/vip/vip-premium-diamante.webp" width="300" height="300" alt="" loading="lazy" decoding="async"><span class="vip__cell-name">Concessionária<small>Premium</small></span></span><span class="sr-only">: acesso à concessionária Premium.</span></span>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Palco: vitrine do item selecionado (carro da concessionária Premium ou emblema grande) -->
+    <div class="vip__show" aria-hidden="true">
+      <span class="vip__beam"></span>
+      <span class="vip__halo"></span>
+      <span class="vip__plinth"></span>
+      <span class="vip__contact"></span>
+      <div class="vip__car">
+        <svg class="vip__car-img" viewBox="0 0 800 360"><use href="#vip-car3"/></svg>
+        <svg class="vip__car-ref" viewBox="0 0 800 360"><use href="#vip-car3"/></svg>
+      </div>
+      <div class="vip__gem">
+        <img class="vip__gem-art vip__gem-art--bronze" style="--plan: var(--vip-bronze)" src="assets/img/vip/vip-emblema-bronze.webp" width="300" height="300" alt="" loading="lazy" decoding="async">
+        <img class="vip__gem-art vip__gem-art--prata" style="--plan: var(--vip-prata)" src="assets/img/vip/vip-emblema-prata.webp" width="300" height="300" alt="" loading="lazy" decoding="async">
+        <img class="vip__gem-art vip__gem-art--ouro" style="--plan: var(--vip-ouro)" src="assets/img/vip/vip-emblema-ouro.webp" width="300" height="300" alt="" loading="lazy" decoding="async">
+      </div>
+    </div>
+
+    <!-- Zona 3: selo + prévia (topo) e informações + CTA (base) -->
+    <aside class="vip__side" aria-label="Prévia do plano">
+      <div class="vip__prev" aria-hidden="true">
+        <svg class="vip__prev-scene" viewBox="0 0 210 92" preserveAspectRatio="xMidYMid slice">
+          <defs>
+            <linearGradient id="vip-pv-wall" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1a0a4a"/><stop offset="1" stop-color="#3A0A66"/></linearGradient>
+            <linearGradient id="vip-pv-floor" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#BE6BFF" stop-opacity=".55"/><stop offset="1" stop-color="#120022"/></linearGradient>
+          </defs>
+          <rect width="210" height="92" fill="url(#vip-pv-wall)"/>
+          <path d="M0 8h210" stroke="#F3D6FF" stroke-opacity=".7" stroke-width="2"/>
+          <g fill="#4B23FF" fill-opacity=".55"><rect x="12" y="16" width="16" height="44"/><rect x="40" y="16" width="16" height="44"/><rect x="154" y="16" width="16" height="44"/><rect x="182" y="16" width="16" height="44"/></g>
+          <g fill="#F3D6FF" fill-opacity=".85"><rect x="18" y="16" width="3" height="44"/><rect x="46" y="16" width="3" height="44"/><rect x="160" y="16" width="3" height="44"/><rect x="188" y="16" width="3" height="44"/></g>
+          <polygon points="0,60 210,60 210,92 0,92" fill="url(#vip-pv-floor)"/>
+          <path d="M0 60h210M60 60 30 92M105 60v32M150 60l30 32" stroke="#F3D6FF" stroke-opacity=".25"/>
+          <ellipse cx="105" cy="74" rx="62" ry="9" fill="none" stroke="#F3D6FF" stroke-opacity=".6"/>
+          <use href="#vip-car3" x="40" y="22" width="130" height="58"/>
+        </svg>
+        <span class="vip__prev-play"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z" fill="currentColor"/></svg></span>
+        <span class="vip__prev-label">Prévia</span>
+      </div>
+    </aside>
+
+    <div class="vip__info">
+      <div class="vip__details" aria-live="polite">
+        <article class="vip__detail vip__detail--bronze" style="--plan: var(--vip-bronze)">
+          <p class="vip__d-cat"><svg class="vip__d-mini" aria-hidden="true"><use href="#vip-e-bronze"/></svg>Plano de apoio · Nível 01</p>
+          <h3 class="vip__d-name">Bronze</h3>
+          <p class="vip__d-sub">Distintivo Bronze · Discord e site</p>
+          <p class="vip__d-text">“O primeiro degrau pra quem quer ver a RYZ subir junto.”</p>
+          <p class="vip__d-by">— ryz.group™</p>
+        </article>
+        <article class="vip__detail vip__detail--prata" style="--plan: var(--vip-prata)">
+          <p class="vip__d-cat"><svg class="vip__d-mini" aria-hidden="true"><use href="#vip-e-prata"/></svg>Plano de apoio · Nível 02</p>
+          <h3 class="vip__d-name">Prata</h3>
+          <p class="vip__d-sub">Distintivo Prata · Discord e site</p>
+          <p class="vip__d-text">“Pra quem já colou na cidade e quer mostrar que tá dentro.”</p>
+          <p class="vip__d-by">— ryz.group™</p>
+        </article>
+        <article class="vip__detail vip__detail--ouro" style="--plan: var(--vip-ouro)">
+          <p class="vip__d-cat"><svg class="vip__d-mini" aria-hidden="true"><use href="#vip-e-ouro"/></svg>Plano de apoio · Nível 03</p>
+          <h3 class="vip__d-name">Ouro</h3>
+          <p class="vip__d-sub">Distintivo Ouro · Discord e site</p>
+          <p class="vip__d-text">“Seu nome brilhando no Discord e no site, do jeito certo.”</p>
+          <p class="vip__d-by">— ryz.group™</p>
+        </article>
+        <article class="vip__detail vip__detail--esmeralda" style="--plan: var(--vip-esmeralda)">
+          <p class="vip__d-cat"><svg class="vip__d-mini" aria-hidden="true"><use href="#vip-e-esmeralda"/></svg>Plano Premium · Nível 04</p>
+          <h3 class="vip__d-name">Esmeralda</h3>
+          <p class="vip__d-sub">Distintivo Esmeralda <i>+</i> Concessionária Premium</p>
+          <p class="vip__d-text">“Aqui a garagem muda de nível: a concessionária Premium abre pra você.”</p>
+          <p class="vip__d-by">— ryz.group™</p>
+        </article>
+        <article class="vip__detail vip__detail--rubi" style="--plan: var(--vip-rubi)">
+          <p class="vip__d-cat"><svg class="vip__d-mini" aria-hidden="true"><use href="#vip-e-rubi"/></svg>Plano Premium · Nível 05</p>
+          <h3 class="vip__d-name">Rubi</h3>
+          <p class="vip__d-sub">Distintivo Rubi <i>+</i> Concessionária Premium</p>
+          <p class="vip__d-text">“Mais cor, mais presença e a concessionária Premium liberada.”</p>
+          <p class="vip__d-by">— ryz.group™</p>
+        </article>
+        <article class="vip__detail vip__detail--diamante" style="--plan: var(--vip-diamante)">
+          <p class="vip__d-cat"><svg class="vip__d-mini" aria-hidden="true"><use href="#vip-e-diamante"/></svg>Plano Premium · Nível 06</p>
+          <h3 class="vip__d-name">Diamante</h3>
+          <p class="vip__d-sub">Distintivo Diamante <i>+</i> Concessionária Premium</p>
+          <p class="vip__d-text">“O topo da trilha. Quem chega aqui, a cidade inteira vê passar.”</p>
+          <p class="vip__d-by">— ryz.group™</p>
+        </article>
+      </div>
+      <div class="vip__cta">
+        <p class="vip__cta-req vip__cta-req--bronze"><span><svg class="ico" aria-hidden="true"><use href="#i-lock"/></svg>Requer plano <b>Bronze</b></span><span class="vip__cta-price">· Preço: em breve</span></p>
+        <p class="vip__cta-req vip__cta-req--prata"><span><svg class="ico" aria-hidden="true"><use href="#i-lock"/></svg>Requer plano <b>Prata</b></span><span class="vip__cta-price">· Preço: em breve</span></p>
+        <p class="vip__cta-req vip__cta-req--ouro"><span><svg class="ico" aria-hidden="true"><use href="#i-lock"/></svg>Requer plano <b>Ouro</b></span><span class="vip__cta-price">· Preço: em breve</span></p>
+        <p class="vip__cta-req vip__cta-req--esmeralda"><span><svg class="ico" aria-hidden="true"><use href="#i-lock"/></svg>Requer plano <b>Esmeralda</b></span><span class="vip__cta-price">· Preço: em breve</span></p>
+        <p class="vip__cta-req vip__cta-req--rubi"><span><svg class="ico" aria-hidden="true"><use href="#i-lock"/></svg>Requer plano <b>Rubi</b></span><span class="vip__cta-price">· Preço: em breve</span></p>
+        <p class="vip__cta-req vip__cta-req--diamante"><span><svg class="ico" aria-hidden="true"><use href="#i-lock"/></svg>Requer plano <b>Diamante</b></span><span class="vip__cta-price">· Preço: em breve</span></p>
+        <div class="vip__btn-wrap"><button class="vip__btn" type="button" disabled><svg class="ico" aria-hidden="true"><use href="#i-lock"/></svg><span>Em breve</span><span class="sr-only"> · preço e venda dos planos VIP ainda não foram abertos</span></button></div>
+      </div>
+    </div>
+
+    <!-- HUD de sistema, preso na borda de baixo -->
+    <footer class="vip__hud">
+      <div class="vip__sys">
+        <div class="vip__hints">
+          <a class="vip__key vip__key--sm" href="https://discord.gg/jogueryz" target="_blank" rel="noopener"><kbd>D</kbd><span>Discord</span></a>
+          <a class="vip__key vip__key--sm" href="#vip-title"><kbd>Tab</kbd><span>Detalhes</span></a>
+        </div>
+        <p class="vip__build">Servidor RYZ RP <span>|</span> Beta fechado <span>|</span> Online <b data-players>Offline</b> <span>|</span> ryz.group™</p>
+      </div>
+      <div class="vip__keys">
+        <span class="vip__key" aria-hidden="true"><kbd>←</kbd><kbd>→</kbd><span>Trocar</span></span>
+        <a class="vip__key" href="#inicio"><kbd>Esc</kbd><span>Voltar</span></a>
+      </div>
+    </footer>
+  </div>
+</section>
