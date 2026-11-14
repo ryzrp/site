@@ -231,7 +231,7 @@
     color-mix(in srgb, var(--cid) 10%, var(--c-ink)) 100%);
   transition: transform var(--t-med) var(--ease);
 }
-.cidade__ph img { width: 100%; height: 100%; object-fit: cover; }
+.cidade__ph img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: var(--pos, 50% 50%); }
 .cidade__scene {
   position: absolute;
   left: 0; top: 0;
