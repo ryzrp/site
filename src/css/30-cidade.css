@@ -336,8 +336,6 @@
   overflow-wrap: normal;
   hyphens: none;
 }
-.cidade__card--concessionaria .cidade__name { font-size: 1.0625rem; letter-spacing: 0; }
-.cidade__card--prefeitura .cidade__name { font-size: 1.5rem; }
 .cidade__meta {
   grid-row: 2;
   grid-column: 1;
@@ -471,7 +469,6 @@
   .cidade__card.is-sel { transform: none; }
   .cidade__band { padding: 10px calc(var(--leanc) * 0.7) 10px calc(var(--leanc) * 0.2 + 8px); grid-template-rows: 1fr 26px; row-gap: 6px; }
   .cidade__name { font-size: 1.3125rem; }
-  .cidade__card--concessionaria .cidade__name { font-size: 0.875rem; letter-spacing: 0; }
   .cidade__cat { width: 26px; height: 26px; }
   .cidade__cat svg { width: 14px; height: 14px; }
   .cidade__meta { font-size: 0.8125rem; gap: 6px; }
@@ -518,6 +515,23 @@
 }
 
 /* telas médias: a placa "ZONA 0X" cabe numa linha só */
-@media (max-width: 1360px) and (min-width: 761px) {
+/* placa "ZONA 0X" no mesmo tamanho em todas as telas grandes, com espaço até o ícone */
+@media (min-width: 761px) {
   .cidade__meta { font-size: 0.8125rem; letter-spacing: 0.05em; gap: 6px; }
+}
+
+/* Placas uniformes: um tamanho só para os nomes (Concessionária, a palavra mais longa, o mais perto
+   possível), nome acompanhando a inclinação da carta e ícone com a mesma folga do lado esquerdo */
+.cidade__name { font-size: 1.375rem; padding-left: calc(var(--leanc) * 0.07); }
+.cidade__card--concessionaria .cidade__name { font-size: 1.125rem; letter-spacing: -0.005em; }
+.cidade__band { padding-right: calc(var(--leanc) * 0.72 + 14px); }
+@media (max-width: 760px) {
+  .cidade__name { font-size: 1.1875rem; }
+  .cidade__card--concessionaria .cidade__name { font-size: 0.9375rem; }
+  .cidade__band { padding-right: calc(var(--leanc) * 0.7 + 6px); }
+}
+@media (max-width: 1360px) and (min-width: 761px) {
+  .cidade__card--concessionaria .cidade__name { font-size: 1rem; }
+  .cidade__band { padding-right: calc(var(--leanc) * 0.72 + 6px); }
+  .cidade__meta { letter-spacing: 0.03em; gap: 5px; }
 }
