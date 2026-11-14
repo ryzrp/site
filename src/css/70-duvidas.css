@@ -884,3 +884,8 @@
 .duv-p__body a { color: var(--c-pink); font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
 .duv-p__body a:hover { color: #fff; }
 .duv-p__body a:focus-visible { outline: 2px solid var(--c-lavender); outline-offset: 2px; }
+
+/* roda sem login: cadeado no botão; sem a API no ar o botão fica travado */
+.duv-spin__lock { display: none; width: 18px; height: 18px; flex: none; color: var(--c-pink); }
+.duv-spin.is-locked .duv-spin__lock { display: block; }
+.duv-spin.is-locked .duv-spin__btn[disabled] { cursor: not-allowed; opacity: 0.7; }

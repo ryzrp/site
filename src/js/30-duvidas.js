@@ -262,10 +262,20 @@ var PREMIOS = [
   }
   function unlock() {
     window.clearInterval(timer);
-    btn.disabled = false;
-    if (label) label.textContent = API && !getTok() ? 'Entrar com Discord' : 'Girar a roda';
-    if (out) { out.classList.remove('is-new'); out.textContent = API && !getTok() ? 'Entre com seu Discord para girar.' : OUT0; }
     slices.forEach(function (s) { s.classList.remove('is-win'); });
+    if (out) out.classList.remove('is-new');
+    var noLogin = !API || !getTok();
+    if (spinBox) spinBox.classList.toggle('is-locked', noLogin);
+    if (!API) { /* sem a API da roda no ar: girar só com login do Discord, então fica travado */
+      btn.disabled = true;
+      if (label) label.textContent = 'Entrar com Discord';
+      if (out) out.textContent = 'O login com Discord chega em breve. Aí é um giro por dia.';
+      setState('');
+      return;
+    }
+    btn.disabled = false;
+    if (label) label.textContent = noLogin ? 'Entrar com Discord' : 'Girar a roda';
+    if (out) out.textContent = noLogin ? 'Entre com seu Discord para girar.' : OUT0;
     setState('is-ready');
   }
 
@@ -404,9 +414,7 @@ var PREMIOS = [
       if (d.today) { serverDay = d.today; var k = findIndex(d.today.prize, d.today.i); setRot(restAngle(k)); lock(k, false); }
     }).catch(function (e) { if (e.status === 401) { setTok(''); updateWho(null); unlock(); } });
   } else {
-    var saved = load();
-    if (saved) { setRot(restAngle(saved.i)); lock(saved.i, false); }
-    else { setRot(restAngle(N - 1)); unlock(); }
+    setRot(restAngle(N - 1)); unlock(); /* sem login não gira (ver unlock) */
   }
 
   /* No celular o medalhão-roda entra no painel da pergunta 01 (no desktop fica no meio da cena). */
