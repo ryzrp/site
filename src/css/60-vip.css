@@ -642,6 +642,36 @@
   filter: blur(2px);
   mask-image: linear-gradient(0deg, #000 0%, transparent 55%);
 }
+/* Carros reais por tier (Esmeralda, Rubi, Diamante), recortados e sem logos de fabricante.
+   A base das rodas fica em 91% da caixa, sobre a sombra de contato; o reflexo começa ali. */
+.vip__car-photo {
+  position: absolute; z-index: 1;
+  left: 50%; bottom: 9%;
+  width: 84%; height: auto;
+  transform: translateX(-50%);
+  display: none;
+  /* contorno de luz: fio claro em cima, contraluz rosa e preenchimento violeta (carro preto no palco escuro) */
+  filter:
+    drop-shadow(0 -2px 0 color-mix(in srgb, #fff 55%, transparent))
+    drop-shadow(5px -4px 9px color-mix(in srgb, var(--c-pink) 60%, transparent))
+    drop-shadow(-12px 0 22px color-mix(in srgb, var(--c-violet) 75%, transparent));
+}
+.vip__car-photo--ref {
+  z-index: 0;
+  top: 91%; bottom: auto;
+  transform: translateX(-50%) scaleY(-1);
+  opacity: .32;
+  filter: blur(2px);
+  -webkit-mask-image: linear-gradient(0deg, #000 0%, transparent 42%);
+  mask-image: linear-gradient(0deg, #000 0%, transparent 42%);
+}
+.vip__car-photo--diamante { display: block; width: 72%; bottom: 6%; }
+.vip__car-photo--ref.vip__car-photo--diamante { bottom: auto; top: 94%; } /* SUV: mais alto, fica menor para ter a mesma presença dos esportivos */
+.vip:has(#vip-p-esmeralda:checked, #vip-p-rubi:checked) .vip__car-photo--diamante { display: none; }
+.vip:has(#vip-p-esmeralda:checked) .vip__car-photo--esmeralda,
+.vip:has(#vip-p-rubi:checked) .vip__car-photo--rubi { display: block; }
+/* sombra de contato acompanhando a base dos carros reais (mais larga e mais baixa que a do desenho) */
+.vip__car::after { top: 84%; left: 12%; right: 10%; height: 15%; }
 .vip__gem { left: 50%; top: 4%; width: min(70%, 300px); aspect-ratio: 1; transform: translateX(-50%); display: none; }
 .vip__gem-art {
   position: absolute; inset: 0; width: 100%; height: 100%;
