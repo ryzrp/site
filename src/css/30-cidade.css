@@ -488,3 +488,29 @@
   .cidade__card:hover, .cidade__card:focus-visible, .cidade__card.is-sel { transform: none; }
   .cidade__card:hover .cidade__ph, .cidade__card:focus-visible .cidade__ph { transform: none; }
 }
+
+/* Filtro roxo nos prints: véu meio transparente em repouso; some no hover, no foco e no card aberto */
+.cidade__ph img { filter: brightness(0.82) saturate(0.85); transition: filter 0.45s var(--ease); }
+.cidade__ph::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--c-violet) 70%, var(--c-purple)), color-mix(in srgb, var(--c-purple) 60%, var(--c-magenta)));
+  mix-blend-mode: color;
+  opacity: 0.58;
+  transition: opacity 0.45s var(--ease);
+}
+.cidade__card:hover .cidade__ph::before,
+.cidade__card:focus-visible .cidade__ph::before,
+.cidade__card.is-sel .cidade__ph::before { opacity: 0; }
+.cidade__card:hover .cidade__ph img,
+.cidade__card:focus-visible .cidade__ph img,
+.cidade__card.is-sel .cidade__ph img { filter: none; }
+/* enquanto outro card está em hover, o aberto volta a ficar roxo (só um colorido por vez) */
+.cidade__grid:has(.cidade__card:hover) .cidade__card.is-sel:not(:hover) .cidade__ph::before { opacity: 0.58; }
+.cidade__grid:has(.cidade__card:hover) .cidade__card.is-sel:not(:hover) .cidade__ph img { filter: brightness(0.82) saturate(0.85); }
+@media (prefers-reduced-motion: reduce) {
+  .cidade__ph img, .cidade__ph::before { transition: none; }
+}
