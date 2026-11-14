@@ -256,6 +256,21 @@
   text-shadow: 2px 2px 0 var(--c-deep);
 }
 .vip__title b { color: color-mix(in srgb, var(--c-lavender) 80%, var(--c-blue)); font-weight: 800; }
+/* "TIER <nome>": mostra só o nome do plano selecionado, na cor do plano (sem :has, fica Diamante, o padrão) */
+.vip__tier { display: none; }
+.vip__tier--diamante { display: inline; }
+.vip:has(.vip__radio:checked:not(#vip-p-diamante)) .vip__tier--diamante { display: none; }
+.vip:has(#vip-p-bronze:checked) .vip__tier--bronze { display: inline; }
+.vip:has(#vip-p-prata:checked) .vip__tier--prata { display: inline; }
+.vip:has(#vip-p-ouro:checked) .vip__tier--ouro { display: inline; }
+.vip:has(#vip-p-esmeralda:checked) .vip__tier--esmeralda { display: inline; }
+.vip:has(#vip-p-rubi:checked) .vip__tier--rubi { display: inline; }
+.vip__tier--bronze { color: color-mix(in srgb, var(--vip-bronze) 75%, var(--c-lavender)); }
+.vip__tier--prata { color: color-mix(in srgb, var(--vip-prata) 75%, var(--c-lavender)); }
+.vip__tier--ouro { color: color-mix(in srgb, var(--vip-ouro) 75%, var(--c-lavender)); }
+.vip__tier--esmeralda { color: color-mix(in srgb, var(--vip-esmeralda) 75%, var(--c-lavender)); }
+.vip__tier--rubi { color: color-mix(in srgb, var(--vip-rubi) 75%, var(--c-lavender)); }
+.vip__tier--diamante { color: color-mix(in srgb, var(--vip-diamante) 75%, var(--c-lavender)); }
 .vip__season {
   display: flex; align-items: center; gap: 8px;
   margin: 10px 0 0;
