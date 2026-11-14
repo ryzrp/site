@@ -687,35 +687,52 @@
   display: flex; justify-content: flex-end;
   padding-top: 8px;
 }
-.vip__prev {
-  position: relative;
-  width: 220px; height: 124px;
-  padding: 1px;
-  background: var(--v-stroke-hi);
+/* Ficha do veículo do tier selecionado (no lugar da antiga "Prévia") */
+.vip__specs { position: relative; width: 268px; }
+.vip__spec {
+  display: none;
+  padding: 12px 16px 14px;
+  background:
+    linear-gradient(160deg, color-mix(in srgb, var(--plan, var(--c-violet)) 16%, #15121e), #0f0d16 70%);
+  box-shadow: inset 0 0 0 1px var(--v-stroke-hi), inset 0 2px 0 color-mix(in srgb, var(--plan, var(--c-lavender)) 70%, transparent);
   clip-path: polygon(14px 0, 100% 0, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0 100%, 0 14px);
 }
-.vip__prev-scene {
-  filter: saturate(.45) brightness(.8);
-  display: block; width: 100%; height: calc(100% - 26px);
-  clip-path: polygon(13px 0, 100% 0, 100% 100%, 0 100%, 0 13px);
+.vip__spec--esmeralda { --plan: var(--vip-esmeralda); }
+.vip__spec--rubi { --plan: var(--vip-rubi); }
+.vip__spec--diamante { --plan: var(--vip-diamante); display: block; }
+.vip:has(.vip__radio:checked:not(#vip-p-diamante)) .vip__spec--diamante { display: none; }
+.vip:has(#vip-p-esmeralda:checked) .vip__spec--esmeralda,
+.vip:has(#vip-p-rubi:checked) .vip__spec--rubi,
+.vip:has(#vip-p-bronze:checked, #vip-p-prata:checked, #vip-p-ouro:checked) .vip__spec--none { display: block; }
+.vip__spec-kick { margin: 0; font-size: .6875rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--v-dim); }
+.vip__spec-name { margin: 2px 0 0; font-size: 1.75rem; font-weight: 900; font-style: italic; line-height: 1; text-transform: uppercase; color: var(--c-lavender); }
+.vip__spec-cat { margin: 4px 0 10px; font-size: .8125rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: color-mix(in srgb, var(--plan, var(--c-lavender)) 80%, var(--c-lavender)); }
+.vip__spec-attrs { display: grid; gap: 6px; margin: 0; padding: 0; list-style: none; }
+.vip__spec-attr {
+  display: grid; grid-template-columns: 98px 1fr 30px; align-items: center; gap: 8px;
+  font-size: .8125rem; font-weight: 600; text-transform: uppercase; letter-spacing: .04em; color: var(--v-dim);
 }
-.vip__prev-play {
-  position: absolute; left: 50%; top: 38%;
-  width: 34px; height: 34px; transform: translate(-50%, -50%);
-  display: grid; place-items: center;
-  color: var(--c-lavender); background: color-mix(in srgb, #0e0d13 70%, transparent);
-  border-radius: 50%;
-  outline: 1px solid var(--v-stroke-hi);
+.vip__spec-attr b { text-align: right; font-weight: 800; color: var(--c-lavender); }
+.vip__spec-bar {
+  position: relative; height: 8px;
+  background: repeating-linear-gradient(90deg, color-mix(in srgb, #fff 10%, transparent) 0 calc(10% - 2px), transparent calc(10% - 2px) 10%);
 }
-.vip__prev-play svg { width: 18px; height: 18px; margin-left: 2px; }
-.vip__prev-label {
-  position: absolute; left: 2px; right: 2px; bottom: 2px;
-  height: 26px; display: grid; place-items: center;
-  font-weight: 600; text-transform: uppercase; font-size: var(--fs-md); letter-spacing: var(--track-ui);
-  color: var(--c-lavender);
-  background: #121019;
-  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%);
+.vip__spec-bar i {
+  position: absolute; inset: 0 auto 0 0; width: calc(var(--v) * 100%);
+  background: linear-gradient(90deg, color-mix(in srgb, var(--plan, var(--c-violet)) 70%, var(--c-ink)), color-mix(in srgb, var(--plan, var(--c-lavender)) 70%, #fff));
+  -webkit-mask-image: repeating-linear-gradient(90deg, #000 0 calc(10% - 2px), transparent calc(10% - 2px) 10%);
+  mask-image: repeating-linear-gradient(90deg, #000 0 calc(10% - 2px), transparent calc(10% - 2px) 10%);
+  -webkit-mask-size: calc(100% / var(--v)) 100%; mask-size: calc(100% / var(--v)) 100%;
+  box-shadow: 0 0 10px color-mix(in srgb, var(--plan, var(--c-violet)) 60%, transparent);
 }
+.vip__spec-meta {
+  display: flex; gap: 14px; margin: 10px 0 0; padding-top: 8px;
+  border-top: 1px solid color-mix(in srgb, #fff 10%, transparent);
+  font-size: .8125rem; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; color: var(--v-dim);
+}
+.vip__spec-meta b { color: var(--c-lavender); }
+.vip__spec-none { margin: 8px 0 2px; font-size: .9375rem; line-height: 1.35; color: var(--v-dim); }
+.vip__spec-none b { color: var(--c-lavender); }
 
 /* ---------------- Zona 3: informações + CTA ---------------- */
 .vip__info {
@@ -884,7 +901,7 @@ a.vip__key:hover kbd { background: var(--c-lavender); }
 /* ---------------- Telas menores ---------------- */
 @media (max-width: 1280px) {
   .vip__wrap { grid-template-columns: minmax(420px, 42%) 1fr minmax(300px, 340px); }
-  .vip__prev { width: 190px; height: 110px; }
+  .vip__specs { width: 240px; }
   .vip__cta-req { width: 100%; font-size: .875rem; gap: 6px; padding-inline: 16px 10px; }
   .vip__cta-req .ico { width: 17px; height: 17px; }
   .vip__cell-name { font-size: 1.0625rem; }
@@ -914,7 +931,7 @@ a.vip__key:hover kbd { background: var(--c-lavender); }
   .vip__car { left: 50%; width: 84%; bottom: 14%; }
   .vip__gem { left: 50%; top: 4%; width: 200px; }
   .vip__side { align-self: stretch; justify-content: flex-start; padding-top: 0; }
-  .vip__prev { height: 96px; }
+  .vip__specs { width: 100%; }
   .vip__info { padding-bottom: 0; }
   .vip__cta { margin-right: 0; }
   .vip__cta { margin-left: 10px; transform: skewX(-8deg); }
@@ -938,7 +955,6 @@ a.vip__key:hover kbd { background: var(--c-lavender); }
   .vip__cell-name { font-size: .9375rem; }
   .vip__cell--prem .vip__cell-name { font-size: .8125rem; }
   .vip__cell-art, .vip__cell-art--key { width: 42px; height: 42px; }
-  .vip__prev { flex: 1; width: auto; }
   .vip__d-name { font-size: 2.8rem; }
   .vip__cta-req { font-size: var(--fs-sm); padding-inline: 18px 16px; flex-wrap: wrap; gap: 0 8px; }
   .vip__radio:checked + .vip__row .vip__cell-name { font-size: 1.25rem; }

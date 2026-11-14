@@ -196,25 +196,50 @@
       </div>
     </div>
 
-    <!-- Zona 3: selo + prévia (topo) e informações + CTA (base) -->
-    <aside class="vip__side" aria-label="Prévia do plano">
-      <div class="vip__prev" aria-hidden="true">
-        <svg class="vip__prev-scene" viewBox="0 0 210 92" preserveAspectRatio="xMidYMid slice">
-          <defs>
-            <linearGradient id="vip-pv-wall" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1a0a4a"/><stop offset="1" stop-color="#3A0A66"/></linearGradient>
-            <linearGradient id="vip-pv-floor" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#BE6BFF" stop-opacity=".55"/><stop offset="1" stop-color="#120022"/></linearGradient>
-          </defs>
-          <rect width="210" height="92" fill="url(#vip-pv-wall)"/>
-          <path d="M0 8h210" stroke="#F3D6FF" stroke-opacity=".7" stroke-width="2"/>
-          <g fill="#4B23FF" fill-opacity=".55"><rect x="12" y="16" width="16" height="44"/><rect x="40" y="16" width="16" height="44"/><rect x="154" y="16" width="16" height="44"/><rect x="182" y="16" width="16" height="44"/></g>
-          <g fill="#F3D6FF" fill-opacity=".85"><rect x="18" y="16" width="3" height="44"/><rect x="46" y="16" width="3" height="44"/><rect x="160" y="16" width="3" height="44"/><rect x="188" y="16" width="3" height="44"/></g>
-          <polygon points="0,60 210,60 210,92 0,92" fill="url(#vip-pv-floor)"/>
-          <path d="M0 60h210M60 60 30 92M105 60v32M150 60l30 32" stroke="#F3D6FF" stroke-opacity=".25"/>
-          <ellipse cx="105" cy="74" rx="62" ry="9" fill="none" stroke="#F3D6FF" stroke-opacity=".6"/>
-          <use href="#vip-car3" x="40" y="22" width="130" height="58"/>
-        </svg>
-        <span class="vip__prev-play"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z" fill="currentColor"/></svg></span>
-        <span class="vip__prev-label">Prévia</span>
+    <!-- Zona 3: ficha do veículo do tier (topo) e informações + CTA (base) -->
+    <aside class="vip__side" aria-label="Ficha do veículo">
+      <div class="vip__specs">
+        <div class="vip__spec vip__spec--esmeralda" data-placeholder="Ficha do veículo Comet S2R: atributos e especificações de exemplo">
+          <p class="vip__spec-kick">Veículo do tier</p>
+          <p class="vip__spec-name">Comet S2R</p>
+          <p class="vip__spec-cat">Esportivo</p>
+          <ul class="vip__spec-attrs" role="list">
+            <li class="vip__spec-attr"><span>Velocidade</span><span class="vip__spec-bar" style="--v:0.82" role="img" aria-label="Velocidade 8,2 de 10"><i></i></span><b>8,2</b></li>
+            <li class="vip__spec-attr"><span>Aceleração</span><span class="vip__spec-bar" style="--v:0.86" role="img" aria-label="Aceleração 8,6 de 10"><i></i></span><b>8,6</b></li>
+            <li class="vip__spec-attr"><span>Frenagem</span><span class="vip__spec-bar" style="--v:0.80" role="img" aria-label="Frenagem 8,0 de 10"><i></i></span><b>8,0</b></li>
+            <li class="vip__spec-attr"><span>Dirigibilidade</span><span class="vip__spec-bar" style="--v:0.88" role="img" aria-label="Dirigibilidade 8,8 de 10"><i></i></span><b>8,8</b></li>
+          </ul>
+          <p class="vip__spec-meta"><span>Tração <b>Traseira</b></span><span>2 lugares</span></p>
+        </div>
+        <div class="vip__spec vip__spec--rubi" data-placeholder="Ficha do veículo 811 S2: atributos e especificações de exemplo">
+          <p class="vip__spec-kick">Veículo do tier</p>
+          <p class="vip__spec-name">811 S2</p>
+          <p class="vip__spec-cat">Supercarro</p>
+          <ul class="vip__spec-attrs" role="list">
+            <li class="vip__spec-attr"><span>Velocidade</span><span class="vip__spec-bar" style="--v:0.94" role="img" aria-label="Velocidade 9,4 de 10"><i></i></span><b>9,4</b></li>
+            <li class="vip__spec-attr"><span>Aceleração</span><span class="vip__spec-bar" style="--v:0.96" role="img" aria-label="Aceleração 9,6 de 10"><i></i></span><b>9,6</b></li>
+            <li class="vip__spec-attr"><span>Frenagem</span><span class="vip__spec-bar" style="--v:0.86" role="img" aria-label="Frenagem 8,6 de 10"><i></i></span><b>8,6</b></li>
+            <li class="vip__spec-attr"><span>Dirigibilidade</span><span class="vip__spec-bar" style="--v:0.84" role="img" aria-label="Dirigibilidade 8,4 de 10"><i></i></span><b>8,4</b></li>
+          </ul>
+          <p class="vip__spec-meta"><span>Tração <b>Integral</b></span><span>2 lugares</span></p>
+        </div>
+        <div class="vip__spec vip__spec--diamante" data-placeholder="Ficha do veículo Starlight: atributos e especificações de exemplo">
+          <p class="vip__spec-kick">Veículo do tier</p>
+          <p class="vip__spec-name">Starlight</p>
+          <p class="vip__spec-cat">SUV elétrico</p>
+          <ul class="vip__spec-attrs" role="list">
+            <li class="vip__spec-attr"><span>Velocidade</span><span class="vip__spec-bar" style="--v:0.76" role="img" aria-label="Velocidade 7,6 de 10"><i></i></span><b>7,6</b></li>
+            <li class="vip__spec-attr"><span>Aceleração</span><span class="vip__spec-bar" style="--v:0.88" role="img" aria-label="Aceleração 8,8 de 10"><i></i></span><b>8,8</b></li>
+            <li class="vip__spec-attr"><span>Frenagem</span><span class="vip__spec-bar" style="--v:0.78" role="img" aria-label="Frenagem 7,8 de 10"><i></i></span><b>7,8</b></li>
+            <li class="vip__spec-attr"><span>Dirigibilidade</span><span class="vip__spec-bar" style="--v:0.76" role="img" aria-label="Dirigibilidade 7,6 de 10"><i></i></span><b>7,6</b></li>
+          </ul>
+          <p class="vip__spec-meta"><span>Tração <b>Integral</b></span><span>5 lugares</span></p>
+        </div>
+        <div class="vip__spec vip__spec--none">
+          <p class="vip__spec-kick">Veículo do tier</p>
+          <p class="vip__spec-name">Sem veículo</p>
+          <p class="vip__spec-none">A Concessionária Premium começa no <b>Tier Esmeralda</b>.</p>
+        </div>
       </div>
     </aside>
 
