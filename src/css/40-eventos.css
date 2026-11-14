@@ -332,7 +332,18 @@
   mix-blend-mode: luminosity;
   opacity: 0.75;
 }
-.evento--arquivo .evento__fig--oculos { --leakh: 0px; width: 41%; right: calc(var(--lean) + 15%); }
+/* personagem do Arquivo sobe e sai pela borda de cima (como no Frame); o selo NOVO/tempo
+   desce para a esquerda, acima da caixa da temporada, para liberar o canto do rosto */
+.evento--arquivo .evento__fig--oculos { --leakh: 46px; width: 50%; right: calc(var(--lean) + 9%); }
+.ev-top.ev-top--stack { flex-direction: column; align-items: flex-start; gap: var(--sp-2); }
+.evento--arquivo .evento__tab {
+  position: relative;
+  top: auto; right: auto;
+  min-height: 38px;
+  font-size: 1.05rem;
+  padding: 0.25em 1em 0.3em 1.4em;
+  clip-path: polygon(14px 0, 100% 0, 100% 100%, 0 100%);
+}
 /* VOZ DA RUA: print noturno da cidade no fundo, tingido com o rosa do card */
 .evento--voz .ev-scene {
   inset: 0;
