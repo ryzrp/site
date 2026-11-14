@@ -31,6 +31,36 @@
     }
   });
 
+  // Conta (ícone do canto): login com Discord da Roda da Sorte (RYZ.rodaApi). O token volta no
+  // hash (#roda=TOKEN) para qualquer página; o nome mostrado vem do próprio token (só exibição).
+  (function () {
+    var a = document.querySelector('[data-player]');
+    var api = String(cfg.rodaApi || '').replace(/\/+$/, '');
+    var KEY = 'ryz-roda-token';
+    var get = function () { try { return localStorage.getItem(KEY) || ''; } catch (e) { return ''; } };
+    var m = location.hash.match(/[#&]roda=([^&]+)/);
+    if (api && m) {
+      try { localStorage.setItem(KEY, decodeURIComponent(m[1])); } catch (e) { /* sem storage */ }
+      if (page !== 'home') history.replaceState(null, '', location.pathname + location.search);
+    }
+    if (!a || !api) return;
+    var name = '';
+    try {
+      var p = JSON.parse(atob(get().split('.')[0].replace(/-/g, '+').replace(/_/g, '/')));
+      if (p && p.exp * 1000 > Date.now()) name = String(p.name || '');
+    } catch (e) { /* sem login */ }
+    var badge = a.querySelector('[data-player-badge]'), sr = a.querySelector('[data-player-sr]');
+    a.removeAttribute('target'); a.removeAttribute('data-discord');
+    if (name) {
+      a.href = (page === 'home' ? '' : 'index.html') + '#dp-1';
+      a.title = 'Conectado como ' + name + ' · Roda da sorte';
+      if (badge) badge.textContent = name.split(/\s+/)[0].slice(0, 7);
+      if (sr) sr.textContent = 'Conectado como ' + name + '. Ir para a Roda da sorte';
+    } else {
+      a.href = api + '/auth/login?r=' + encodeURIComponent(location.origin + location.pathname);
+    }
+  })();
+
   if (page === 'home') {
     document.querySelectorAll('a[href^="index.html#"]').forEach(function (a) {
       a.setAttribute('href', a.getAttribute('href').replace('index.html', ''));
