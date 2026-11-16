@@ -1032,8 +1032,8 @@ a.vip__key:hover kbd { background: var(--c-lavender); }
 }
 /* no palco, o pacote cresce com a quantidade (10 menor, 500 cheio) */
 .vip--loja .vip__gem-art { transform-origin: 50% 100%; }
-.vip--loja .vip__gem-art--bronze { --k: .6; } .vip--loja .vip__gem-art--prata { --k: .68; }
-.vip--loja .vip__gem-art--ouro { --k: .76; } .vip--loja .vip__gem-art--esmeralda { --k: .88; }
+.vip--loja .vip__gem-art--bronze { --k: .52; } .vip--loja .vip__gem-art--prata { --k: .64; }
+.vip--loja .vip__gem-art--ouro { --k: .8; } .vip--loja .vip__gem-art--esmeralda { --k: .88; }
 .vip--loja .vip__gem-art--rubi { --k: .95; } .vip--loja .vip__gem-art--diamante { --k: 1; }
 .vip--loja .vip__gem-art--diamante,
 .vip--loja:has(#vip-p-bronze:checked) .vip__gem-art--bronze,
