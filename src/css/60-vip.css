@@ -968,3 +968,76 @@ a.vip__key:hover kbd { background: var(--c-lavender); }
   .vip__row, .vip__detail { transition: none; animation: none !important; }
   .vip__dust--far, .vip__dust--near, .vip__fog--drift, .vip__beams, .vip__bokeh--big { animation: none; }
 }
+
+/* ================= LOJA DE DIAMANTES (prévia) =================
+   Reaproveita a cena, a trilha e o palco do VIP. Um card por linha (sem coluna Premium),
+   o pacote selecionado aparece grande no palco, sob o holofote. */
+.vip--loja .vip__tier { color: color-mix(in srgb, var(--plan, var(--c-pink)) 40%, #fff); }
+.vip--loja .vip__tier--bronze { --plan: #9C8CFF; } .vip--loja .vip__tier--prata { --plan: #A97CFF; }
+.vip--loja .vip__tier--ouro { --plan: #B86CFF; } .vip--loja .vip__tier--esmeralda { --plan: #C95CFF; }
+.vip--loja .vip__tier--rubi { --plan: #DE4FFF; } .vip--loja .vip__tier--diamante { --plan: #FF4FD8; }
+.vip--loja .vip__title b.vip__tier-unit { color: color-mix(in srgb, #fff 88%, var(--c-lavender)); }
+.vip__dia { width: 1em; height: 1em; flex: none; }
+.vip--loja .vip__tag .vip__dia { width: 12px; height: 12px; }
+
+.vip--loja .vip__row { grid-template-columns: 38px minmax(0, 1fr); }
+.vip--loja .vip__row > .vip__cell--badge { grid-column: 2; }
+.vip--loja .vip__radio:checked + .vip__row .vip__call { grid-column: 2 / 3; }
+.vip--loja .vip__cell-art { width: calc(clamp(60px, 10.5vh, 96px) * var(--s)); height: calc(clamp(60px, 10.5vh, 96px) * var(--s)); margin: -14px 6px -10px 0; }
+.vip--loja .vip__cell-name { flex-direction: row; align-items: baseline; gap: 12px; }
+.vip__qty {
+  font-weight: 900; font-style: italic; font-size: calc(1.5rem + var(--r) * .5rem); line-height: 1; letter-spacing: -.01em;
+  color: #fff;
+}
+.vip--loja .vip__cell-name small { margin: 0; font-style: italic; text-transform: uppercase; }
+
+/* tile destaque: número grande à esquerda, pacote grande à direita */
+.vip--loja .vip__radio:checked + .vip__row .vip__cell-body { flex-direction: row; align-items: flex-end; justify-content: space-between; padding: 22px 10px 12px 18px; }
+.vip--loja .vip__radio:checked + .vip__row .vip__cell-art { order: 2; align-self: center; flex: 0 1 auto; height: 100%; width: auto; max-height: 200px; max-width: 52%; }
+.vip--loja .vip__radio:checked + .vip__row .vip__cell-name { flex-direction: column; align-items: flex-start; gap: 6px; }
+.vip--loja .vip__radio:checked + .vip__row .vip__qty { font-size: clamp(2.6rem, 1.6rem + 2vw, 3.6rem); text-shadow: 3px 3px 0 #1a1550; }
+
+/* palco: pacote no lugar do carro */
+.vip--loja .vip__gem { display: block; top: auto; bottom: 9%; width: min(92%, 460px); }
+.vip--loja .vip__gem-art {
+  opacity: 0; transform: translateY(10px) scale(.96);
+  transition: opacity var(--t-med) var(--ease), transform var(--t-med) var(--ease);
+  object-position: 50% 100%;
+  filter:
+    drop-shadow(0 0 30px color-mix(in oklab, var(--plan) 55%, transparent))
+    drop-shadow(0 26px 18px rgba(0, 0, 0, .55));
+}
+.vip--loja .vip__gem-art--diamante { opacity: 1; transform: none; }
+.vip--loja:has(.vip__radio:checked:not(#vip-p-diamante)) .vip__gem-art--diamante { opacity: 0; }
+.vip--loja:has(#vip-p-bronze:checked) .vip__gem-art--bronze,
+.vip--loja:has(#vip-p-prata:checked) .vip__gem-art--prata,
+.vip--loja:has(#vip-p-ouro:checked) .vip__gem-art--ouro,
+.vip--loja:has(#vip-p-esmeralda:checked) .vip__gem-art--esmeralda,
+.vip--loja:has(#vip-p-rubi:checked) .vip__gem-art--rubi { opacity: 1; transform: none; }
+.vip--loja .vip__d-mini { color: color-mix(in oklab, var(--plan) 70%, #fff); }
+.vip--loja .vip__d-name { font-size: clamp(4rem, 2rem + 4.4vw, 6.6rem); }
+.vip--loja .vip__cta-req b { margin-right: -4px; }
+
+@media (max-width: 1080px), (max-height: 700px) {
+  .vip--loja .vip__show { height: 280px; }
+  .vip--loja .vip__gem { width: 280px; bottom: 4%; }
+  .vip--loja .vip__radio:checked + .vip__row { height: 200px; }
+  .vip--loja .vip__radio:checked + .vip__row .vip__cell-art { width: 46%; height: auto; max-height: 130px; }
+}
+@media (max-width: 560px) {
+  .vip--loja .vip__row { grid-template-columns: 30px minmax(0, 1fr); }
+  .vip--loja .vip__cell-name small { font-size: 11px; }
+  .vip--loja .vip__qty { font-size: 1.375rem; }
+  .vip--loja .vip__radio:checked + .vip__row .vip__qty { font-size: 2.4rem; }
+}
+/* no palco, o pacote cresce com a quantidade (10 menor, 500 cheio) */
+.vip--loja .vip__gem-art { transform-origin: 50% 100%; }
+.vip--loja .vip__gem-art--bronze { --k: .6; } .vip--loja .vip__gem-art--prata { --k: .68; }
+.vip--loja .vip__gem-art--ouro { --k: .76; } .vip--loja .vip__gem-art--esmeralda { --k: .88; }
+.vip--loja .vip__gem-art--rubi { --k: .95; } .vip--loja .vip__gem-art--diamante { --k: 1; }
+.vip--loja .vip__gem-art--diamante,
+.vip--loja:has(#vip-p-bronze:checked) .vip__gem-art--bronze,
+.vip--loja:has(#vip-p-prata:checked) .vip__gem-art--prata,
+.vip--loja:has(#vip-p-ouro:checked) .vip__gem-art--ouro,
+.vip--loja:has(#vip-p-esmeralda:checked) .vip__gem-art--esmeralda,
+.vip--loja:has(#vip-p-rubi:checked) .vip__gem-art--rubi { transform: scale(var(--k)); }
