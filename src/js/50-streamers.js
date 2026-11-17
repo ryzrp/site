@@ -25,6 +25,8 @@ var STREAMERS = [
   { nome: 'liinkone', plataforma: 'twitch', url: 'https://www.twitch.tv/liinkone', foto: 'assets/img/streamers/liinkone.webp', aoVivo: 'auto', horario: '', cor: '' },
   { nome: 'pacharock', plataforma: 'twitch', url: 'https://www.twitch.tv/pacharock', foto: 'assets/img/streamers/pacharock.webp', aoVivo: 'auto', horario: '', cor: '' },
   { nome: 'brendarabelini', plataforma: 'tiktok', url: 'https://www.tiktok.com/@brendarabelini', foto: 'assets/img/streamers/brendarabelini.webp', aoVivo: false, horario: '', cor: '' },
+  { nome: 'senhor_coruja_', plataforma: 'twitch', url: 'https://www.twitch.tv/senhor_coruja_', foto: 'assets/img/streamers/senhor-coruja.webp', aoVivo: 'auto', horario: '', cor: '' },
+  { nome: 'thebig_bob', plataforma: 'twitch', url: 'https://www.twitch.tv/thebig_bob', foto: 'assets/img/streamers/thebig-bob.webp', aoVivo: 'auto', horario: '', cor: '' },
 ];
 
 (function () {
@@ -263,7 +265,7 @@ var STREAMERS = [
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(caber);
   caber();
   var rt;
-  window.addEventListener('resize', function () { clearTimeout(rt); rt = setTimeout(caber, 120); });
+  window.addEventListener('resize', function () { clearTimeout(rt); rt = setTimeout(function () { apply(filtro); }, 120); });
   function count(f) {
     return cards.filter(function (c) { return match(c, f); }).length;
   }
@@ -276,19 +278,42 @@ var STREAMERS = [
     n.textContent = count(n.getAttribute('data-count'));
   });
 
-  var all = Array.prototype.slice.call(list.querySelectorAll('.sc'));
-  function select(li) {
-    all.forEach(function (c) { c.classList.toggle('is-sel', c === li); });
-  }
-  all.forEach(function (c) {
+  /* CONVITES: a última linha da grade se completa com cards "Quer ser streamer
+     da RYZ?" (cópias do card original). Ex.: 13 streamers em 6 colunas = 6 + 6 + 1
+     e mais 5 convites. Se a linha fechar certinho, sobra 1 convite numa linha nova.
+     Recalcula ao trocar de aba e ao mudar a largura (6, 4 ou 2 colunas). */
+  var extras = [];
+  function hook(c) {
     c.addEventListener('pointerenter', function () { select(c); });
     c.addEventListener('focusin', function () { select(c); });
-  });
+  }
+  function convites(shown) {
+    var cols = getComputedStyle(list).gridTemplateColumns.split(' ').filter(Boolean).length || 1;
+    var resto = shown % cols;
+    var need = resto ? cols - resto : 1;
+    if (!join) return;
+    while (extras.length < need - 1) {
+      var cl = join.cloneNode(true);
+      cl.removeAttribute('data-join');
+      cl.classList.remove('is-sel');
+      /* cópias: mesmo visual e mesmo link, mas fora da leitura de tela e do Tab (o original já anuncia) */
+      cl.setAttribute('aria-hidden', 'true');
+      cl.querySelectorAll('a').forEach(function (a) { a.tabIndex = -1; });
+      list.appendChild(cl); hook(cl); extras.push(cl);
+    }
+    extras.forEach(function (c, k) { c.hidden = k >= need - 1; });
+  }
+  var all = Array.prototype.slice.call(list.querySelectorAll('.sc'));
+  function select(li) {
+    all.concat(extras).forEach(function (c) { c.classList.toggle('is-sel', c === li); });
+  }
+  all.forEach(hook);
   var filtro = 'todos';
   function apply(f, focus) {
     filtro = f;
     var shown = 0;
     cards.forEach(function (c) { var ok = match(c, f); c.hidden = !ok; if (ok) shown++; });
+    convites(shown);
     if (typeof caber === 'function') caber();
     select(all.filter(function (c) { return !c.hidden; })[0]);
     if (empty) empty.hidden = shown > 0;
