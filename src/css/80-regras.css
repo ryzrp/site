@@ -636,6 +636,7 @@
   line-height: 1.02;
   text-wrap: balance;
   color: color-mix(in srgb, var(--rg-white) 92%, transparent);
+  padding-top: .2em; margin-top: -.2em; /* folga: o corte não pega o acento (MÍNIMA, DECISÃO) */
 }
 /* resumo de uma linha: quase branco a 75%, 16px */
 .regra__d {

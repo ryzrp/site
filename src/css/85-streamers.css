@@ -441,7 +441,7 @@ body[data-page="streamers"] .nav__stat--members { display: none; }
   color: rgba(255, 255, 255, .75);
 }
 .sc__meta .ico { flex: none; font-size: 0.9375rem; color: rgba(255, 255, 255, .7); }
-.sc__meta-t { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+.sc__meta-t { min-width: 0; overflow: hidden; text-overflow: ellipsis; padding-top: .25em; margin-top: -.25em; } /* folga: o corte não pega o acento (HORÁRIO) */
 .sc__meta--live { color: var(--c-pink); }
 .sc__meta--live .ico { color: var(--c-magenta); }
 
