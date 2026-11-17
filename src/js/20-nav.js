@@ -75,6 +75,38 @@
     });
   }
 
+  /* Endereço das seções sem "#": no site publicado, clicar em "Dúvidas" rola até a
+     seção e a barra mostra /duvidas (Início = /). Quem abre /duvidas cai direto na
+     seção; link antigo /#duvidas vira /duvidas. Âncoras internas (#dp-3) não mudam. */
+  var SECS = ['inicio', 'cidade', 'eventos', 'como-entrar', 'vip', 'duvidas'];
+  if (page === 'home' && /^https?:$/.test(location.protocol) && history.pushState) {
+    var secUrl = function (id) { return id === 'inicio' ? '/' : '/' + id; };
+    var secAt = function () { var p = location.pathname.replace(/^\/+|\/+$/g, ''); return SECS.indexOf(p) > -1 ? p : ''; };
+    var goSec = function (id, smooth) {
+      var el = document.getElementById(id);
+      if (el) el.scrollIntoView({ block: 'start', behavior: smooth && !matchMedia('(prefers-reduced-motion: reduce)').matches ? 'smooth' : 'auto' });
+    };
+    var h0 = location.hash.slice(1);
+    if (SECS.indexOf(h0) > -1) history.replaceState(history.state, '', secUrl(h0));
+    if (secAt() && !location.hash) {
+      goSec(secAt(), false);
+      /* imagens que carregam depois empurram a página: confere de novo no load */
+      var mexeu = false, mx = function () { mexeu = true; };
+      ['wheel', 'touchstart', 'keydown'].forEach(function (t) { window.addEventListener(t, mx, { once: true, passive: true }); });
+      window.addEventListener('load', function () { if (!mexeu && secAt()) goSec(secAt(), false); }, { once: true });
+    }
+    document.addEventListener('click', function (e) {
+      if (e.defaultPrevented || e.button || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+      var a = e.target.closest && e.target.closest('a[href^="#"]');
+      var id = a && a.getAttribute('href').slice(1);
+      if (!id || SECS.indexOf(id) < 0) return;
+      e.preventDefault();
+      goSec(id, true);
+      if (location.pathname + location.hash !== secUrl(id)) history.pushState(null, '', secUrl(id));
+    });
+    window.addEventListener('popstate', function () { if (!location.hash) goSec(secAt() || 'inicio', false); });
+  }
+
   // Página atual
   if (nav) {
     nav.querySelectorAll('[data-nav]').forEach(function (a) {

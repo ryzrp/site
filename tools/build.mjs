@@ -36,6 +36,9 @@ function finish(name, html) {
   // Site publicado: links sem ".html" (ryzrp.com.br/streamers). O GitHub Pages serve /streamers -> streamers.html.
   // As prévias (.preview/, via file://) mantêm o .html, senão os links não abrem no navegador.
   if (!preview) html = html
+    // seções da home viram endereço próprio: /duvidas, /vip... (o JS rola até a seção)
+    .replace(/href="index\.html#(inicio|cidade|eventos|como-entrar|vip|duvidas)"/g,
+      (m, id) => name === 'index.html' ? `href="#${id}"` : (id === 'inicio' ? 'href="/"' : `href="/${id}"`))
     .replace(/href="index\.html#/g, name === 'index.html' ? 'href="#' : 'href="/#')
     .replace(/href="index\.html"/g, 'href="/"')
     .replace(/href="(regras|streamers)\.html/g, 'href="/$1');
@@ -51,6 +54,7 @@ const BUNDLES = {
   streamers: { css: ['85'], js: ['50'] },
   '404': { css: ['90'], js: [] }
 };
+const HOME_SECS = ['cidade', 'eventos', 'como-entrar', 'vip', 'duvidas'];
 const PAGE_BUNDLE = { 'index.html': 'home', 'regras.html': 'regras', 'streamers.html': 'streamers', '404.html': '404' };
 const list = (dir, ext) => fs.existsSync(P(dir)) ? fs.readdirSync(P(dir)).filter(f => f.endsWith(ext)).sort() : [];
 const owned = kind => new Set(Object.values(BUNDLES).flatMap(b => b[kind]));
@@ -82,6 +86,9 @@ if (fs.existsSync(P('src/pages')))
     const html = include(read(P('src/pages', f)))
       .replace('href="site.css"', `href="${a.css}"`).replace('src="site.js"', `src="${a.js}"`);
     fs.writeFileSync(path.join(out, f), finish(f, html));
+    // Site publicado: /cidade, /eventos, /como-entrar, /vip e /duvidas abrem a home (o canonical continua "/")
+    if (f === 'index.html' && !preview)
+      for (const sec of HOME_SECS) fs.writeFileSync(path.join(out, sec + '.html'), finish(f, html));
   }
 copyDir(P('assets/img'), path.join(out, 'assets/img'));
 copyDir(P('assets/fonts'), path.join(out, 'assets/fonts'));
