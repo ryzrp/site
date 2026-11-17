@@ -3,6 +3,14 @@
    - Marca a página atual (aria-current) e a sub-aba da seção visível.
    - Menu do celular (abre/fecha, ESC, clique fora).
    - Aplica RYZ.discord, RYZ.social e RYZ.video nos links. ESC/Home volta ao topo. */
+
+/* Endereço limpo: quem chega por um link antigo (/streamers.html, /index.html)
+   vê /streamers e / na barra, sem recarregar. Só no site publicado (http/https). */
+(function () {
+  if (!/^https?:$/.test(location.protocol) || !history.replaceState) return;
+  var p = location.pathname, n = p.replace(/\/index\.html$/, '/').replace(/\.html$/, '');
+  if (n !== p) history.replaceState(history.state, '', n + location.search + location.hash);
+})();
 (function () {
   var cfg = window.RYZ || {};
   var page = document.body.getAttribute('data-page') || '';
@@ -52,7 +60,7 @@
     var badge = a.querySelector('[data-player-badge]'), sr = a.querySelector('[data-player-sr]');
     a.removeAttribute('target'); a.removeAttribute('data-discord');
     if (name) {
-      a.href = (page === 'home' ? '' : 'index.html') + '#dp-1';
+      a.href = (page === 'home' ? '' : (location.protocol === 'file:' ? 'index.html' : '/')) + '#dp-1';
       a.title = 'Conectado como ' + name + ' · Roda da sorte';
       if (badge) badge.textContent = name.split(/\s+/)[0].slice(0, 7);
       if (sr) sr.textContent = 'Conectado como ' + name + '. Ir para a Roda da sorte';

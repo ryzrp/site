@@ -33,6 +33,12 @@ const absolutize = html => html.replace(/\s(href|src|srcset|imagesrcset)="([^"]*
 function finish(name, html) {
   if (preview) html = html.replace(/[ \t]*<link rel="preload"[^>]*as="font"[^>]*>\r?\n?/g, '');
   if (name === '404.html' && process.env.VERCEL) html = absolutize(html);
+  // Site publicado: links sem ".html" (ryzrp.com.br/streamers). O GitHub Pages serve /streamers -> streamers.html.
+  // As prévias (.preview/, via file://) mantêm o .html, senão os links não abrem no navegador.
+  if (!preview) html = html
+    .replace(/href="index\.html#/g, name === 'index.html' ? 'href="#' : 'href="/#')
+    .replace(/href="index\.html"/g, 'href="/"')
+    .replace(/href="(regras|streamers)\.html/g, 'href="/$1');
   return html;
 }
 fs.rmSync(out, { recursive: true, force: true }); fs.mkdirSync(out, { recursive: true });
