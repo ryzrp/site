@@ -6,23 +6,25 @@
      url:        link do canal ('' = card sem link)
      foto:       caminho da foto em retrato, ex. 'assets/img/streamers/fulano.webp' ('' = arte ilustrada de placeholder)
      aoVivo:     true mostra o selo AO VIVO e entra na aba "Ao vivo"
+                 'auto' (só Twitch) = o site confere sozinho se o canal está ao vivo
+                 (ao abrir a página e a cada 2 minutos) pelo link do campo `url`
      horario:    texto curto do horário, ex. '20h às 00h' (2ª linha da placa do card offline; '' = "Horário em breve")
      cor:        (opcional) cor de identidade da carta (fundo do retrato): número de 0 a 5
                  0 lavanda · 1 magenta · 2 azul-violeta · 3 roxo · 4 rosa claro · 5 violeta
                  ('' = cor automática)
    =================================================================== */
 var STREAMERS = [
-  { nome: '', plataforma: 'twitch',  url: '', foto: '', aoVivo: true,  horario: '', cor: '' },
-  { nome: '', plataforma: 'youtube', url: '', foto: '', aoVivo: false, horario: '', cor: '' },
-  { nome: '', plataforma: 'tiktok',  url: '', foto: '', aoVivo: true,  horario: '', cor: '' },
-  { nome: '', plataforma: 'twitch',  url: '', foto: '', aoVivo: false, horario: '', cor: '' },
-  { nome: '', plataforma: 'twitch',  url: '', foto: '', aoVivo: false, horario: '', cor: '' },
-  { nome: '', plataforma: 'youtube', url: '', foto: '', aoVivo: true,  horario: '', cor: '' },
-  { nome: '', plataforma: 'tiktok',  url: '', foto: '', aoVivo: false, horario: '', cor: '' },
-  { nome: '', plataforma: 'twitch',  url: '', foto: '', aoVivo: false, horario: '', cor: '' },
-  { nome: '', plataforma: 'youtube', url: '', foto: '', aoVivo: false, horario: '', cor: '' },
-  { nome: '', plataforma: 'tiktok',  url: '', foto: '', aoVivo: true,  horario: '', cor: '' },
-  { nome: '', plataforma: 'twitch',  url: '', foto: '', aoVivo: false, horario: '', cor: '' },
+  { nome: 'itsdebora_', plataforma: 'twitch', url: 'https://www.twitch.tv/itsdebora_', foto: 'assets/img/streamers/itsdebora.webp', aoVivo: 'auto', horario: '', cor: '' },
+  { nome: 'medusabolivar', plataforma: 'twitch', url: 'https://www.twitch.tv/medusabolivar', foto: 'assets/img/streamers/medusabolivar.webp', aoVivo: 'auto', horario: '', cor: '' },
+  { nome: 'picapaugamer', plataforma: 'twitch', url: 'https://www.twitch.tv/picapaugamer', foto: 'assets/img/streamers/picapaugamer.webp', aoVivo: 'auto', horario: '', cor: '' },
+  { nome: 'vtgzin_', plataforma: 'twitch', url: 'https://www.twitch.tv/vtgzin_', foto: 'assets/img/streamers/vtgzin.webp', aoVivo: 'auto', horario: '', cor: '' },
+  { nome: 'omelhordojogobr', plataforma: 'twitch', url: 'https://www.twitch.tv/omelhordojogobr', foto: 'assets/img/streamers/omelhordojogobr.webp', aoVivo: 'auto', horario: '', cor: '' },
+  { nome: 'leandrabatista', plataforma: 'twitch', url: 'https://www.twitch.tv/leandrabatista', foto: 'assets/img/streamers/leandrabatista.webp', aoVivo: 'auto', horario: '', cor: '' },
+  { nome: 'criptogirl', plataforma: 'twitch', url: 'https://www.twitch.tv/criptogirl', foto: 'assets/img/streamers/criptogirl.webp', aoVivo: 'auto', horario: '', cor: '' },
+  { nome: 'tattyrp', plataforma: 'twitch', url: 'https://www.twitch.tv/tattyrp', foto: 'assets/img/streamers/tattyrp.webp', aoVivo: 'auto', horario: '', cor: '' },
+  { nome: 'liinkone', plataforma: 'twitch', url: 'https://www.twitch.tv/liinkone', foto: 'assets/img/streamers/liinkone.webp', aoVivo: 'auto', horario: '', cor: '' },
+  { nome: 'pacharock', plataforma: 'twitch', url: 'https://www.twitch.tv/pacharock', foto: 'assets/img/streamers/pacharock.webp', aoVivo: 'auto', horario: '', cor: '' },
+  { nome: 'brendarabelini', plataforma: 'tiktok', url: 'https://www.tiktok.com/@brendarabelini', foto: 'assets/img/streamers/brendarabelini.webp', aoVivo: false, horario: '', cor: '' },
 ];
 
 (function () {
@@ -148,11 +150,12 @@ var STREAMERS = [
     return s;
   }
 
+  var autos = [];
   STREAMERS.forEach(function (s, i) {
     var num = String(i + 1).padStart(2, '0');
     var plat = NOMES[s.plataforma] ? s.plataforma : 'twitch';
     var li = el('li', 'sc');
-    li.setAttribute('data-live', s.aoVivo ? 'true' : 'false');
+    var live = s.aoVivo === true;
     li.setAttribute('data-plat', plat);
     /* variação do retrato (só arte de placeholder): pele, cabelo e roupa
        giram em ciclos diferentes, então nenhum card repete a combinação */
@@ -167,7 +170,6 @@ var STREAMERS = [
 
     var card = el(s.url ? 'a' : 'div', 'sc__card');
     if (s.url) { card.href = s.url; card.target = '_blank'; card.rel = 'noopener'; }
-    card.title = (s.nome || 'Streamer ' + num) + ' · ' + NOMES[plat] + ' · ' + (s.horario || (s.aoVivo ? 'No ar agora' : 'Horário em breve'));
 
     /* camadas (o card é um objeto: paralelogramo em skewX + rotateY leve):
        filete > fundo escuro com plano diagonal do streamer > retrato (sai pelo
@@ -182,6 +184,7 @@ var STREAMERS = [
       img.loading = 'lazy'; img.decoding = 'async';
       fig.appendChild(img);
       fig.classList.add('sc__fig--foto');
+      wrap.classList.add('sc__figwrap--foto');
     } else {
       fig.setAttribute('data-placeholder', '[STREAMER — FOTO ' + num + '] retrato do streamer');
       fig.insertAdjacentHTML('beforeend', portrait(i, tone));
@@ -199,34 +202,68 @@ var STREAMERS = [
     inner.appendChild(name); inner.appendChild(pi);
     /* 2ª linha: micro-dado com ícone. Ao vivo = "No ar agora" (vem de aoVivo);
        offline = horário da live (campo `horario`; vazio = placeholder) */
-    var meta = el('span', 'sc__meta' + (s.aoVivo ? ' sc__meta--live' : ''));
+    var meta = el('span', 'sc__meta');
     meta.setAttribute('aria-hidden', 'true');
-    meta.appendChild(ico(s.aoVivo ? 'live' : 'clock'));
-    var mt = el('span', 'sc__meta-t', s.aoVivo ? 'No ar agora' : (s.horario || 'Horário em breve'));
-    if (!s.aoVivo && !s.horario) mt.setAttribute('data-placeholder', '[STREAMER — HORÁRIO ' + num + ']');
-    meta.appendChild(mt);
     inner.appendChild(meta);
-    inner.appendChild(el('span', 'sr-only', ', ' + NOMES[plat] + (s.aoVivo ? ', ao vivo' : ', offline')));
+    var sr = el('span', 'sr-only');
+    inner.appendChild(sr);
     band.appendChild(inner);
     card.appendChild(band);
     card.appendChild(el('span', 'sc__shine'));
     card.appendChild(el('span', 'sc__sel'));
-    if (s.aoVivo) {
-      var seal = el('span', 'sc__live');
-      seal.setAttribute('aria-hidden', 'true');
-      var sin = el('span', 'sc__live-in');
-      sin.appendChild(el('span', 'sc__pulse'));
-      sin.appendChild(el('span', null, 'Live'));
-      seal.appendChild(sin);
-      card.appendChild(seal);
-    }
-    if (!s.url) card.setAttribute('aria-label', (s.nome || 'Streamer ' + num) + ', ' + NOMES[plat] + (s.aoVivo ? ', ao vivo' : ', offline'));
+    var seal = el('span', 'sc__live');
+    seal.setAttribute('aria-hidden', 'true');
+    var sin = el('span', 'sc__live-in');
+    sin.appendChild(el('span', 'sc__pulse'));
+    sin.appendChild(el('span', null, 'Live'));
+    seal.appendChild(sin);
+    var who = s.nome || 'Streamer ' + num;
+    /* estado ao vivo/offline: selo LIVE, 2ª linha da placa, textos de acessibilidade */
+    li._setLive = function (on) {
+      li.setAttribute('data-live', on ? 'true' : 'false');
+      meta.className = 'sc__meta' + (on ? ' sc__meta--live' : '');
+      meta.textContent = '';
+      meta.appendChild(ico(on ? 'live' : 'clock'));
+      var mt = el('span', 'sc__meta-t', on ? 'No ar agora' : (s.horario || 'Horário em breve'));
+      if (!on && !s.horario) mt.setAttribute('data-placeholder', '[STREAMER — HORÁRIO ' + num + ']');
+      meta.appendChild(mt);
+      sr.textContent = ', ' + NOMES[plat] + (on ? ', ao vivo' : ', offline');
+      card.title = who + ' · ' + NOMES[plat] + ' · ' + (on ? 'No ar agora' : (s.horario || 'Horário em breve'));
+      if (!s.url) card.setAttribute('aria-label', who + ', ' + NOMES[plat] + (on ? ', ao vivo' : ', offline'));
+      if (on) card.appendChild(seal); else if (seal.parentNode) seal.remove();
+    };
+    li._setLive(live);
+    /* ao vivo automático (Twitch): canal tirado do link */
+    var tw = s.aoVivo === 'auto' && plat === 'twitch' && /twitch\.tv\/([A-Za-z0-9_]{3,25})/.exec(s.url || '');
+    if (tw) autos.push({ li: li, canal: tw[1].toLowerCase() });
 
     li.appendChild(card);
     list.insertBefore(li, join);
   });
 
   var cards = Array.prototype.slice.call(list.querySelectorAll('.sc[data-plat]'));
+  /* nome comprido diminui até caber na placa (mín. 62% do tamanho), sem reticências */
+  var nomes = Array.prototype.slice.call(list.querySelectorAll('.sc__name'));
+  var regua = document.createElement('canvas').getContext('2d');
+  function caber() {
+    nomes.forEach(function (n) {
+      n.style.fontSize = '';
+      var w = n.clientWidth;
+      if (!w || !regua) return;
+      var cs = getComputedStyle(n);
+      var base = parseFloat(cs.fontSize);
+      regua.font = cs.fontStyle + ' ' + cs.fontWeight + ' ' + base + 'px ' + cs.fontFamily;
+      var t = n.textContent.toUpperCase();
+      /* largura real do texto + espaçamento entre letras + folga do itálico */
+      var tw = regua.measureText(t).width + t.length * base * 0.01 + base * 0.12;
+      if (tw <= w) return;
+      n.style.fontSize = (base * Math.max(0.62, w / tw)).toFixed(2) + 'px';
+    });
+  }
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(caber);
+  caber();
+  var rt;
+  window.addEventListener('resize', function () { clearTimeout(rt); rt = setTimeout(caber, 120); });
   function count(f) {
     return cards.filter(function (c) { return match(c, f); }).length;
   }
@@ -247,9 +284,12 @@ var STREAMERS = [
     c.addEventListener('pointerenter', function () { select(c); });
     c.addEventListener('focusin', function () { select(c); });
   });
+  var filtro = 'todos';
   function apply(f, focus) {
+    filtro = f;
     var shown = 0;
     cards.forEach(function (c) { var ok = match(c, f); c.hidden = !ok; if (ok) shown++; });
+    if (typeof caber === 'function') caber();
     select(all.filter(function (c) { return !c.hidden; })[0]);
     if (empty) empty.hidden = shown > 0;
     btns.forEach(function (b) {
@@ -279,4 +319,35 @@ var STREAMERS = [
     else if (k === 'e') step(1);
   });
   apply('todos');
+
+  /* AO VIVO AUTOMÁTICO (Twitch). DecAPI responde em texto puro, sem chave:
+     "fulano is offline" ou o tempo de live ("2 hours, 5 minutes"). Se a consulta
+     falhar, o card fica como está (offline). Confere de novo a cada 2 minutos. */
+  function refreshCounts() {
+    document.querySelectorAll('[data-count]').forEach(function (n) {
+      n.textContent = count(n.getAttribute('data-count'));
+    });
+  }
+  function checar() {
+    if (!autos.length || !window.fetch) return;
+    Promise.all(autos.map(function (a) {
+      return fetch('https://decapi.me/twitch/uptime/' + a.canal, { cache: 'no-store' })
+        .then(function (r) { return r.ok ? r.text() : ''; })
+        .then(function (t) {
+          t = (t || '').toLowerCase();
+          if (!t || /error|not found|no user|invalid/.test(t)) return false;
+          var on = !/offline/.test(t);
+          if ((a.li.getAttribute('data-live') === 'true') === on) return false;
+          a.li._setLive(on);
+          return true;
+        })
+        .catch(function () { return false; });
+    })).then(function (mudou) {
+      if (mudou.indexOf(true) < 0) return;
+      refreshCounts();
+      apply(filtro);
+    });
+  }
+  checar();
+  setInterval(function () { if (!document.hidden) checar(); }, 120000);
 })();
