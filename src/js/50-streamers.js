@@ -1,18 +1,3 @@
-/* 50-streamers.js (dono: construtor de STREAMERS)
-   ===================================================================
-   LISTA DE STREAMERS: edite aqui. Um objeto por streamer.
-     nome:       nome do streamer ('' = mostra o placeholder "STREAMER 01")
-     plataforma: 'twitch' | 'youtube' | 'tiktok'
-     url:        link do canal ('' = card sem link)
-     foto:       caminho da foto em retrato, ex. 'assets/img/streamers/fulano.webp' ('' = arte ilustrada de placeholder)
-     aoVivo:     true mostra o selo AO VIVO e entra na aba "Ao vivo"
-                 'auto' (só Twitch) = o site confere sozinho se o canal está ao vivo
-                 (ao abrir a página e a cada 2 minutos) pelo link do campo `url`
-     horario:    texto curto do horário, ex. '20h às 00h' (2ª linha da placa do card offline; '' = "Horário em breve")
-     cor:        (opcional) cor de identidade da carta (fundo do retrato): número de 0 a 5
-                 0 lavanda · 1 magenta · 2 azul-violeta · 3 roxo · 4 rosa claro · 5 violeta
-                 ('' = cor automática)
-   =================================================================== */
 var STREAMERS = [
   { nome: 'itsdebora_', plataforma: 'twitch', url: 'https://www.twitch.tv/itsdebora_', foto: 'assets/img/streamers/itsdebora.webp', aoVivo: 'auto', horario: '', cor: '' },
   { nome: 'medusabolivar', plataforma: 'twitch', url: 'https://www.twitch.tv/medusabolivar', foto: 'assets/img/streamers/medusabolivar.webp', aoVivo: 'auto', horario: '', cor: '' },
@@ -36,30 +21,20 @@ var STREAMERS = [
   var join = list.querySelector('[data-join]');
   var empty = document.querySelector('[data-streamers-empty]');
   var btns = Array.prototype.slice.call(tabs.querySelectorAll('[data-filter]'));
-  /* ARTE DE PLACEHOLDER (só enfeite; some quando o streamer ganhar `foto`).
-     Retrato ilustrado em SVG, com traço e sombra chapada, em duotone da paleta.
-     Cores vêm de variáveis CSS do card (data-tone), então o SVG não tem cor fixa.
-     Cada card ganha um visual diferente (cabelo/acessório) para a grade ter ritmo. */
-  /* 4 roupas diferentes (gola V, moletom, camiseta, jaqueta de gola alta),
-     para a grade não repetir a mesma gola em todo card */
   var TORSO = '<path class="a-jk" d="M-14 262V222c8-27 42-41 74-47l30 28 30-28c32 6 66 20 74 47v40z"/>';
   var TORSO_SH = '<path class="a-shade" d="M120 262l-16-52c8-8 14-20 16-35 32 6 66 20 74 47v40z"/>';
   var NECK = '<path class="a-sk" d="M76 134v42l14 16 14-16v-42z"/>' +
     '<path class="a-skd" d="M76 138c8 14 20 14 28 0v20c-8 9-20 9-28 0z"/>';
   var BODIES = [
-    /* jaqueta aberta com gola em V */
     TORSO + '<path class="a-sh" d="M66 176l24 46 24-46z"/>' +
       '<path class="a-shade" d="M90 203l30-28c32 6 66 20 74 47v40H98z"/>' +
       '<path class="a-trim" d="M60 175l22 52-5 35M120 175l-22 52 5 35"/>' + NECK,
-    /* moletom: gola redonda grossa e cordões */
     TORSO + TORSO_SH + NECK +
       '<path class="a-jk" d="M56 172c4 40 64 40 68 0l-12-6c-6 24-38 24-44 0z"/>' +
       '<path class="a-shade" d="M90 201c18 0 32-12 34-29l-12-6c-3 12-12 18-22 18z"/>' +
       '<path class="a-trim" d="M78 200v36M102 200v30"/>',
-    /* camiseta: gola careca e faixa no peito */
     TORSO + '<path class="a-sh" d="M-13 230h206v16H-13z"/>' + TORSO_SH + NECK +
       '<path class="a-trim" d="M64 177c8 22 44 22 52 0"/>',
-    /* jaqueta fechada de gola alta com zíper */
     TORSO + TORSO_SH + NECK +
       '<path class="a-jk" d="M60 170l14-12 16 28 16-28 14 12-8 40-22-14-22 14z"/>' +
       '<path class="a-shade" d="M90 186l16-28 14 12-8 40-22-14z"/>' +
@@ -81,7 +56,6 @@ var STREAMERS = [
   var ROUND = '<circle class="a-frame" cx="77" cy="100" r="10"/><circle class="a-frame" cx="103" cy="100" r="10"/><path class="a-frame" d="M87 99h6"/>';
   var SET = '<path class="a-band" d="M52 102c0-58 76-58 76 0"/><rect class="a-gear" x="46" y="92" width="13" height="26" rx="4"/>' +
     '<rect class="a-gear" x="121" y="92" width="13" height="26" rx="4"/><path class="a-mic" d="M52 116c2 16 12 22 28 22"/>';
-  /* [atrás do rosto, na frente do rosto] */
   var LOOKS = [
     ['', '<path class="a-hr" d="M56 98c-4-38 14-62 38-60 20 2 34 18 30 54-4-12-10-22-20-26-8 8-26 12-40 10-4 6-6 14-8 22z"/>' + SET],
     ['', '<path class="a-hr" d="M56 94c0-10 2-16 4-20h60c2 4 4 10 4 20-10-10-50-10-68 0z"/><path class="a-cap" d="M56 80c2-28 16-40 34-40s32 12 34 40z"/><path class="a-trim2" d="M54 76h72v9H54z"/><path class="a-cap" d="M118 66l24-8 3 11-22 9z"/>' + SHADES],
@@ -92,16 +66,11 @@ var STREAMERS = [
     ['', '<path class="a-hr" d="M58 94l2-10h60l2 10c-8-4-14-6-20-4l-12 4-12-4c-6-2-12 0-20 4z"/><path class="a-cap" d="M54 84c0-34 16-50 36-50s36 16 36 50z"/><path class="a-trim2" d="M52 76h76v13H52z"/><path class="a-rib" d="M64 46v28M77 38v36M90 36v38M103 38v36M116 46v28"/><circle class="a-cap" cx="90" cy="29" r="8"/>'],
     ['<circle class="a-hr" cx="90" cy="66" r="40"/><circle class="a-hr" cx="58" cy="80" r="22"/><circle class="a-hr" cx="122" cy="80" r="22"/><circle class="a-hr" cx="68" cy="46" r="22"/><circle class="a-hr" cx="112" cy="46" r="22"/>', '<path class="a-hr" d="M60 86c4-18 16-28 30-28s26 10 30 28c-10-10-20-14-30-14s-20 4-30 14z"/>' + SHADES]
   ];
-  /* Enquadramento: busto FECHADO (cabeça e ombros enchem a carta) e a cabeça
-     vaza ~16px acima da borda. TOPS = topo da cabeça de cada visual no viewBox;
-     a figura inteira desce/sobe para todas as cabeças ficarem na mesma linha
-     (com variação pequena, para ler como elenco e não como clone). */
   var TOPS = [38, 40, 38, 30, 21, 26, 21, 24];
   var JIT = [0, 2, -1, 1, 3, -2, 1, 0];
   var TILT = [-5, 4, 0, -3, 6, -2, 3, -6];
-  var LEAN = [-5, 3, 0, 6, -3, 5, -6, 2];   /* ombro girado (pose) */
-  var TURN = [-3, 0, 3, 0, 0, 2, -2, 0];    /* feições deslocadas: cabeça virada (0 nos de óculos) */
-  /* cel-shading em 3 tons: luz à esquerda, base, sombra chapada à direita */
+  var LEAN = [-5, 3, 0, 6, -3, 5, -6, 2];   
+  var TURN = [-3, 0, 3, 0, 0, 2, -2, 0];    
   var JKL = '<path class="a-jkl" d="M-14 262V222c8-27 42-41 74-47l8 8c-26 8-52 22-58 44l-6 35z"/>';
   function portrait(i, tone) {
     var v = i % LOOKS.length;
@@ -114,15 +83,11 @@ var STREAMERS = [
       FACE_BASE + '<g transform="translate(' + TURN[v] + ' 0)">' +
       (i % 3 === 1 ? FEATS : FEATS.replace(/<path class="a-mouth"[^>]*>/, SMILE)) + '</g>' + LOOKS[v][1] + '</g></g></svg>';
   }
-  /* rim light na cor do card (data-tone): por dentro (filtro) e por fora (CSS) */
   var RIM = ['#FFFFFF', '#FFE0FF', '#D9CCFF', '#FFF0FF', '#FFFFFF', '#E6D4FF'];
-  /* cor de identidade de cada carta (fundo claro/saturado do retrato), em
-     sequência que não repete vizinhos; magenta cai nas cartas ao vivo */
   var TONE_SEQ = [1, 0, 4, 2, 3, 5, 0, 3, 2, 1, 4, 5];
   var defs = '<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs>';
   RIM.forEach(function (c, k) {
     defs += '<filter id="sc-rim-' + k + '" x="-5%" y="-5%" width="110%" height="110%" color-interpolation-filters="sRGB">' +
-      /* volume: a silhueta desfocada vira relevo; a luz clareia a esquerda e escurece a direita */
       '<feGaussianBlur in="SourceAlpha" stdDeviation="7" result="b"/>' +
       '<feDiffuseLighting in="b" surfaceScale="9" diffuseConstant="1.3" lighting-color="#fff" result="l"><feDistantLight azimuth="205" elevation="50"/></feDiffuseLighting>' +
       '<feBlend in="SourceGraphic" in2="l" mode="multiply" result="m"/>' +
@@ -159,8 +124,6 @@ var STREAMERS = [
     var li = el('li', 'sc');
     var live = s.aoVivo === true;
     li.setAttribute('data-plat', plat);
-    /* variação do retrato (só arte de placeholder): pele, cabelo e roupa
-       giram em ciclos diferentes, então nenhum card repete a combinação */
     li.setAttribute('data-skin', String((i * 2 + 1) % 5));
     li.setAttribute('data-hair', String((i * 3) % 5));
     li.setAttribute('data-fit', String(i % 6));
@@ -173,9 +136,6 @@ var STREAMERS = [
     var card = el(s.url ? 'a' : 'div', 'sc__card');
     if (s.url) { card.href = s.url; card.target = '_blank'; card.rel = 'noopener'; }
 
-    /* camadas (o card é um objeto: paralelogramo em skewX + rotateY leve):
-       filete > fundo escuro com plano diagonal do streamer > retrato (sai pelo
-       topo) > placa do nome > luz lateral > selo LIVE */
     card.appendChild(el('span', 'sc__plate'));
     card.appendChild(el('span', 'sc__bgd'));
     var wrap = el('span', 'sc__figwrap');
@@ -188,22 +148,16 @@ var STREAMERS = [
       fig.classList.add('sc__fig--foto');
       wrap.classList.add('sc__figwrap--foto');
     } else {
-      fig.setAttribute('data-placeholder', '[STREAMER — FOTO ' + num + '] retrato do streamer');
       fig.insertAdjacentHTML('beforeend', portrait(i, tone));
     }
     wrap.appendChild(fig);
     card.appendChild(wrap);
 
-    /* placa sólida de altura fixa: nome grande à esquerda, ícone à direita.
-       Status AO VIVO = selo LIVE + borda magenta (sem pílulas na placa). */
     var band = el('span', 'sc__band');
     var inner = el('span', 'sc__band-in');
     var name = el('span', 'sc__name', s.nome || 'Streamer ' + num);
-    if (!s.nome) name.setAttribute('data-placeholder', '[STREAMER — NOME ' + num + ']');
     var pi = el('span', 'sc__plat-ico'); pi.appendChild(ico(plat));
     inner.appendChild(name); inner.appendChild(pi);
-    /* 2ª linha: micro-dado com ícone. Ao vivo = "No ar agora" (vem de aoVivo);
-       offline = horário da live (campo `horario`; vazio = placeholder) */
     var meta = el('span', 'sc__meta');
     meta.setAttribute('aria-hidden', 'true');
     inner.appendChild(meta);
@@ -220,14 +174,12 @@ var STREAMERS = [
     sin.appendChild(el('span', null, 'Live'));
     seal.appendChild(sin);
     var who = s.nome || 'Streamer ' + num;
-    /* estado ao vivo/offline: selo LIVE, 2ª linha da placa, textos de acessibilidade */
     li._setLive = function (on) {
       li.setAttribute('data-live', on ? 'true' : 'false');
       meta.className = 'sc__meta' + (on ? ' sc__meta--live' : '');
       meta.textContent = '';
       meta.appendChild(ico(on ? 'live' : 'clock'));
       var mt = el('span', 'sc__meta-t', on ? 'No ar agora' : (s.horario || 'Horário em breve'));
-      if (!on && !s.horario) mt.setAttribute('data-placeholder', '[STREAMER — HORÁRIO ' + num + ']');
       meta.appendChild(mt);
       sr.textContent = ', ' + NOMES[plat] + (on ? ', ao vivo' : ', offline');
       card.title = who + ' · ' + NOMES[plat] + ' · ' + (on ? 'No ar agora' : (s.horario || 'Horário em breve'));
@@ -235,7 +187,6 @@ var STREAMERS = [
       if (on) card.appendChild(seal); else if (seal.parentNode) seal.remove();
     };
     li._setLive(live);
-    /* ao vivo automático (Twitch): canal tirado do link */
     var tw = s.aoVivo === 'auto' && plat === 'twitch' && /twitch\.tv\/([A-Za-z0-9_]{3,25})/.exec(s.url || '');
     if (tw) autos.push({ li: li, canal: tw[1].toLowerCase() });
 
@@ -244,7 +195,6 @@ var STREAMERS = [
   });
 
   var cards = Array.prototype.slice.call(list.querySelectorAll('.sc[data-plat]'));
-  /* nome comprido diminui até caber na placa (mín. 62% do tamanho), sem reticências */
   var nomes = Array.prototype.slice.call(list.querySelectorAll('.sc__name'));
   var regua = document.createElement('canvas').getContext('2d');
   function caber() {
@@ -256,7 +206,6 @@ var STREAMERS = [
       var base = parseFloat(cs.fontSize);
       regua.font = cs.fontStyle + ' ' + cs.fontWeight + ' ' + base + 'px ' + cs.fontFamily;
       var t = n.textContent.toUpperCase();
-      /* largura real do texto + espaçamento entre letras + folga do itálico */
       var tw = regua.measureText(t).width + t.length * base * 0.01 + base * 0.12;
       if (tw <= w) return;
       n.style.fontSize = (base * Math.max(0.62, w / tw)).toFixed(2) + 'px';
@@ -278,10 +227,6 @@ var STREAMERS = [
     n.textContent = count(n.getAttribute('data-count'));
   });
 
-  /* CONVITES: a última linha da grade se completa com cards "Quer ser streamer
-     da RYZ?" (cópias do card original). Ex.: 13 streamers em 6 colunas = 6 + 6 + 1
-     e mais 5 convites. Se a linha fechar certinho, sobra 1 convite numa linha nova.
-     Recalcula ao trocar de aba e ao mudar a largura (6, 4 ou 2 colunas). */
   var extras = [];
   function hook(c) {
     c.addEventListener('pointerenter', function () { select(c); });
@@ -296,7 +241,6 @@ var STREAMERS = [
       var cl = join.cloneNode(true);
       cl.removeAttribute('data-join');
       cl.classList.remove('is-sel');
-      /* cópias: mesmo visual e mesmo link, mas fora da leitura de tela e do Tab (o original já anuncia) */
       cl.setAttribute('aria-hidden', 'true');
       cl.querySelectorAll('a').forEach(function (a) { a.tabIndex = -1; });
       list.appendChild(cl); hook(cl); extras.push(cl);
@@ -345,9 +289,6 @@ var STREAMERS = [
   });
   apply('todos');
 
-  /* AO VIVO AUTOMÁTICO (Twitch). DecAPI responde em texto puro, sem chave:
-     "fulano is offline" ou o tempo de live ("2 hours, 5 minutes"). Se a consulta
-     falhar, o card fica como está (offline). Confere de novo a cada 2 minutos. */
   function refreshCounts() {
     document.querySelectorAll('[data-count]').forEach(function (n) {
       n.textContent = count(n.getAttribute('data-count'));

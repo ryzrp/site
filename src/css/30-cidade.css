@@ -1,15 +1,4 @@
-/* ==========================================================================
-   30-cidade.css  (dono: construtor da CIDADE)
-   Grade de seleção estilo menu de jogo: 6 cartas-retrato inclinadas sobre um
-   palco quase preto com planos diagonais. Cada carta = cena em camadas
-   (céu na cor da zona, skyline, plano médio, primeiro plano recortado) até a
-   borda + placa de nome sólida e escura com barra na cor da zona.
-   Uma carta começa selecionada (.is-sel); hover/foco move a seleção.
-   Para trocar um print: substitua o div.g-ph.cidade__ph por
-   <picture class="cidade__ph"> (a imagem cobre a carta; a placa fica por cima).
-   ========================================================================== */
 .cidade {
-  /* paralelogramo real: o mesmo ângulo (~6,5°) em todas as cartas = recuo de 11,5% da altura */
   --card-h: clamp(440px, calc(100vh - 330px), 580px);
   --leanc: calc(var(--card-h) * 0.105);
   --chf: 22px;
@@ -24,7 +13,6 @@
   padding-block: var(--sp-5) var(--sp-5);
 }
 @media (min-width: 1181px) and (min-height: 700px) {
-  /* a tela fecha em si mesma: a seção ocupa a janela abaixo do menu */
   .cidade { min-height: calc(100vh - var(--nav-h, 88px)); }
 }
 .cidade__wide {
@@ -34,7 +22,6 @@
   padding-inline: clamp(var(--sp-3), 2vw, var(--sp-6));
 }
 
-/* ---- Topo: título à esquerda, régua de HUD à direita (mesma linha de base) ---- */
 .cidade__top {
   display: flex;
   align-items: flex-end;
@@ -77,7 +64,6 @@
 }
 .cidade__count-txt span { font-size: 0.875rem; font-weight: 600; letter-spacing: 0.06em; color: var(--txt2); }
 
-/* trailer: chip de HUD na mesma régua */
 .cidade__trailer {
   display: flex;
   align-items: center;
@@ -117,7 +103,6 @@
   color: var(--txt2);
 }
 
-/* ---- Palco: chapado e quase preto; só marcas de HUD com intenção (cantos em L e régua de ticks) ---- */
 .cidade__stage {
   position: relative;
   isolation: isolate;
@@ -125,7 +110,6 @@
   background: color-mix(in srgb, var(--c-ink) 55%, var(--c-black));
   box-shadow: inset 0 1px 0 color-mix(in srgb, var(--c-lavender) 12%, transparent);
 }
-/* marcas de canto em L (lavanda) */
 .cidade__stage::before {
   content: "";
   position: absolute;
@@ -143,7 +127,6 @@
     linear-gradient(var(--m), var(--m)) 100% 100% / 22px 2px no-repeat,
     linear-gradient(var(--m), var(--m)) 100% 100% / 2px 22px no-repeat;
 }
-/* régua de ticks no topo, entre os cantos */
 .cidade__stage::after {
   content: "";
   position: absolute;
@@ -156,7 +139,6 @@
     repeating-linear-gradient(90deg, color-mix(in srgb, var(--c-lavender) 55%, transparent) 0 2px, transparent 2px 120px) 0 0 / 100% 6px no-repeat;
 }
 
-/* ---- Grade de cartas ---- */
 .cidade__grid {
   display: grid;
   grid-template-columns: repeat(6, minmax(0, 1fr));
@@ -177,7 +159,6 @@
   filter: var(--rest);
   transition: transform var(--t-med) var(--ease), filter var(--t-med) var(--ease);
 }
-/* cor de acento de cada zona (céu sempre escuro; o acento entra no prédio e na barra da placa) */
 .cidade__card--hospital       { --cid: color-mix(in srgb, var(--c-lavender) 60%, var(--c-blue)); }
 .cidade__card--cassino        { --cid: var(--c-magenta); }
 .cidade__card--oficina        { --cid: var(--c-pink); }
@@ -185,7 +166,6 @@
 .cidade__card--concessionaria { --cid: color-mix(in srgb, var(--c-blue) 70%, var(--c-lavender)); }
 .cidade__card--prefeitura           { --cid: color-mix(in srgb, var(--c-purple) 50%, var(--c-magenta)); }
 
-/* moldura de 2px bem mais clara que tudo (lavanda quase branca a ~70%) */
 .cidade__card::before {
   content: "";
   position: absolute;
@@ -194,7 +174,6 @@
   background: color-mix(in srgb, var(--white) 70%, transparent);
   clip-path: var(--shape);
 }
-/* moldura grossa de seleção (lavanda sólida, só a opacidade anima) */
 .cidade__card::after {
   content: "";
   position: absolute;
@@ -213,7 +192,6 @@
   background: var(--c-black);
 }
 
-/* arte (ou placeholder) até a borda: céu escuro aqui, cena em SVG por cima */
 .cidade__ph {
   position: absolute;
   inset: 0;
@@ -238,7 +216,6 @@
   width: 100%;
   height: calc(100% - var(--band) + 4px);
 }
-/* scanlines leves + vinheta */
 .cidade__ph::after {
   content: "";
   position: absolute;
@@ -265,7 +242,6 @@
 .cidade__card:hover .g-ph__label,
 .cidade__card:focus-visible .g-ph__label { opacity: 1; }
 
-/* três planos de valor: céu escuro -> prédios em tom médio (acento da zona) -> luzes quase brancas */
 .cidade__scene .k-glow  { fill: var(--cid); opacity: 0.32; }
 .cidade__scene .k-far   { fill: color-mix(in srgb, var(--cid) 16%, var(--c-ink)); opacity: 1; }
 .cidade__scene .k-mid   { fill: color-mix(in srgb, var(--cid) 46%, var(--c-deep)); }
@@ -305,8 +281,6 @@
 #cid-fog .s-fog0 { stop-color: var(--c-ink); stop-opacity: 0; }
 #cid-fog .s-fog1 { stop-color: var(--c-black); stop-opacity: 0.35; }
 
-/* placa de nome: bloco escuro sólido de borda a borda, altura fixa e igual em todas.
-   Nome encostado na base de uma caixa de 2 linhas: todas as bases se alinham. */
 .cidade__band {
   position: absolute;
   left: 0; right: 0; bottom: 0;
@@ -350,7 +324,6 @@
   text-transform: uppercase;
   color: var(--txt2);
 }
-/* slot do ícone: mesmo tamanho, borda e preenchimento em todas as cartas */
 .cidade__cat {
   grid-row: 2;
   grid-column: 2;
@@ -371,7 +344,6 @@
 .cidade .r-o { fill: color-mix(in srgb, var(--cid) 28%, var(--c-ink)); stroke: var(--cid); stroke-width: 1.4; }
 .cidade .r-i { fill: var(--cid); }
 
-/* frase do lugar: faixa que sobe da base no hover/foco/seleção */
 .cidade__line {
   position: absolute;
   left: 0; right: 0;
@@ -389,8 +361,6 @@
   transition: opacity var(--t-med) var(--ease), transform var(--t-med) var(--ease);
 }
 
-/* ---- Carta selecionada: a primeira por padrão; hover/foco move a seleção.
-   Selecionada: moldura lavanda grossa, brilho externo, scale 1.05. As demais ficam ~30% mais escuras. ---- */
 .cidade__card.is-sel,
 .cidade__card:hover,
 .cidade__card:focus-visible {
@@ -418,7 +388,6 @@
 .cidade__card:focus-visible .cidade__cat svg { fill: var(--c-ink); }
 .cidade__card:hover .cidade__ph,
 .cidade__card:focus-visible .cidade__ph { transform: scale(1.04); }
-/* quando outra carta está em hover/foco, a seleção padrão volta ao repouso */
 .cidade__grid:has(.cidade__card:hover, .cidade__card:focus-visible) .cidade__card.is-sel:not(:hover):not(:focus-visible) {
   transform: none;
   z-index: auto;
@@ -431,7 +400,6 @@
 .cidade__grid:has(.cidade__card:hover, .cidade__card:focus-visible) .cidade__card.is-sel:not(:hover):not(:focus-visible) .cidade__cat { background: color-mix(in srgb, var(--c-lavender) 10%, var(--c-ink)); box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--white) 55%, transparent); }
 .cidade__grid:has(.cidade__card:hover, .cidade__card:focus-visible) .cidade__card.is-sel:not(:hover):not(:focus-visible) .cidade__cat svg { fill: var(--white); }
 
-/* ---- Rodapé de HUD: dicas de tecla, pronúncia e Discord ---- */
 .cidade__hud {
   display: flex;
   align-items: center;
@@ -447,7 +415,6 @@
 .cidade__hint--go kbd { background: var(--c-pink); }
 .cidade__hint--go:hover, .cidade__hint--go:focus-visible { color: var(--c-pink); }
 
-/* ---- Responsivo ---- */
 @media (max-width: 1180px) {
   .cidade__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .cidade { --card-h: 470px; }
@@ -473,7 +440,6 @@
   .cidade__cat svg { width: 14px; height: 14px; }
   .cidade__meta { font-size: 0.8125rem; gap: 6px; }
   .cidade__rank { width: 15px; height: 17px; }
-  /* sem hover no toque: a frase fica sempre visível */
   .cidade__line { opacity: 1; transform: none; font-size: var(--fs-xs); line-height: 1.25; padding: var(--sp-2) calc(var(--leanc) * 0.55) var(--sp-2) calc(var(--leanc) * 0.4 + 6px); }
   .cidade__ph .g-ph__label { display: none; }
   .cidade__hud { gap: var(--sp-3) var(--sp-4); }
@@ -488,7 +454,6 @@
   .cidade__card:hover .cidade__ph, .cidade__card:focus-visible .cidade__ph { transform: none; }
 }
 
-/* Filtro roxo nos prints: véu meio transparente em repouso; some no hover, no foco e no card aberto */
 .cidade__ph img { filter: brightness(0.82) saturate(0.85); transition: filter 0.45s var(--ease); }
 .cidade__ph::before {
   content: "";
@@ -507,21 +472,16 @@
 .cidade__card:hover .cidade__ph img,
 .cidade__card:focus-visible .cidade__ph img,
 .cidade__card.is-sel .cidade__ph img { filter: none; }
-/* enquanto outro card está em hover, o aberto volta a ficar roxo (só um colorido por vez) */
 .cidade__grid:has(.cidade__card:hover) .cidade__card.is-sel:not(:hover) .cidade__ph::before { opacity: 0.58; }
 .cidade__grid:has(.cidade__card:hover) .cidade__card.is-sel:not(:hover) .cidade__ph img { filter: brightness(0.82) saturate(0.85); }
 @media (prefers-reduced-motion: reduce) {
   .cidade__ph img, .cidade__ph::before { transition: none; }
 }
 
-/* telas médias: a placa "ZONA 0X" cabe numa linha só */
-/* placa "ZONA 0X" no mesmo tamanho em todas as telas grandes, com espaço até o ícone */
 @media (min-width: 761px) {
   .cidade__meta { font-size: 0.8125rem; letter-spacing: 0.05em; gap: 6px; }
 }
 
-/* Placas uniformes: um tamanho só para os nomes (Concessionária, a palavra mais longa, o mais perto
-   possível), nome acompanhando a inclinação da carta e ícone com a mesma folga do lado esquerdo */
 .cidade__name { font-size: 1.375rem; padding-left: calc(var(--leanc) * 0.07); }
 .cidade__card--concessionaria .cidade__name { font-size: 1.125rem; letter-spacing: -0.005em; }
 .cidade__band { padding-right: calc(var(--leanc) * 0.72 + 14px); }

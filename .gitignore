@@ -1,8 +1,9 @@
-# dependências e saída do build (o GitHub monta o site sozinho)
+# dependências e saída do build
 node_modules/
 dist/
 
-# arquivos de trabalho e prints de teste
+# notas internas, rascunhos e prints (ficam só no computador)
+_interno/
 .preview/
 .snapshots/
 .verdicts/
@@ -11,18 +12,48 @@ referencias/
 referencias-crops/
 docs/
 .claude/
+*.md
+!.github/**/*.md
 
-# originais grandes (as versões leves usadas no site ficam em assets/img)
+# Worker da roleta: fica num repositório privado separado
+worker/
+roda-api/
+
+# ferramentas de teste locais (o site só precisa de build, serve e strip)
+tools/*
+!tools/build.mjs
+!tools/serve.mjs
+!tools/strip.mjs
+
+# hospedagem antiga (Vercel), não usada no GitHub Pages
+vercel.json
+api/
+
+# imagens originais grandes (as versões leves ficam em assets/img)
 assets/originais/
+assets/streamers/
 assets/*.png
 assets/*.jpg
+
+# segredos e variáveis locais: nunca subir
+.env
+.env.*
+.dev.vars
+.dev.vars.*
+*.pem
+*.key
+.wrangler/
+
+# mapas de código, backups e rascunhos
+*.map
+*.bak
+*.orig
+*.tmp
+*~
+*.rascunho.*
 
 # sistema
 .DS_Store
 Thumbs.db
+desktop.ini
 *.log
-
-# segredos da API da roda (nunca subir)
-roda-api/.dev.vars
-roda-api/.wrangler/
-roda-api/node_modules/

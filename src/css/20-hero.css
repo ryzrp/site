@@ -1,9 +1,3 @@
-/* ==========================================================================
-   20-hero.css  (dono: construtor do HERO)
-   Palco com 3 painéis (cena 1 | moldura inclinada com a arte RYZ | cena 2),
-   título gigante sobreposto, legenda EN com a pronúncia, HUD (online + beta),
-   botão do Discord com selo BETA e aba de rolar presa na faixa de baixo.
-   ========================================================================== */
 .hero {
   --hero-band: color-mix(in srgb, var(--c-lavender) 7%, color-mix(in srgb, var(--c-blue) 11%, color-mix(in srgb, var(--c-deep) 18%, var(--c-ink))));
   --hero-side: color-mix(in srgb, var(--c-lavender) 5%, color-mix(in srgb, var(--c-deep) 4%, var(--c-ink)));
@@ -28,7 +22,6 @@
   z-index: 2;
 }
 
-/* ---- Palco ---- */
 .hero__stage {
   position: relative;
   display: grid;
@@ -42,12 +35,10 @@
   overflow: hidden;
   background: var(--hero-side);
 }
-/* a lateral passa por baixo da moldura inclinada (--hero-lean) */
 .hero__side--l { margin-right: calc(var(--hero-lean) * -1); }
 .hero__side--r { margin-left: calc(var(--hero-lean) * -1); }
 .hero__side picture { position: absolute; inset: 0; }
 .hero__side img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 18%; }
-/* escurece embaixo (título por cima) e na borda de fora (funde com a página) */
 .hero__side::after {
   content: "";
   position: absolute;
@@ -58,7 +49,6 @@
 .hero__side--l::after { background: linear-gradient(180deg, transparent 45%, color-mix(in srgb, var(--c-ink) 78%, transparent) 100%), linear-gradient(90deg, color-mix(in srgb, var(--c-ink) 55%, transparent), transparent 22%); }
 .hero__side--r::after { background: linear-gradient(180deg, transparent 45%, color-mix(in srgb, var(--c-ink) 78%, transparent) 100%), linear-gradient(270deg, color-mix(in srgb, var(--c-ink) 55%, transparent), transparent 22%); }
 
-/* moldura escura inclinada com a arte dentro */
 .hero__art {
   position: relative;
   z-index: 1;
@@ -66,7 +56,6 @@
   background: var(--hero-frame);
 }
 .hero__art::before {
-  /* fundo do quadro (abaixo da arte), onde a aba de rolar encaixa */
   content: "";
   position: absolute;
   inset: auto 0 0 0;
@@ -87,9 +76,6 @@
   inset: 0;
   background: linear-gradient(180deg, transparent 62%, color-mix(in srgb, var(--c-ink) 55%, transparent));
 }
-/* A arte tem a logo desenhada (ocupa ~60% da largura). Cobre o quadro, mas o zoom
-   para em 135% da largura do quadro, para as pontas do R e do Z nunca serem cortadas;
-   se sobrar espaço embaixo, a rua escura se funde no fundo do quadro. */
 .hero__art picture { container-type: size; background: var(--c-ink); }
 .hero__art img {
   position: absolute;
@@ -103,7 +89,6 @@
   mask-image: linear-gradient(180deg, #000 78%, transparent);
 }
 
-/* ---- Texto e chamada ---- */
 .hero__copy {
   position: relative;
   z-index: 3;
@@ -156,7 +141,6 @@
 .hero__players b[data-state="offline"] { color: var(--c-text-dim); }
 .hero__players .ico { color: var(--c-magenta); }
 
-/* botão principal: só "Entrar no Discord", letra grande, ícone do Discord à esquerda */
 .hero__btn {
   min-height: 104px;
   min-width: min(560px, 100%);
@@ -170,7 +154,6 @@
 .hero__btn::after { clip-path: polygon(44px 0, 100% 0, calc(100% - 44px) 100%, 0 100%); }
 .hero__btn-ico { width: 1.05em; height: 1.05em; flex: none; }
 
-/* aba de rolar: trapézio encaixado na faixa de baixo */
 .hero__scroll {
   position: relative;
   z-index: 3;

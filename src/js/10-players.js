@@ -1,8 +1,3 @@
-/* 10-players.js (dono: Fundação)
-   Preenche todo [data-players] com "N/100" (ao vivo) ou "Offline".
-   1) RYZ.playersEndpoint (função da Vercel, timeout 5 s)
-   2) se falhar e RYZ.server for código cfx (sem ":"), API pública do FiveM
-   Atualiza a cada 60 s, só com a aba visível. Falhas são silenciosas. */
 (function () {
   var cfg = window.RYZ || {};
   var max = cfg.maxPlayers || 100;

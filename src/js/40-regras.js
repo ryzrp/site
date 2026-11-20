@@ -1,10 +1,3 @@
-/* 40-regras.js (dono: construtor das REGRAS)
-   Tela de regras como menu de jogo:
-   - "páginas": sem busca, só a seção ativa aparece (abas 01-05 e ←→ trocam).
-   - busca em tempo real: filtra [data-rule], destaca com <mark>, contadores geral/seção/aba, estado vazio.
-   - seleção: clicar numa regra (ou ↑↓) mostra o detalhe no painel da direita.
-   Atalhos: "/" busca, ESC limpa, ↑↓ navega, ←→ troca de seção.
-   Enter sem foco em nada abre o Discord (é a keycap do CTA). */
 (function () {
   var input = document.querySelector('[data-rules-search]');
   var root = document.querySelector('[data-rules]');
@@ -34,7 +27,6 @@
     penBox: $('.regras__stat--sev', detail), scope: $('[data-d-scope]', detail), pun: $('[data-d-pun]', detail)
   } : null;
   var SEV = ['Sem punição', 'Leve', 'Média', 'Grave', 'Máxima'];
-  // progresso de leitura (regras já abertas nesta visita)
   var readSet = [];
   var readN = $('[data-read-n]'), readOf = $('[data-read-of]'), readBar = $('[data-read-bar]');
   var readSegs = $('[data-read-segs]'), readPct = $('[data-read-pct]');
@@ -42,7 +34,6 @@
     n: $('[data-band-n]', root), name: $('[data-band-name]', root), en: $('[data-band-en]', root),
     read: $('[data-band-read]', root), of: $('[data-band-of]', root)
   };
-  // ícone pequeno de cada célula = glifo da seção
   var GLYPH = {
     gerais: '<path d="M12 2.5 20.5 6.5v6c0 5-3.5 8-8.5 10-5-2-8.5-5-8.5-10v-6Z"/>',
     discord: '<path d="M4 5h16v11H9l-5 4Z"/>',
@@ -50,7 +41,6 @@
     conduta: '<path d="M12 3v17M7 21h10M4 7h16M6 7l-3 7h6ZM18 7l-3 7h6Z"/>',
     beta: '<path d="M9.5 3h5M10.5 3v6.5L4.5 19c-.5 1 0 2 1.5 2h12c1.5 0 2-1 1.5-2l-6-9.5V3"/>'
   };
-  // ícone de categoria por regra (pelo código 1.1, 1.2...). Regra nova sem ícone usa o glifo da seção.
   var RULE_ICO = {
     '1.1': '<circle cx="9" cy="8" r="3"/><circle cx="16.5" cy="9" r="2.5"/><path d="M3 20c0-3.5 2.7-6 6-6s6 2.5 6 6M14.5 14.4c3.4-.4 6.5 1.6 6.5 5.1"/>',
     '1.2': '<path d="M3.5 5h17v15h-17ZM3.5 10h17M8 3v4M16 3v4"/><path d="M9 13.5v4M12.5 15.5h3M14 14v3"/>',
@@ -100,7 +90,6 @@
   var allRules = [];
   data.forEach(function (s) { s.rules.forEach(function (r) { r.sec = s; allRules.push(r); }); });
 
-  // cada célula ganha o nível da penalidade (de .regra__pen[data-sev]) e o marcador de lida
   var nextName = $('[data-next-name]', root), secRead = $('[data-sec-read]', root), secBar = $('[data-sec-bar]', root);
   allRules.forEach(function (r) {
     if (!r.btn) return;
@@ -111,7 +100,6 @@
     chip.setAttribute('data-sev', sv);
     chip.innerHTML = '<span class="regra__sev-bars" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span class="regra__sev-t">' + SEV[sv] + '</span>';
     chip.title = 'Penalidade: ' + SEV[sv];
-    // a lista é secundária: só número, título e gravidade (o resumo aparece no herói)
     r.el.setAttribute('data-sev', sv);
     r.btn.appendChild(chip);
     var ico = document.createElement('span');
@@ -133,7 +121,6 @@
     r.st = st;
   });
   var readIn = function (s) { return s.rules.filter(function (r) { return readSet.indexOf(r) > -1; }).length; };
-  // medidor segmentado de LIDAS (um segmento por regra)
   if (readSegs) readSegs.innerHTML = allRules.map(function () { return '<i></i>'; }).join('');
   function paintSecRead() {
     var s = data[active];
@@ -141,7 +128,6 @@
     var n = readIn(s);
     if (secRead) secRead.textContent = n + '/' + s.rules.length;
     if (secBar) secBar.style.transform = 'scaleX(' + (n / s.rules.length) + ')';
-    // contador de leitura em cada aba do trilho
     tabs.forEach(function (t) {
       var sd = data.filter(function (x) { return x.id === t.getAttribute('data-tab'); })[0];
       var c = $('[data-tab-read]', t);
@@ -161,8 +147,8 @@
     }
   }
 
-  var active = 0;        // índice da seção ativa
-  var selected = null;   // regra selecionada
+  var active = 0;
+  var selected = null;
   var query = '';
 
   function paint(part, q) {
@@ -244,7 +230,6 @@
       if (opts.select !== false && (!selected || selected.sec !== s)) select(s.rules[0]);
       if (opts.hash && history.replaceState) history.replaceState(null, '', '#' + s.id);
     } else {
-      // com busca: a aba leva até a seção dentro dos resultados
       if (opts.scroll) s.el.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   }
@@ -364,7 +349,6 @@
     }
   });
 
-  // seção pela âncora (#roleplay etc.)
   var fromHash = function () {
     var id = (location.hash || '').slice(1);
     for (var i = 0; i < data.length; i++) if (data[i].id === id) return i;

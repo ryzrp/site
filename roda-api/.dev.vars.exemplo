@@ -1,8 +1,0 @@
-# Copie para ".dev.vars" (esse arquivo NÃO vai para o GitHub) e preencha.
-# Discord Developer Portal -> sua aplicação -> OAuth2
-DISCORD_CLIENT_ID=
-DISCORD_CLIENT_SECRET=
-# Canal dos admins -> Editar canal -> Integrações -> Webhooks -> Copiar URL do webhook
-DISCORD_WEBHOOK_URL=
-# Deixe em branco: eu gero uma chave aleatória
-SESSION_SECRET=

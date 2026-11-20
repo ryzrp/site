@@ -1,9 +1,3 @@
-/* 35-fundo-vip.js (fundo contínuo, ver css/72-fundo.css)
-   A fatia do VIP (assets/img/fundo-vip.*, 1920x1006) tem um pedestal desenhado,
-   com o centro do tampo em (960, 625). O carro fica sobre .vip__plinth, cuja posição
-   muda com a largura da tela. Aqui a imagem é escalada e deslocada para o tampo do
-   pedestal cair sob o carro, sem nunca deixar borda vazia. Sem pedestal visível
-   (ex.: celular), volta ao "cover" centralizado do CSS. */
 (function () {
   var vip = document.getElementById('vip');
   var plinth = vip && vip.querySelector('.vip__plinth');
@@ -18,9 +12,8 @@
       return;
     }
     var W = r.width, H = r.height;
-    var cx = p.left - r.left + p.width / 2;   /* centro do pedestal do carro */
+    var cx = p.left - r.left + p.width / 2;
     var cy = p.top - r.top + p.height * 0.4;
-    /* menor escala que cobre a seção e ainda deixa o pedestal alinhado sem borda vazia */
     var s = Math.max(W / IW, H / IH, cx / PX, (W - cx) / (IW - PX), cy / PY, (H - cy) / (IH - PY));
     s = Math.min(s, MAX);
     var bw = IW * s, bh = IH * s;

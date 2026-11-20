@@ -1,18 +1,4 @@
-/* ==========================================================================
-   10-nav.css  (dono: construtor da NAV)
-   Barra de menu de jogo, 46 px, grafite neutro semitransparente com fio de luz
-   de 1px na base. Hierarquia por CONTRASTE DE PESO E VALOR, nao por brilho:
-   - so o JOGAR e pesado (800 italico) e tem preenchimento de cor (violeta contido,
-     filete claro de 1px, sem glow nem sombra);
-   - itens secundarios em condensada 500, 15px, quase brancos, respiro uniforme;
-   - um unico acento fino: rosa claro (--c-pink) em filetes de 2px, selos e icones.
-   Direita: bloco de estado de HUD (jogadores online, membros do Discord, atalhos
-   monocromaticos, retrato com placa BETA), separado por barras diagonais.
-   Angulo unico em tudo: skewX(-16deg). Sem text-shadow nem filter nos rotulos.
-   ========================================================================== */
 html:root { --nav-bar-h: 46px; --nav-sub-h: 28px; }
-/* --nav-h = so a barra; as sub-abas da home pendem sob o bloco INICIO/JOGAR,
-   por cima do canto do conteudo. O recuo das ancoras soma o grupo. */
 body { --nav-h: var(--nav-bar-h); }
 @media (min-width: 981px) {
   html:has(body[data-page="home"]) { scroll-padding-top: calc(var(--nav-bar-h) + var(--nav-sub-h) + var(--sp-4)); }
@@ -21,10 +7,10 @@ body { --nav-h: var(--nav-bar-h); }
 
 .nav {
   --sk: -16deg;
-  --sl: 13px;                              /* deslocamento da diagonal na altura da barra */
-  --nav-accent: var(--c-pink);             /* acento unico e fino */
+  --sl: 13px;
+  --nav-accent: var(--c-pink);
   --nav-ink: #fff;
-  --nav-item: rgba(244, 242, 250, .88);    /* rotulos: quase branco */
+  --nav-item: rgba(244, 242, 250, .88);
   --nav-soft: rgba(244, 242, 250, .7);
   --nav-line: rgba(236, 232, 244, .14);
   --nav-slash: rgba(236, 232, 244, .35);
@@ -37,7 +23,6 @@ body { --nav-h: var(--nav-bar-h); }
   letter-spacing: var(--track-ui);
   pointer-events: none;
 }
-/* Material no pseudo do cabecalho (o blur fica fora do .nav__bar para nao prender o menu fixo do celular) */
 .nav::before {
   content: "";
   position: absolute;
@@ -65,7 +50,7 @@ body { --nav-h: var(--nav-bar-h); }
   height: var(--nav-bar-h);
   padding: 0;
 }
-.nav__bar::before { /* duas faixas diagonais fantasmas atras do meio, no angulo unico */
+.nav__bar::before {
   content: "";
   position: absolute;
   inset: 0;
@@ -75,7 +60,7 @@ body { --nav-h: var(--nav-bar-h); }
     linear-gradient(106deg, transparent 56%, rgba(255, 255, 255, .028) 56% 60%, transparent 60%),
     linear-gradient(106deg, transparent 61%, rgba(0, 0, 0, .2) 61% 63%, transparent 63%);
 }
-.nav__bar::after { /* linha de luz de 1px na base */
+.nav__bar::after {
   content: "";
   position: absolute;
   left: 0;
@@ -87,7 +72,6 @@ body { --nav-h: var(--nav-bar-h); }
   background: var(--nav-line);
 }
 
-/* ---------- Bloco ancora: INICIO + JOGAR, mesma diagonal, sem vao ---------- */
 .nav__brand, .nav__play {
   position: relative;
   isolation: isolate;
@@ -104,8 +88,6 @@ body { --nav-h: var(--nav-bar-h); }
   pointer-events: none;
   transform: skewX(var(--sk));
 }
-/* INICIO: aba em paralelogramo quase transparente; na home, contorno fino em "L"
-   (lateral esquerda inclinada + base de 2px) na cor de acento */
 .nav__brand {
   gap: 8px;
   margin-left: 16px;
@@ -140,8 +122,6 @@ body[data-page="home"] .nav__brand-label { color: var(--nav-accent); }
 body:not([data-page="home"]) .nav__brand:hover .nav__brand-label { color: var(--nav-ink); }
 body:not([data-page="home"]) .nav__brand:hover::before { background: rgba(255, 255, 255, .08); }
 
-/* JOGAR: unico bloco de cor e unico rotulo pesado. Paralelogramo violeta contido,
-   filete claro de 1px no topo e na aresta direita. Sem glow, sem sombra, sem riscos. */
 .nav__play {
   justify-content: center;
   width: 140px;
@@ -162,7 +142,6 @@ body:not([data-page="home"]) .nav__brand:hover::before { background: rgba(255, 2
 .nav__play:hover::before, .nav__play:focus-visible::before { background: linear-gradient(180deg, #8a6df0, #6a4ccf); }
 .nav__play:active::before { background: var(--nav-play-b); }
 
-/* ---------- Itens: condensada 500, 15px, tracking .05em, quase branco, respiro uniforme ---------- */
 .nav__menu { display: flex; align-items: stretch; flex: 0 1 auto; min-width: 0; margin-left: 10px; }
 .nav__menu > ul { display: flex; align-items: stretch; gap: 0; margin: 0; }
 .nav__menu > ul > li { position: relative; display: flex; flex: none; }
@@ -185,7 +164,7 @@ body:not([data-page="home"]) .nav__brand:hover::before { background: rgba(255, 2
   white-space: nowrap;
   transition: color var(--t-fast) var(--ease);
 }
-.nav__link::before { /* placa inclinada leve no hover */
+.nav__link::before {
   content: "";
   position: absolute;
   z-index: -1;
@@ -196,7 +175,7 @@ body:not([data-page="home"]) .nav__brand:hover::before { background: rgba(255, 2
   pointer-events: none;
   transition: opacity var(--t-fast) var(--ease);
 }
-.nav__link::after { /* filete de 2px na base (hover e pagina atual) */
+.nav__link::after {
   content: "";
   position: absolute;
   left: 14px;
@@ -211,7 +190,6 @@ body:not([data-page="home"]) .nav__brand:hover::before { background: rgba(255, 2
 .nav__link:hover, .nav__link:focus-visible { color: var(--nav-ink); }
 .nav__link:hover::before, .nav__link:focus-visible::before { opacity: 1; }
 .nav__link:hover::after, .nav__link:focus-visible::after { transform: skewX(var(--sk)) scaleX(1); }
-/* Pagina atual (Streamers, Regras): mesmo "L" fino do INICIO, texto no acento */
 .nav__link[aria-current="page"] { color: var(--nav-accent); font-weight: 600; }
 .nav__link[aria-current="page"]::before {
   opacity: 1;
@@ -220,9 +198,6 @@ body:not([data-page="home"]) .nav__brand:hover::before { background: rgba(255, 2
 }
 .nav__link[aria-current="page"]::after { left: 8px; right: 8px; background: var(--nav-accent); transform: skewX(var(--sk)); }
 
-/* Selos de HUD (EVENTOS "4" e VIP "EM BREVE"): um estilo so. Marcador solido pequeno,
-   paralelogramo no angulo unico, colado ao canto superior direito do rotulo,
-   alinhado ao topo das maiusculas. */
 .nav__link-txt { position: relative; display: block; }
 .nav__link--tagged { padding-right: 73px; }
 .nav__link--notif { padding-right: 40px; }
@@ -257,7 +232,6 @@ body:not([data-page="home"]) .nav__brand:hover::before { background: rgba(255, 2
   transform: skewX(var(--sk));
 }
 
-/* ---------- Bloco de estado a direita: contadores | atalhos | retrato ---------- */
 .nav__hud {
   position: relative;
   display: flex;
@@ -267,7 +241,6 @@ body:not([data-page="home"]) .nav__brand:hover::before { background: rgba(255, 2
   padding-left: 12px;
   white-space: nowrap;
 }
-/* Contador de HUD: icone 18px + numeral condensado 15px, sem caixa */
 .nav__slot {
   position: relative;
   display: inline-flex;
@@ -288,7 +261,7 @@ body:not([data-page="home"]) .nav__brand:hover::before { background: rgba(255, 2
 .nav__slot .nav__slot-ico { display: block; flex: none; width: 18px; height: 18px; color: var(--nav-accent); }
 .nav__slot-val { font-variant-numeric: tabular-nums; }
 .nav__slot-unit { font-size: 0.8125rem; letter-spacing: 0.06em; color: var(--nav-soft); }
-.nav__led { /* ponto de estado preso ao icone: apagado (offline), claro e pulsando (online) */
+.nav__led {
   position: absolute;
   top: -3px;
   right: -4px;
@@ -300,7 +273,7 @@ body:not([data-page="home"]) .nav__brand:hover::before { background: rgba(255, 2
 }
 .nav__slot--players:has([data-state="online"]) .nav__led { background: var(--nav-accent); animation: nav-led 1.8s ease-in-out infinite; }
 @keyframes nav-led { 50% { opacity: .45; } }
-a.nav__slot::after, .nav__util::after { /* hover: filete de 2px na base */
+a.nav__slot::after, .nav__util::after {
   content: "";
   position: absolute;
   left: 10px;
@@ -316,7 +289,6 @@ a.nav__slot:hover, a.nav__slot:focus-visible { color: var(--nav-ink); }
 a.nav__slot:hover::after, a.nav__slot:focus-visible::after,
 .nav__util:hover::after, .nav__util:focus-visible::after { opacity: 1; }
 
-/* Separadores: barras finas no angulo unico, a 35% */
 .nav__slash {
   display: block;
   flex: none;
@@ -327,7 +299,6 @@ a.nav__slot:hover::after, a.nav__slot:focus-visible::after,
   transform: skewX(var(--sk));
 }
 
-/* Atalhos: icones monocromaticos de 18px, todos levam a algum lugar */
 .nav__utils { display: flex; align-items: stretch; }
 .nav__util {
   position: relative;
@@ -342,7 +313,6 @@ a.nav__slot:hover::after, a.nav__slot:focus-visible::after,
 .nav__util:hover, .nav__util:focus-visible { color: var(--nav-ink); }
 .nav__util::after { left: 8px; right: 8px; }
 
-/* Retrato: moldura fina neutra de 1px, fundo grafite, placa de nivel BETA na base */
 .nav__player {
   position: relative;
   display: block;
@@ -379,13 +349,11 @@ a.nav__slot:hover::after, a.nav__slot:focus-visible::after,
   box-shadow: 0 -1px 0 rgba(236, 232, 244, .3);
 }
 
-/* Contador reaproveitado no rodape do menu do celular */
 .nav__stat { position: relative; display: inline-flex; align-items: center; gap: 7px; }
 .nav__stat-ico { display: block; flex: none; width: 18px; height: 18px; color: var(--c-pink); }
 .nav__stat-val { font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; font-variant-numeric: tabular-nums; color: var(--c-pink); }
 .nav__stat-val[data-state="online"] { color: var(--nav-ink); }
 
-/* Botao do menu (celular) */
 .nav__toggle {
   display: none;
   place-items: center;
@@ -402,9 +370,6 @@ a.nav__slot:hover::after, a.nav__slot:focus-visible::after,
 .nav__toggle[aria-expanded="true"] .nav__toggle-open { display: none; }
 .nav__toggle[aria-expanded="true"] .nav__toggle-close { display: block; }
 
-/* ---------- Sub-abas da home: bandeja chapada de 28px presa sob o bloco INICIO/JOGAR.
-   Um tom mais escura que a barra, sem gradiente; ponta em diagonal no angulo unico.
-   Aba ativa: texto branco + chip chapado discreto + filete de 2px no acento (sem contorno). ---------- */
 body:not([data-page="home"]) .nav__sub { display: none; }
 .nav__sub {
   position: relative;
@@ -423,7 +388,7 @@ body:not([data-page="home"]) .nav__sub { display: none; }
   margin: 0;
   padding: 0 calc(var(--sl) + 2px) 0 0;
 }
-.nav__sub > ul::before { /* placa do grupo */
+.nav__sub > ul::before {
   content: "";
   position: absolute;
   inset: 0 0 0 -2px;
@@ -453,7 +418,7 @@ body:not([data-page="home"]) .nav__sub { display: none; }
   white-space: nowrap;
   transition: color var(--t-fast) var(--ease);
 }
-.nav__sublink::before { /* chip chapado da aba ativa / hover */
+.nav__sublink::before {
   content: "";
   position: absolute;
   z-index: -1;
@@ -464,7 +429,7 @@ body:not([data-page="home"]) .nav__sub { display: none; }
   pointer-events: none;
   transition: opacity var(--t-fast) var(--ease);
 }
-.nav__sublink::after { /* filete de 2px na base */
+.nav__sublink::after {
   content: "";
   position: absolute;
   left: 2px;
@@ -481,7 +446,6 @@ body:not([data-page="home"]) .nav__sub { display: none; }
 .nav__sublink.is-active::before, .nav__sublink[aria-current="true"]::before { opacity: 1; }
 .nav__sublink.is-active::after, .nav__sublink[aria-current="true"]::after { transform: skewX(var(--sk)) scaleX(1); }
 
-/* ---------- Telas medias ---------- */
 @media (max-width: 1360px) {
   .nav__link { padding-inline: 19px; }
   .nav__link--tagged { padding-right: 69px; }
@@ -508,7 +472,6 @@ body:not([data-page="home"]) .nav__sub { display: none; }
   .nav__util--top { display: none; }
 }
 
-/* ---------- Celular / tablet: menu de jogo em tela cheia ---------- */
 @media (max-width: 980px) {
   html:root { --nav-bar-h: 52px; --nav-sub-h: 44px; }
   .nav { --sl: 13px; }
@@ -523,7 +486,6 @@ body:not([data-page="home"]) .nav__sub { display: none; }
   .nav__hud::before { display: none; }
   .nav__hud { padding-left: var(--sp-2); }
   .nav__toggle { display: grid; }
-  /* No celular as sub-abas voltam a ser uma faixa de toque de 44 px */
   body[data-page="home"] { --nav-h: calc(var(--nav-bar-h) + var(--nav-sub-h)); }
   .nav__sub { width: auto; min-width: 0; padding-left: 0; }
   .nav__sub > ul { padding: 0 var(--sp-2); }
@@ -597,7 +559,7 @@ body:not([data-page="home"]) .nav__sub { display: none; }
     color: var(--c-lavender);
   }
   .nav__link::before,
-  .nav__link[aria-current="page"]::before { /* cada item vira uma aba inclinada */
+  .nav__link[aria-current="page"]::before {
     top: 0;
     bottom: 0;
     left: 8px;

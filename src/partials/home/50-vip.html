@@ -1,13 +1,8 @@
-<!-- LOJA DE DIAMANTES (prévia, no lugar do Passe VIP). Tudo "Em breve".
-     Mesma cena do VIP: holofote, trilha inclinada à esquerda com 6 pacotes (10 a 500 diamantes),
-     vitrine do pacote selecionado no centro e informações + CTA à direita.
-     Cada card é um rádio; tudo troca só com CSS (:has), sem JS. As classes por slot (bronze…diamante) são só posições 1 a 6. -->
 <section id="vip" class="section vip vip--loja" aria-labelledby="vip-kick vip-title">
   <svg class="vip__defs" aria-hidden="true" focusable="false">
     <symbol id="vip-dia" viewBox="0 0 24 24"><path d="M6.5 3h11L22 9l-10 12L2 9z" fill="currentColor" fill-opacity=".25" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M2 9h20M9 3 7.5 9 12 21l4.5-12L15 3" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></symbol>
   </svg>
 
-  <!-- Zona 1: cena de fundo (sem imagem): foco de luz magenta/violeta atrás do carro, feixes diagonais, cidade noturna desfocada em SVG, névoa baixa, asfalto molhado com neon refletido, bokeh em 3 planos, partículas e vinheta -->
   <div class="vip__scene" aria-hidden="true">
     <span class="vip__sky"></span>
     <span class="vip__glow"></span>
@@ -37,7 +32,6 @@
       <p class="vip__season"><svg class="ico" aria-hidden="true"><use href="#i-clock"/></svg>Vendas abrem na inauguração</p>
     </header>
 
-    <!-- Zona 2: trilha plana inclinada (paralelogramo), um pacote por linha -->
     <div class="vip__stage">
       <div class="vip__track">
         <p class="vip__track-bar"><span>Diamantes · 6 pacotes</span><span class="vip__lvls" aria-hidden="true"><b class="vip__lvl vip__lvl--bronze">Pacote 01<i>/06</i></b><b class="vip__lvl vip__lvl--prata">Pacote 02<i>/06</i></b><b class="vip__lvl vip__lvl--ouro">Pacote 03<i>/06</i></b><b class="vip__lvl vip__lvl--esmeralda">Pacote 04<i>/06</i></b><b class="vip__lvl vip__lvl--rubi">Pacote 05<i>/06</i></b><b class="vip__lvl vip__lvl--diamante">Pacote 06<i>/06</i></b></span></p>
@@ -82,7 +76,6 @@
       </div>
     </div>
 
-    <!-- Palco: o pacote selecionado sob o holofote -->
     <div class="vip__show" aria-hidden="true">
       <span class="vip__beam"></span>
       <span class="vip__halo"></span>
@@ -154,7 +147,6 @@
       </div>
     </div>
 
-    <!-- HUD de sistema, preso na borda de baixo -->
     <footer class="vip__hud">
       <div class="vip__sys">
         <div class="vip__hints">

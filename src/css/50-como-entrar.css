@@ -1,8 +1,3 @@
-/* ==========================================================================
-   50-como-entrar.css  (dono: construtor de COMO ENTRAR)
-   Quatro painéis inclinados altos com número gigante + linha do tempo
-   tracejada com etiquetas de etapa (como um chaveamento de torneio).
-   ========================================================================== */
 .entrar .g-head { margin-bottom: var(--sp-6); }
 .entrar__sub { color: color-mix(in srgb, var(--c-lavender) 62%, var(--c-bg)); font-size: clamp(1rem, 0.9rem + 0.4vw, 1.25rem); }
 
@@ -14,8 +9,6 @@
   margin: 0;
   list-style: none;
 }
-/* Cada passo tem uma cor da paleta, em progressão com o fundo da página:
-   azul (fundo desta seção) -> violeta -> roxo -> rosa (o que vem depois). */
 .entrar__step:nth-child(1) { --acc: var(--c-blue);    --acc-hi: color-mix(in srgb, var(--c-blue) 45%, var(--c-lavender)); }
 .entrar__step:nth-child(2) { --acc: var(--c-violet);  --acc-hi: color-mix(in srgb, var(--c-violet) 42%, var(--c-lavender)); }
 .entrar__step:nth-child(3) { --acc: var(--c-purple);  --acc-hi: color-mix(in srgb, var(--c-purple) 60%, var(--c-lavender)); }
@@ -28,7 +21,6 @@
   justify-content: flex-end;
   min-height: clamp(280px, 22vw + 30px, 340px);
   padding: var(--sp-5) calc(var(--tilt) + var(--sp-4)) var(--sp-5) calc(var(--tilt) + var(--sp-4));
-  /* vidro escuro tingido com a cor do passo: o fundo aparece por trás */
   background:
     radial-gradient(120% 70% at 30% 0%, color-mix(in srgb, var(--acc) 34%, transparent), transparent 70%),
     linear-gradient(165deg, color-mix(in srgb, var(--acc) 30%, rgba(18, 0, 34, 0.72)), rgba(14, 0, 28, 0.86) 75%);
@@ -37,7 +29,6 @@
   clip-path: polygon(var(--tilt) 0, 100% 0, calc(100% - var(--tilt)) 100%, 0 100%);
   transition: transform var(--t-fast) var(--ease);
 }
-/* filete de luz no topo, na cor do passo */
 .entrar__step::after {
   content: "";
   position: absolute;
@@ -48,13 +39,11 @@
   pointer-events: none;
 }
 .entrar__step:hover { transform: translateY(-4px); }
-/* passo atual: um pouco mais aceso */
 .entrar__step--now {
   background:
     radial-gradient(120% 75% at 30% 0%, color-mix(in srgb, var(--acc) 48%, transparent), transparent 72%),
     linear-gradient(165deg, color-mix(in srgb, var(--acc) 40%, rgba(18, 0, 34, 0.7)), rgba(14, 0, 28, 0.84) 78%);
 }
-/* último passo (vídeo da cidade): rosa cheio, texto escuro, fecha a progressão */
 .entrar__step--video {
   background: linear-gradient(160deg, var(--c-pink), color-mix(in srgb, var(--c-magenta) 70%, var(--c-pink)));
   color: var(--c-ink);
@@ -93,13 +82,11 @@
   text-underline-offset: 3px;
   color: var(--acc-hi);
 }
-/* link do vídeo no card rosa: escuro, com ícone de play */
 .entrar__step--video .entrar__link { color: var(--c-ink); font-weight: 800; }
 .entrar__video { display: inline-flex; align-items: center; gap: 0.4em; }
 .entrar__video .ico { width: 1.1em; height: 1.1em; }
 .entrar__video[aria-disabled="true"] { text-decoration: none; cursor: default; opacity: 0.75; }
 
-/* Números, títulos e links na mesma altura nos 4 painéis */
 @supports (grid-template-rows: subgrid) {
   .entrar__step {
     display: grid;
@@ -112,10 +99,8 @@
   .entrar__steps { grid-template-rows: minmax(clamp(90px, 9vw, 128px), 1fr) auto auto auto; }
 }
 
-/* Linha do tempo: etiquetas alinhadas ao centro de cada painel */
 .entrar__timeline { margin-top: var(--sp-4); gap: clamp(1rem, 0.4rem + 2vw, 3.25rem); }
 .entrar__timeline .g-timeline__step > span { padding: 0.35em 1.3em; font-weight: 800; }
-/* cada etiqueta na cor do seu passo */
 .entrar__timeline .g-timeline__step:nth-child(1) > span { background: color-mix(in srgb, var(--c-blue) 55%, var(--c-ink)); color: var(--c-lavender); }
 .entrar__timeline .g-timeline__step:nth-child(2) > span { background: color-mix(in srgb, var(--c-violet) 55%, var(--c-ink)); color: var(--c-lavender); }
 .entrar__timeline .g-timeline__step:nth-child(3) > span { background: var(--c-purple); color: var(--c-ink); }

@@ -1,7 +1,4 @@
-<!-- STREAMERS (dono: construtor de STREAMERS).
-     Os cards são gerados por src/js/50-streamers.js a partir da lista STREAMERS no topo do arquivo. -->
 <section class="streamers" aria-labelledby="streamers-title">
-  <!-- CENA de fundo (CSS/SVG, escura e desfocada): céu, skyline em dois planos, névoa, bokeh e vinheta -->
   <div class="streamers__scene" aria-hidden="true">
     <span class="st-sky"></span>
     <svg class="st-city st-city--far" viewBox="0 0 1440 300" preserveAspectRatio="xMidYMax slice" focusable="false">
@@ -40,10 +37,8 @@
       </div>
     </div>
 
-    <!-- O painel das abas fica num div (display: contents) para a <ul> continuar sendo uma lista de verdade. -->
     <div class="streamers__panel" id="st-grid" role="tabpanel" aria-labelledby="st-tab-todos">
     <ul class="streamers__grid" data-streamers>
-      <!-- preenchido pelo JS; o card de convite (slot vazio) fica sempre no fim -->
       <li class="sc sc--join" data-join>
         <a class="sc__card" href="https://discord.gg/jogueryz" data-discord target="_blank" rel="noopener">
           <span class="sc__join">

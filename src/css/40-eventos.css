@@ -1,11 +1,3 @@
-/* ==========================================================================
-   40-eventos.css  (dono: construtor de EVENTOS)
-   Grade 2x2 de cápsulas de evento em paralelogramo forte (~12°), todas com o
-   mesmo ângulo. Cada card tem cor-assinatura própria (borda grossa, filete
-   interno, gradiente da cena, brilho), arte em camadas (cena desfocada, luz,
-   figura com luz de recorte que vaza acima da borda, primeiro plano
-   desfocado), aba de tempo grande na quina e um HUD de progresso padrão.
-   ========================================================================== */
 .eventos {
   padding-top: clamp(2.5rem, 1.5rem + 2.5vw, 3.75rem);
   position: relative;
@@ -13,7 +5,6 @@
   overflow: clip;
 }
 
-/* ---- Palco: feixe de luz central, chão iluminado, raios, partículas, vinheta ---- */
 .eventos__fx {
   position: absolute;
   inset: 0;
@@ -59,13 +50,12 @@
   background: radial-gradient(closest-side, color-mix(in srgb, var(--c-pink) 42%, transparent), color-mix(in srgb, var(--c-magenta) 16%, transparent) 55%, transparent);
 }
 
-/* ---- Cabeçalho integrado num bloco de HUD ---- */
 .ev-head {
   display: flex;
   flex-wrap: nowrap;
   align-items: center;
   gap: var(--sp-4);
-  margin-bottom: 70px; /* espaço para as figuras que vazam pelo topo */
+  margin-bottom: 70px;
 }
 .ev-head__slab {
   display: flex;
@@ -113,9 +103,8 @@
   mask-image: linear-gradient(90deg, #000, transparent);
 }
 
-/* ---- Grade inclinada única: colunas iguais, mesmo ângulo, gutter constante ---- */
 .eventos__grid {
-  --lean: 60px;      /* 60px sobre ~290px de altura = ~12° */
+  --lean: 60px;
   --cut: 16px;
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -123,11 +112,9 @@
   padding: 0;
   list-style: none;
 }
-/* os paralelogramos se encaixam: as caixas se sobrepõem em meio --lean, sobra um gutter fixo de 18px */
 .eventos__grid > li:nth-child(odd)  { margin-right: calc(var(--lean) * -0.5 + 9px); }
 .eventos__grid > li:nth-child(even) { margin-left:  calc(var(--lean) * -0.5 + 9px); }
 
-/* ---- Cápsula ---- */
 .evento {
   --sig: var(--c-purple);
   --sig-hi: var(--c-lavender);
@@ -136,11 +123,11 @@
   --sig-grad: linear-gradient(110deg, var(--c-ink), var(--c-purple));
   --panel-line: var(--sig);
   --panel-bg: var(--c-ink);
-  --bw: 4px;      /* borda grossa na cor-assinatura */
-  --bb: 9px;      /* base ainda mais grossa */
-  --gap: 3px;     /* respiro escuro entre a borda e o filete */
-  --fl: 1.5px;    /* filete interno */
-  --leakh: 58px;  /* quanto a figura vaza acima do card */
+  --bw: 4px;
+  --bb: 9px;
+  --gap: 3px;
+  --fl: 1.5px;
+  --leakh: 58px;
   --img: image-set(url("assets/img/ryz-hero-1024.webp") type("image/webp"), url("assets/img/ryz-hero-1024.jpg") type("image/jpeg"));
   display: flex;
   flex-direction: column;
@@ -150,7 +137,6 @@
   filter: drop-shadow(0 0 14px color-mix(in srgb, var(--sig) 55%, transparent)) drop-shadow(8px 8px 0 color-mix(in srgb, var(--c-black) 70%, transparent));
   transition: transform var(--t-med) var(--ease), filter var(--t-med) var(--ease);
 }
-/* Cores-assinatura: violeta, lilás, rosa claro brilhante, magenta neon sobre preto */
 .evento--frame {
   --sig: var(--c-violet);
   --sig-hi: color-mix(in srgb, var(--c-violet) 40%, var(--c-lavender));
@@ -180,7 +166,6 @@
   --sig-grad: linear-gradient(112deg, var(--c-ink) 20%, color-mix(in srgb, var(--c-deep) 60%, var(--c-ink)) 55%, color-mix(in srgb, var(--c-magenta) 40%, var(--c-ink)) 100%);
 }
 
-/* moldura: borda grossa (::before) > respiro escuro (::after) > filete (.evento__line) > cena */
 .evento::after { z-index: -1; inset: var(--bw) var(--bw) var(--bb) var(--bw); background: var(--c-ink); }
 .evento__line,
 .evento__bg {
@@ -197,7 +182,6 @@
   transform: translateY(-4px);
   filter: drop-shadow(0 0 24px color-mix(in srgb, var(--sig) 80%, transparent)) drop-shadow(8px 8px 0 color-mix(in srgb, var(--c-black) 70%, transparent));
 }
-/* brilho fino na quina chanfrada superior esquerda */
 .evento > .evento__line::after {
   content: "";
   position: absolute;
@@ -208,7 +192,6 @@
   background: linear-gradient(90deg, var(--c-lavender), transparent);
 }
 
-/* ---- Cena dentro do recorte (plano de fundo) ---- */
 .evento__bg {
   z-index: 0;
   isolation: isolate;
@@ -229,7 +212,6 @@
 .evento--arquivo .ev-scene { --bg-pos: 100% 0;  --bg-size: 320%; --scene-op: .4; }
 .evento--voz     .ev-scene { --bg-pos: 0 100%;  --bg-size: 240%; --scene-op: .28; }
 .evento--live    .ev-scene { --bg-pos: 100% 2%; --bg-size: 300%; --scene-op: .8; }
-/* legibilidade: escuro no terço inferior esquerdo + topo + listras */
 .evento__bg::after {
   content: "";
   position: absolute;
@@ -242,7 +224,6 @@
     repeating-linear-gradient(-62deg, transparent 0 22px, color-mix(in srgb, var(--c-lavender) 7%, transparent) 22px 24px);
 }
 
-/* luzes da cena (atrás da figura), todas na cor-assinatura */
 .ev-light { position: absolute; z-index: 1; display: block; pointer-events: none; }
 .ev-light--rays {
   right: 4%;
@@ -285,7 +266,6 @@
   box-shadow: 0 0 22px var(--c-magenta), 0 0 70px var(--c-magenta), inset 0 0 22px var(--c-magenta), inset 0 0 90px color-mix(in srgb, var(--c-magenta) 50%, transparent);
 }
 
-/* ---- Luz de recorte que vaza acima da borda superior ---- */
 .evento__leak {
   position: absolute;
   z-index: 2;
@@ -300,7 +280,6 @@
 }
 .evento--voz .evento__leak { right: calc(var(--lean) + 16%); }
 
-/* ---- Figura: ancorada embaixo à direita, vaza pelo topo, com luz de recorte ---- */
 .evento__fig {
   position: absolute;
   z-index: 3;
@@ -315,8 +294,6 @@
 .evento--voz .evento__fig { width: 62%; right: calc(var(--lean) + 1%); }
 .evento--frame .evento__fig { --leakh: 76px; width: 60%; }
 
-/* FRAME DA CIDADE com arte real: print da cidade no fundo + personagem recortada.
-   O print (dia, céu azul) é tingido com a cor do card: mantém o desenho, ganha a paleta. */
 .evento--frame .ev-scene {
   inset: 0;
   background: image-set(url("assets/img/eventos/frame-fundo-1280.webp") type("image/webp"), url("assets/img/eventos/frame-fundo-1280.jpg") type("image/jpeg")) 50% 38% / cover no-repeat;
@@ -324,7 +301,6 @@
   mix-blend-mode: luminosity;
   opacity: 0.85;
 }
-/* ARQUIVO RYZ: letreiro RYZ CITY no fundo + personagem de óculos; a pasta do capítulo fica na frente */
 .evento--arquivo .ev-scene {
   inset: 0;
   background: image-set(url("assets/img/eventos/arquivo-fundo-1280.webp") type("image/webp"), url("assets/img/eventos/arquivo-fundo-1280.jpg") type("image/jpeg")) 34% 55% / cover no-repeat;
@@ -332,8 +308,6 @@
   mix-blend-mode: luminosity;
   opacity: 0.75;
 }
-/* personagem do Arquivo sobe e sai pela borda de cima (como no Frame); o selo NOVO/tempo
-   desce para a esquerda, acima da caixa da temporada, para liberar o canto do rosto */
 .evento--arquivo .evento__fig--oculos { --leakh: 46px; width: 50%; right: calc(var(--lean) + 9%); }
 .ev-top.ev-top--stack { flex-direction: column; align-items: flex-start; gap: var(--sp-2); }
 .evento--arquivo .evento__tab {
@@ -344,7 +318,6 @@
   padding: 0.25em 1em 0.3em 1.4em;
   clip-path: polygon(14px 0, 100% 0, 100% 100%, 0 100%);
 }
-/* VOZ DA RUA: print noturno da cidade no fundo, tingido com o rosa do card */
 .evento--voz .ev-scene {
   inset: 0;
   background: image-set(url("assets/img/eventos/voz-fundo-1280.webp") type("image/webp"), url("assets/img/eventos/voz-fundo-1280.jpg") type("image/jpeg")) 50% 45% / cover no-repeat;
@@ -352,8 +325,6 @@
   mix-blend-mode: luminosity;
   opacity: 0.8;
 }
-/* o celular da personagem fica no topo direito: o selo de dia/tempo sai de lá e fica
-   ao lado da caixa "Prints enviados" (o espaço abaixo é da frase que aparece no hover) */
 .ev-top { display: flex; flex-wrap: wrap; align-items: flex-end; gap: var(--sp-2) var(--sp-3); }
 .ev-top .ev-hud { margin-top: var(--sp-2); }
 .evento--frame .evento__tab {
@@ -367,7 +338,6 @@
 .evento__fig--img {
   object-fit: contain;
   object-position: right bottom;
-  /* luz de recorte na cor do card + sombra dura do estilo */
   filter:
     drop-shadow(0 0 1.5px color-mix(in srgb, var(--sig-hi) 90%, transparent))
     drop-shadow(0 0 16px color-mix(in srgb, var(--sig) 70%, transparent))
@@ -388,38 +358,31 @@
   filter: drop-shadow(0 0 4px var(--sig-hi)) drop-shadow(0 0 14px var(--sig));
 }
 .ev-rim--hot { stroke: var(--c-lavender); stroke-width: 2.6; filter: none; }
-/* primeiro plano desfocado (bokeh) e fundo desfocado */
 .ev-fg circle { fill: var(--sig-hi); }
 .ev-fg { opacity: .42; filter: blur(5px); }
 .ev-fg--back { opacity: .3; filter: blur(3px); }
 .evento--voz .ev-fg { opacity: .55; }
-/* Frame: celular erguido */
 .ev-phone { fill: var(--c-ink); stroke: var(--sig-hi); stroke-width: 3.5; filter: drop-shadow(0 0 6px var(--sig)); }
 .ev-phone__scr { fill: var(--sig); }
 .ev-phone__vf { fill: none; stroke: var(--c-lavender); stroke-width: 3; }
 .ev-phone__dot { fill: var(--c-magenta); }
 .ev-hand { stroke: var(--sig-hi); stroke-width: 2; }
-/* Arquivo: chapéu e pasta */
 .ev-hatband { fill: var(--c-lavender); }
 .ev-folder { fill: var(--c-lavender); stroke: var(--c-ink); stroke-width: 3; }
 .ev-folder__sheet { fill: var(--c-pink); stroke: var(--c-ink); stroke-width: 2; }
 .ev-folder__txt { font: italic 900 34px/1 var(--font, inherit); fill: var(--c-ink); }
 .ev-folder__cap { font: italic 800 16px/1 var(--font, inherit); fill: var(--c-violet); letter-spacing: .1em; }
-/* Voz: megafone erguido */
 .ev-mega { fill: var(--c-lavender); stroke: var(--c-ink); stroke-width: 4; stroke-linejoin: round; }
 .ev-mega__bell { fill: var(--c-magenta); stroke: var(--c-ink); stroke-width: 4; }
 .ev-mega__wave { fill: none; stroke: var(--c-lavender); stroke-width: 6; stroke-linecap: round; filter: drop-shadow(0 0 6px var(--c-magenta)); }
-/* Streamers: fone e microfone */
 .ev-hp { fill: none; stroke: var(--c-ink); stroke-width: 14; stroke-linecap: round; }
 .ev-hp__cup { fill: var(--c-ink); stroke: var(--c-magenta); stroke-width: 4; filter: drop-shadow(0 0 6px var(--c-magenta)); }
 .ev-mic { fill: none; stroke: var(--c-ink); stroke-width: 6; stroke-linecap: round; }
 .ev-mic__head { fill: var(--c-magenta); stroke: var(--c-ink); stroke-width: 3; }
 
-/* conteúdo acima da cena e da figura */
 .evento > .ev-hud,
 .evento > .evento__foot { position: relative; z-index: 4; }
 
-/* ---- Aba do tempo: grande, sólida, chanfrada, presa na quina superior direita ---- */
 .evento__tab {
   position: absolute;
   top: var(--bw);
@@ -478,7 +441,6 @@
 }
 @keyframes ev-pulse { 50% { opacity: 0.3; transform: scale(0.75); } }
 
-/* ---- HUD de progresso padrão (mesmo lugar e tamanho em todo card) ---- */
 .ev-hud {
   display: grid;
   grid-template-columns: auto auto;
@@ -536,7 +498,6 @@
   background: repeating-linear-gradient(90deg, transparent 0 calc(12.5% - 2px), var(--c-ink) calc(12.5% - 2px) 12.5%);
 }
 
-/* ---- Base: legenda em inglês acima + título grande seguindo a inclinação ---- */
 .evento__foot {
   margin-top: auto;
   margin-left: calc(var(--lean) * -0.7);
@@ -579,7 +540,6 @@
   paint-order: stroke fill;
   text-shadow: 4px 4px 0 var(--c-ink), 0 0 26px color-mix(in srgb, var(--sig) 70%, transparent);
 }
-/* descrição: só no hover/foco, como dica acima da legenda */
 .evento__desc {
   position: absolute;
   left: 0;

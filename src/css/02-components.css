@@ -1,38 +1,6 @@
-/* ==========================================================================
-   02-components.css  (dono: Fundação, não editar; sobrescreva no seu CSS)
-   Componentes com linguagem de MENU DE JOGO. Ícones: <svg class="ico"><use href="#i-NOME"/></svg>
-   (sprite em src/partials/shared/icons.html).
-
-   .ico           Ícone SVG 1em. Modificador: .ico--lg
-   .g-head        Cabeçalho de seção:
-                  <header class="g-head"><h2 class="g-head__title">TÍTULO</h2><p class="g-sub" lang="en">Subtitle</p></header>
-                  .g-head--stack (legenda embaixo) · .g-head--center
-   .g-sub         Legenda em inglês: pequena, itálica, caixa alta, roxa.
-   .g-panel       Paralelogramo com borda neon e cantos chanfrados (camadas ::before/::after).
-                  Cores: (padrão roxo) --pink --blue --violet --lavender. Preenchimento: --fill (roxo cheio),
-                  --solid (rosa cheio, texto escuro). --flat (sem inclinação). Ajuste fino: --panel-line, --panel-bg.
-                  .g-panel__title, .g-panel__corner (selo no canto superior direito)
-   .g-btn         Botão de jogo inclinado. .g-btn--primary (rosa, grande: Discord) · .g-btn--ghost (contorno)
-                  .g-btn--soon (desabilitado; use aria-disabled="true") · .g-btn--sm · .g-btn--block
-                  Dentro: <span class="g-btn__label">TEXTO<small class="g-btn__hint">dica</small></span>
-   .g-tag         Selo inclinado. .g-tag--new (NOVO) .g-tag--soon (EM BREVE) .g-tag--beta (BETA) .g-tag--live .g-tag--line
-   .g-chip-time   Chip escuro com relógio: <span class="g-chip-time"><svg class="ico"><use href="#i-clock"/></svg>Texto</span>
-   .g-key         Dica de tecla: <span class="g-key"><kbd>ESC</kbd>Voltar</span> (também em <a>)
-   .g-ph          Placeholder listrado: <div class="g-ph" data-placeholder="o quê"><span class="g-ph__label">[PRINT — HOSPITAL]</span></div>
-                  .g-ph--tall (3/4) .g-ph--square .g-ph--free (sem proporção). Padrão 16/9.
-   .g-timeline    Linha tracejada com etiquetas: <ol class="g-timeline" style="--steps:4"><li class="g-timeline__step is-done|is-now|is-next"><span>PASSO 1</span></li></ol>
-   .g-tab         Aba inclinada; ativa (.is-active, aria-current ou aria-selected) vira bloco destacado.
-   .g-burst       Selo estrelado. .g-burst--pink
-   .g-num         Número de passo gigante.
-   .g-link        Link de ação sublinhado (COMPRAR JOGO ›).
-   .g-stripes     Listras diagonais sutis como fundo.
-   ========================================================================== */
-
-/* ---- Ícones ---- */
 .ico { width: 1em; height: 1em; flex: none; fill: currentColor; vertical-align: -0.125em; }
 .ico--lg { width: 1.5em; height: 1.5em; }
 
-/* ---- Cabeçalho de seção ---- */
 .g-head {
   display: flex;
   flex-wrap: wrap;
@@ -66,7 +34,6 @@
 }
 .g-lead { max-width: 62ch; color: var(--c-text-dim); font-size: var(--fs-lg); }
 
-/* ---- Painel paralelogramo ---- */
 .g-panel {
   --panel-line: var(--c-purple);
   --panel-bg: var(--c-surface-1);
@@ -110,7 +77,6 @@
   z-index: 1;
 }
 
-/* ---- Botão de jogo ---- */
 .g-btn {
   --btn-bg: var(--c-surface-2);
   --btn-line: var(--c-purple);
@@ -170,7 +136,6 @@
 .g-btn--sm { min-height: 44px; font-size: var(--fs-md); padding-inline: calc(var(--sp-4) + var(--lean-sm) * 2); }
 .g-btn--block { display: flex; width: 100%; }
 
-/* ---- Selos ---- */
 .g-tag {
   display: inline-block;
   padding: 0.22em 0.7em;
@@ -191,7 +156,6 @@
 .g-tag--live { background: var(--c-magenta); }
 .g-tag--line { background: color-mix(in srgb, var(--c-purple) 18%, transparent); color: var(--c-lavender); }
 
-/* ---- Chip de tempo ---- */
 .g-chip-time {
   display: inline-flex;
   align-items: center;
@@ -207,7 +171,6 @@
 }
 .g-chip-time .ico { color: var(--c-pink); }
 
-/* ---- Dica de tecla ---- */
 .g-key {
   display: inline-flex;
   align-items: center;
@@ -233,7 +196,6 @@
 a.g-key { min-height: 44px; }
 a.g-key:hover kbd { background: var(--c-pink); }
 
-/* ---- Placeholder listrado ---- */
 .g-ph {
   position: relative;
   display: grid;
@@ -259,7 +221,6 @@ a.g-key:hover kbd { background: var(--c-pink); }
 .g-ph--square { aspect-ratio: 1; }
 .g-ph--free { aspect-ratio: auto; }
 
-/* ---- Linha do tempo ---- */
 .g-timeline {
   position: relative;
   display: grid;
@@ -289,10 +250,9 @@ a.g-key:hover kbd { background: var(--c-pink); }
   white-space: nowrap;
 }
 .g-timeline__step.is-done > span { background: var(--c-deep); }
-.g-timeline__step.is-now > span { background: var(--c-violet); color: #fff; /* lavanda no violeta dava 4.4:1; branco passa no AA */ }
+.g-timeline__step.is-now > span { background: var(--c-violet); color: #fff;  }
 .g-timeline__step.is-next > span { background: var(--c-lavender); color: var(--c-ink); }
 
-/* ---- Abas ---- */
 .g-tab {
   position: relative;
   display: inline-flex;
@@ -327,7 +287,6 @@ a.g-key:hover kbd { background: var(--c-pink); }
 .g-tab[aria-current="page"]::before,
 .g-tab[aria-selected="true"]::before { background: linear-gradient(180deg, var(--c-surface-3), var(--c-deep)); }
 
-/* ---- Selo estrelado ---- */
 .g-burst {
   display: inline-grid;
   place-items: center;
@@ -345,7 +304,6 @@ a.g-key:hover kbd { background: var(--c-pink); }
 }
 .g-burst--pink { background: var(--c-magenta); }
 
-/* ---- Número gigante ---- */
 .g-num {
   display: block;
   font-size: clamp(3.5rem, 2.5rem + 4vw, 6rem);
@@ -356,7 +314,6 @@ a.g-key:hover kbd { background: var(--c-pink); }
   color: var(--c-violet);
 }
 
-/* ---- Link de ação ---- */
 .g-link {
   display: inline-flex;
   align-items: center;
@@ -370,14 +327,11 @@ a.g-key:hover kbd { background: var(--c-pink); }
 }
 .g-link:hover { color: var(--c-text-strong); }
 
-/* ---- Fundo listrado ---- */
 .g-stripes { background-image: var(--stripes); }
 
 @media (max-width: 760px) {
   .g-head { margin-bottom: var(--sp-6); }
-  /* leads de seção usam margin-top negativa: no celular garante respiro abaixo da sombra do título */
   .g-head + .g-lead { margin-top: calc(var(--sp-4) - var(--sp-6)); }
-  /* linha do tempo vira vertical, com tracejado à esquerda */
   .g-timeline { grid-template-columns: minmax(0, 1fr); row-gap: var(--sp-3); padding-left: var(--sp-5); }
   .g-timeline::before { left: 5px; right: auto; top: 0; bottom: 0; border-top: 0; border-left: 2px dashed color-mix(in srgb, var(--c-purple) 45%, transparent); }
   .g-timeline__step { justify-content: flex-start; }

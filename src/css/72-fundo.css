@@ -1,15 +1,3 @@
-/* ==========================================================================
-   72-fundo.css  (fundo contínuo da home, de "A cidade" até o rodapé)
-   Arte única (assets/originais/ryz-fundo-pagina-1920x5685.png) cortada em 6
-   fatias, uma por seção, nos pontos medidos em 1920px. Cada fatia cobre a sua
-   seção (cover, centralizada).
-   Como cada fatia é escalada sozinha (a altura das seções muda com a tela), as bordas
-   não batem: toda emenda tem um esfumaçado que chega a escuro sólido no corte e some
-   em 170px de cada lado.
-   Os cenários desenhados de cada seção (holofote dos Eventos, céu/cidade do VIP,
-   skyline das Dúvidas, arte do rodapé) ficam escondidos para a arte aparecer.
-   Para voltar ao visual antigo: apagar este arquivo.
-   ========================================================================== */
 #cidade, #eventos, #como-entrar, #vip, #duvidas, #rodape {
   --fundo-veu: color-mix(in srgb, var(--c-ink) 22%, transparent);
   --veu: linear-gradient(var(--fundo-veu), var(--fundo-veu));
@@ -27,28 +15,21 @@
 #duvidas     { background-image: var(--veu), var(--em-cima), var(--em-baixo), image-set(url("assets/img/fundo-duvidas.webp") type("image/webp"), url("assets/img/fundo-duvidas.jpg") type("image/jpeg")); }
 #rodape      { background-image: var(--veu), var(--em-cima), image-set(url("assets/img/fundo-rodape.webp") type("image/webp"), url("assets/img/fundo-rodape.jpg") type("image/jpeg")); }
 
-/* VIP: o pedestal da arte vai para baixo do carro (posição calculada em js/35-fundo-vip.js);
-   o pedestal desenhado em código some, mas continua no layout como referência. */
 #vip { background-size: auto, auto, auto, var(--vip-bs, cover); background-position: center, center, center, var(--vip-bp, center); }
 .vip__plinth { opacity: 0; }
 
-/* VIP: a linha de cima (painel, abas Passe VIP/Premium e Prévia) desce 30px para sair
-   da emenda escura; a barra de teclas perde o fundo próprio (a emenda já escurece ali). */
 @media (min-width: 1081px) and (min-height: 701px) {
   #vip .vip__wrap { padding-top: 44px; }
 }
 #vip .vip__hud { background: none; border-top: 0; }
 
-/* o vão acima do rodapé passa a fazer parte dele (a fatia do rodapé inclui esse vão) */
 #rodape { margin-top: 0; padding-top: var(--section-y); }
 
-/* rodapé: a faixa da chamada fica transparente para o skyline da arte aparecer atrás */
 #rodape .footer__cta {
   border-top: 0;
   background: linear-gradient(180deg, transparent 0%, color-mix(in srgb, var(--c-ink) 35%, transparent) 100%);
 }
 
-/* cenários desenhados que a arte substitui */
 .eventos__fx,
 .vip__scene,
 .duv__scene,

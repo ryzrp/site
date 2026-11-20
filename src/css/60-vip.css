@@ -1,29 +1,14 @@
-/* ==========================================================================
-   60-vip.css  (dono: construtor do VIP)
-   Tela de passe de batalha, travada na altura da tela:
-   1) cena: céu frio azul-violeta contra brilho rosa, horizonte luminoso, chão, vinheta e partículas em 2 camadas;
-   2) trilha à esquerda em perspectiva, com régua de níveis e cadeados;
-   3) palco central: vitrine do item selecionado (carro da concessionária Premium ou emblema grande);
-   4) coluna direita: selo + prévia no topo, nome, chips de recompensa e CTA no canto de baixo.
-   Hierarquia: rosa dessaturado = base (molduras, cards, aba inativa).
-   Lavanda sólida (#F3D6FF) com texto escuro = só CTA, moldura do destaque e item selecionado.
-   Cada card é um <input type=radio> + <label>; tudo troca via :has(), sem JS.
-   ========================================================================== */
-
 .vip {
-  --v-rose:    color-mix(in srgb, var(--c-violet) 38%, var(--c-ink));  /* base fria (roxo apagado) */
+  --v-rose:    color-mix(in srgb, var(--c-violet) 38%, var(--c-ink));
   --v-rose-2:  color-mix(in srgb, var(--c-purple) 55%, var(--c-ink));
-  --v-line:    color-mix(in srgb, var(--c-purple) 30%, transparent);  /* borda lilás ~30% */
+  --v-line:    color-mix(in srgb, var(--c-purple) 30%, transparent);
   --v-cell:    color-mix(in srgb, var(--c-ink) 70%, transparent);
   --v-dim:     color-mix(in srgb, var(--c-lavender) 70%, var(--c-ink));
-  --v-hot:     var(--c-lavender);                                     /* item selecionado (frio) */
-  /* COR DE AÇÃO exclusiva: magenta neon saturado. Só no CTA, na faixa de requisito,
-     na aba ativa e na moldura da carta destaque. Nenhum outro elemento usa magenta. */
+  --v-hot:     var(--c-lavender);
   --v-act:     var(--c-magenta);
   --v-act-hi:  color-mix(in srgb, var(--c-magenta) 55%, #fff);
   --v-act-lo:  color-mix(in srgb, var(--c-magenta) 78%, var(--c-violet));
   --v-pad:     clamp(20px, 3.6vw, 60px);
-  /* rodada 7: BASE DESSATURADA. Índigo-grafite, traço neutro 1px cinza-lavanda. */
   --v-base:    #17141f;
   --v-base-2:  #1d1a29;
   --v-panel:   color-mix(in srgb, #0f0d16 82%, transparent);
@@ -44,21 +29,15 @@
 .vip__defs { position: absolute; width: 0; height: 0; overflow: hidden; }
 .vip .ico { width: 1em; height: 1em; fill: currentColor; flex: none; }
 
-/* ---------------- Zona 1: cena (rodada 8: LUZ DE CENA) ----------------
-   A luz é da cena, não da interface: rua noturna desfocada, um foco forte magenta/violeta
-   saindo de trás do carro (~58% x, 54% y), feixes diagonais, névoa baixa, asfalto molhado com o neon
-   refletido, bokeh em 3 planos e vinheta forte nas bordas. A interface por cima continua neutra. */
 .vip__scene { position: absolute; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; background: #0a0612; }
 .vip__scene > span { position: absolute; inset: 0; }
 .vip__sky {
-  /* rodada 9: LUZ FRIA. Céu índigo/azul-violeta; o magenta fica reservado à interface (CTA, aba ativa, carta selecionada) */
   background:
     radial-gradient(60% 50% at 22% 30%, color-mix(in srgb, var(--c-blue) 34%, transparent), transparent 72%),
     radial-gradient(46% 40% at 88% 18%, color-mix(in srgb, var(--c-blue) 26%, transparent), transparent 72%),
     linear-gradient(180deg, #0b0a24 0%, #110f38 40%, #17134a 60%, #08071a 100%);
 }
 .vip__glow {
-  /* o foco de luz atrás do carro: núcleo lavanda quase branco, anel azul-violeta, borda índigo */
   background:
     radial-gradient(14% 18% at 52% 54%, color-mix(in srgb, var(--c-lavender) 62%, transparent), transparent 70%),
     radial-gradient(30% 34% at 52% 54%, color-mix(in srgb, #8f7bff 50%, transparent), transparent 72%),
@@ -66,7 +45,6 @@
     radial-gradient(72% 62% at 52% 48%, color-mix(in srgb, var(--c-blue) 26%, transparent), transparent 80%);
 }
 .vip__beams {
-  /* feixes de luz diagonais frios saindo de cima/trás-direita */
   inset: -20% -10% 18% 14% !important;
   background:
     linear-gradient(112deg, transparent 30%, color-mix(in srgb, var(--c-lavender) 22%, transparent) 33%, transparent 37%,
@@ -80,13 +58,11 @@
   animation: vip-beams 14s ease-in-out infinite alternate;
 }
 @keyframes vip-beams { from { opacity: .7; } to { opacity: 1; } }
-/* cidade noturna desfocada (plano de trás), tingida pela luz fria */
 .vip__city { top: auto !important; bottom: 34% !important; height: 46%; }
 .vip__city svg { position: absolute; inset: 0; width: 100%; height: 100%; }
 .vip__city--far { filter: blur(6px) hue-rotate(-28deg) saturate(.9) brightness(.85); opacity: .55; mask-image: linear-gradient(90deg, transparent 2%, #000 22%, #000 82%, transparent 98%); }
 .vip__city--near { height: 32%; filter: blur(5px) hue-rotate(-30deg) brightness(.75); opacity: .9; mask-image: linear-gradient(90deg, #000 0%, #000 30%, transparent 44%, transparent 70%, #000 84%); }
 .vip__fog {
-  /* névoa volumétrica baixa, lavanda/azul */
   background:
     radial-gradient(46% 14% at 52% 70%, color-mix(in srgb, var(--c-lavender) 26%, transparent), transparent 75%),
     radial-gradient(70% 16% at 36% 74%, color-mix(in srgb, var(--c-blue) 30%, transparent), transparent 75%),
@@ -103,7 +79,6 @@
   animation: vip-fog 38s ease-in-out infinite alternate;
 }
 @keyframes vip-fog { to { transform: translate3d(12%, -2%, 0); } }
-/* bokeh, plano de trás: luzes pequenas frias ao longo do horizonte */
 .vip__bokeh {
   filter: blur(1.5px);
   background:
@@ -150,7 +125,6 @@
   filter: blur(1px);
   mask-image: linear-gradient(90deg, transparent 4%, #000 30%, #000 86%, transparent 100%);
 }
-/* asfalto molhado: chão escuro e brilhante, com a poça de luz fria do foco */
 .vip__floor {
   top: 64% !important;
   background:
@@ -159,7 +133,6 @@
     linear-gradient(180deg, #110f30 0%, #0a0920 60%, #05040e 100%);
 }
 .vip__wet {
-  /* luzes frias da cidade refletidas no asfalto: listras verticais esticadas e desfocadas */
   top: 64% !important; bottom: 0 !important;
   background:
     linear-gradient(90deg,
@@ -205,10 +178,6 @@
 @keyframes vip-drift { to { transform: translate3d(-60px, -40px, 0); } }
 
 
-/* ---------------- Grade da tela (rodada 10) ----------------
-   Coluna 1: a TRILHA ocupa de cima até o rodapé (centro de leitura).
-   Coluna 2: título no topo; o carro vira cenário atrás, mais para a direita.
-   Coluna 3: prévia no topo; nome, citação e CTA embaixo. */
 .vip__wrap {
   position: relative;
   height: 100%;
@@ -219,7 +188,6 @@
   padding: 14px var(--v-pad) 0;
 }
 
-/* ---------------- Cabeçalho (coluna do meio, topo) ---------------- */
 .vip__top { grid-column: 2; grid-row: 1; padding: 4px 0 0 clamp(24px, 3vw, 56px); position: relative; z-index: 2; }
 .vip__ctx { display: flex; gap: 4px; margin-bottom: 12px; }
 .vip__ctx-tab {
@@ -233,7 +201,6 @@
   clip-path: polygon(10px 0, 100% 0, calc(100% - 10px) 100%, 0 100%);
   cursor: pointer;
 }
-/* rodada 11: aba ativa SEM magenta cheio (ele fica exclusivo do botão). Contorno lavanda + filete rosa claro embaixo. */
 .vip__ctx-tab.is-active {
   color: #fff; font-weight: 800; font-style: italic;
   background: linear-gradient(180deg, color-mix(in srgb, var(--c-lavender) 14%, #17141f), #17141f);
@@ -246,7 +213,6 @@
   color: var(--v-dim);
 }
 .vip__kicker span { font-style: italic; font-weight: 500; text-transform: none; color: var(--c-text-mute); }
-/* rodada 11: "Trilha Rise" rebaixado a cabeçalho de seção (o único display da tela é o nome do plano) */
 .vip__title {
   display: flex; align-items: center; gap: 12px;
   margin: 2px 0 0;
@@ -256,7 +222,6 @@
   text-shadow: 2px 2px 0 var(--c-deep);
 }
 .vip__title b { color: color-mix(in srgb, var(--c-lavender) 80%, var(--c-blue)); font-weight: 800; }
-/* "TIER <nome>": mostra só o nome do plano selecionado, na cor do plano (sem :has, fica Diamante, o padrão) */
 .vip__tier { display: none; }
 .vip__tier--diamante { display: inline; }
 .vip:has(.vip__radio:checked:not(#vip-p-diamante)) .vip__tier--diamante { display: none; }
@@ -279,10 +244,6 @@
 }
 .vip__season .ico { width: 16px; height: 16px; }
 
-/* ---------------- Zona 2: TRILHA ----------------
-   Painel paralelogramo PLANO (skewX, sem rotateY), alto, com faixa sólida no topo.
-   Dentro: uma linha por plano (1 a 6), régua de níveis à esquerda e duas colunas de recompensa.
-   O conteúdo é endireitado com o skew inverso, então texto e emblemas ficam retos. */
 .vip { --sk: -9deg; --unsk: 9deg; }
 .vip__stage {
   grid-column: 1; grid-row: 1 / 3;
@@ -309,7 +270,6 @@
     26px 30px 40px -8px rgba(0, 0, 0, .6);
 }
 .vip__track::after {
-  /* fio claro de 1px na borda de baixo, como o painel do jogo */
   content: ""; position: absolute; left: -14px; right: 22px; bottom: -8px; height: 2px;
   background: linear-gradient(90deg, transparent, color-mix(in srgb, #c9bfdc 40%, transparent) 20%, transparent);
 }
@@ -326,7 +286,6 @@
   color: #fff;
 }
 
-/* contador de nível na barra da trilha (troca com o plano selecionado) */
 .vip__lvls { display: inline-block; transform: skewX(var(--unsk)); }
 .vip__lvl {
   display: none;
@@ -341,8 +300,6 @@
 .vip:has(#vip-p-rubi:checked) .vip__lvl--rubi,
 .vip:has(#vip-p-diamante:checked) .vip__lvl--diamante { display: inline; }
 
-/* rodada 11: HIERARQUIA. As linhas crescem de Bronze a Diamante (--g) e o brilho de raridade cresce junto (--r).
-   O plano selecionado vira TILE DESTAQUE: o dobro da altura, ocupando as duas colunas, com faixa de chamada. */
 .vip__grid {
   position: relative;
   flex: 1; min-height: 0;
@@ -350,7 +307,6 @@
   gap: 8px;
 }
 .vip__grid::before {
-  /* trilho vertical da régua (parte não alcançada) */
   content: ""; position: absolute; left: 17px; top: 10px; bottom: 10px; width: 4px;
   background: color-mix(in srgb, #c9bfdc 14%, transparent);
 }
@@ -364,8 +320,8 @@
 .vip__row--diamante  { --g: 1.1; --r: 1;   --s: 1.06; }
 
 .vip__row {
-  --pc: color-mix(in oklab, var(--plan) 76%, #8f899e);       /* cor do plano, levemente dessaturada */
-  --pc-lt: color-mix(in oklab, var(--pc) 62%, #f4f0f8);     /* versão clara para a tag */
+  --pc: color-mix(in oklab, var(--plan) 76%, #8f899e);
+  --pc-lt: color-mix(in oklab, var(--pc) 62%, #f4f0f8);
   position: relative;
   flex: var(--g) 1 0;
   display: grid;
@@ -381,10 +337,8 @@
 .vip__row > .vip__cell--prem { grid-column: 3; grid-row: -2; }
 .vip__call { display: none; }
 
-/* régua: número do nível + segmento de progresso */
 .vip__lv { position: relative; display: grid; place-items: center; }
 .vip__lv::after {
-  /* segmento preenchido: liga este nível ao de cima (atravessa o gap) */
   content: ""; position: absolute; left: 17px; top: -9px; bottom: -9px; width: 4px; z-index: 0;
   background: linear-gradient(180deg, var(--c-pink), color-mix(in srgb, var(--c-lavender) 90%, var(--c-pink)));
   box-shadow: 0 0 8px color-mix(in srgb, var(--c-pink) 50%, transparent);
@@ -400,7 +354,6 @@
   background: color-mix(in srgb, var(--c-lavender) 92%, var(--c-pink));
   clip-path: polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px);
 }
-/* níveis depois do selecionado: não alcançados (trilho apagado, número escuro) */
 .vip__radio:checked + .vip__row ~ .vip__row .vip__lv::after { display: none; }
 .vip__radio:checked + .vip__row ~ .vip__row .vip__lv b {
   color: color-mix(in srgb, var(--c-lavender) 60%, transparent);
@@ -410,7 +363,6 @@
 .vip__radio:checked + .vip__row .vip__lv::after { bottom: 50%; }
 .vip__radio:checked + .vip__row.vip__row--bronze .vip__lv::after { display: none; }
 
-/* célula de recompensa: base escura, cor e brilho do plano proporcionais à raridade */
 .vip__cell {
   position: relative;
   display: flex; flex-direction: column;
@@ -425,7 +377,6 @@
     inset 0 1px 0 color-mix(in srgb, #fff 24%, transparent),
     inset 0 0 calc(var(--r) * 26px) color-mix(in oklab, var(--pc) calc(var(--r) * 55%), transparent);
 }
-/* partículas de raridade: pontos de luz na cor do plano, mais visíveis nos tiers altos */
 .vip__cell::before {
   content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none;
   background:
@@ -440,7 +391,6 @@
 }
 @keyframes vip-twinkle { from { opacity: calc(var(--r) * .35); } to { opacity: var(--r); } }
 .vip__cell > * { position: relative; z-index: 1; }
-/* tag chanfrada presa no topo */
 .vip__cell > .vip__tag {
   position: absolute; left: 0; top: 0; z-index: 3;
   display: inline-flex; align-items: center; gap: 5px;
@@ -486,7 +436,6 @@
   color: color-mix(in srgb, #fff 70%, var(--pc));
 }
 
-/* TRAVADO: sem concessionária Premium. Dessaturado, escurecido, só um cadeado pequeno no canto. */
 .vip__cell.is-locked {
   --r: 0;
   background:
@@ -509,13 +458,11 @@
 }
 .vip__lock .ico { width: 13px; height: 13px; transform: skewX(var(--unsk)); }
 
-/* não selecionados recuam um pouco */
 .vip__grid:has(.vip__radio:checked) .vip__row { filter: brightness(.84) saturate(.9); }
 .vip__grid .vip__radio:checked + .vip__row { filter: none; z-index: 2; }
 .vip__row:hover { filter: none !important; }
 .vip__radio:focus-visible + .vip__row { outline: 3px solid var(--c-lavender); outline-offset: 3px; }
 
-/* ---------- TILE DESTAQUE (plano selecionado) ---------- */
 .vip__radio:checked + .vip__row {
   flex-grow: 2.7;
   grid-template-rows: 30px minmax(0, 1fr);
@@ -523,7 +470,6 @@
   row-gap: 8px;
 }
 .vip__radio:checked + .vip__row::before {
-  /* moldura viva: magenta 2px, brilho interno e luz da cor do plano */
   content: ""; position: absolute; z-index: 0; top: 0; bottom: 0; right: 0; left: 46px;
   clip-path: polygon(14px 0, 100% 0, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0 100%, 0 14px);
   background:
@@ -573,12 +519,10 @@
   box-shadow: inset 0 0 0 2px var(--v-act), 0 0 12px color-mix(in srgb, var(--c-magenta) 60%, transparent);
 }
 .vip__radio:checked + .vip__row .vip__lv::before {
-  /* seta do nível selecionado */
   content: ""; position: absolute; left: -18px; top: 50%; width: 0; height: 0; margin-top: -8px; z-index: 1;
   border: 8px solid transparent; border-left: 10px solid var(--v-act);
 }
 
-/* ---------------- Palco: o carro, iluminado e centrado no vão entre a trilha e a coluna de texto ---------------- */
 .vip__show {
   grid-column: 2; grid-row: 2;
   position: relative;
@@ -588,10 +532,8 @@
 }
 .vip__show > * { position: absolute; }
 .vip__beam {
-  /* cone de luz de cima sobre o carro */
   left: 50%; bottom: 14%; width: 70%; height: 120%;
   transform: translateX(-50%);
-  /* a luz cresce até ~70% e se dissolve antes da base: sem degrau no chão onde o carro pisa */
   background: linear-gradient(180deg, transparent, color-mix(in srgb, var(--c-lavender) 16%, transparent) 55%, color-mix(in srgb, var(--c-lavender) 22%, transparent) 72%, transparent 100%);
   clip-path: polygon(38% 0, 62% 0, 100% 100%, 0 100%);
   -webkit-mask-image: linear-gradient(180deg, #000 70%, transparent 100%);
@@ -600,7 +542,6 @@
   mix-blend-mode: screen;
 }
 .vip__plinth {
-  /* chão refletivo: disco de luz sob o carro */
   left: 50%; bottom: 3%; width: 120%; height: 22%;
   transform: translateX(-50%);
   border-radius: 50%;
@@ -619,7 +560,6 @@
 }
 .vip__car { left: 46%; width: 118%; bottom: 10%; aspect-ratio: 800 / 360; transform: translateX(-50%); filter: brightness(1.28) saturate(1.08) contrast(1.05); }
 .vip__car::after {
-  /* oclusão no chão, colada nas rodas */
   content: ""; position: absolute; left: 10%; right: 4%; top: 79%; height: 14%;
   border-radius: 50%;
   background: radial-gradient(50% 50% at 50% 50%, rgba(3, 1, 8, .95) 0 38%, rgba(3, 1, 8, .5) 62%, transparent 78%);
@@ -628,7 +568,6 @@
 .vip__car-img, .vip__car-ref { position: absolute; z-index: 1; left: 0; width: 100%; height: 100%; overflow: visible; }
 .vip__car-img {
   top: 0;
-  /* rim light forte: fio claro na borda de cima e contraluz rosa, preenchimento frio do outro lado */
   filter:
     drop-shadow(0 -2px 0 color-mix(in srgb, #fff 80%, transparent))
     drop-shadow(3px -3px 6px color-mix(in srgb, var(--c-pink) 75%, transparent))
@@ -642,15 +581,12 @@
   filter: blur(2px);
   mask-image: linear-gradient(0deg, #000 0%, transparent 55%);
 }
-/* Carros reais por tier (Esmeralda, Rubi, Diamante), recortados e sem logos de fabricante.
-   A base das rodas fica em 91% da caixa, sobre a sombra de contato; o reflexo começa ali. */
 .vip__car-photo {
   position: absolute; z-index: 1;
   left: 50%; bottom: 9%;
   width: 84%; height: auto;
   transform: translateX(-50%);
   display: none;
-  /* contorno de luz: fio claro em cima, contraluz rosa e preenchimento violeta (carro preto no palco escuro) */
   filter:
     drop-shadow(0 -2px 0 color-mix(in srgb, #fff 55%, transparent))
     drop-shadow(5px -4px 9px color-mix(in srgb, var(--c-pink) 60%, transparent))
@@ -666,11 +602,10 @@
   mask-image: linear-gradient(0deg, #000 0%, transparent 42%);
 }
 .vip__car-photo--diamante { display: block; width: 72%; bottom: 6%; }
-.vip__car-photo--ref.vip__car-photo--diamante { bottom: auto; top: 94%; } /* SUV: mais alto, fica menor para ter a mesma presença dos esportivos */
+.vip__car-photo--ref.vip__car-photo--diamante { bottom: auto; top: 94%; }
 .vip:has(#vip-p-esmeralda:checked, #vip-p-rubi:checked) .vip__car-photo--diamante { display: none; }
 .vip:has(#vip-p-esmeralda:checked) .vip__car-photo--esmeralda,
 .vip:has(#vip-p-rubi:checked) .vip__car-photo--rubi { display: block; }
-/* sombra de contato acompanhando a base dos carros reais (mais larga e mais baixa que a do desenho) */
 .vip__car::after { top: 84%; left: 12%; right: 10%; height: 15%; }
 .vip__gem { left: 50%; top: 4%; width: min(70%, 300px); aspect-ratio: 1; transform: translateX(-50%); display: none; }
 .vip__gem-art {
@@ -679,7 +614,6 @@
   filter: drop-shadow(0 0 24px color-mix(in oklab, var(--plan) 50%, transparent)) drop-shadow(0 30px 20px rgba(0, 0, 0, .6));
 }
 
-/* ---------------- Zona 3: prévia ---------------- */
 .vip__side {
   grid-column: 3; grid-row: 1;
   align-self: start;
@@ -687,7 +621,6 @@
   display: flex; justify-content: flex-end;
   padding-top: 8px;
 }
-/* Ficha do veículo do tier selecionado (no lugar da antiga "Prévia") */
 .vip__specs { position: relative; width: 268px; }
 .vip__spec {
   display: none;
@@ -734,7 +667,6 @@
 .vip__spec-none { margin: 8px 0 2px; font-size: .9375rem; line-height: 1.35; color: var(--v-dim); }
 .vip__spec-none b { color: var(--c-lavender); }
 
-/* ---------------- Zona 3: informações + CTA ---------------- */
 .vip__info {
   grid-column: 3; grid-row: 2;
   align-self: end;
@@ -742,14 +674,12 @@
   padding-bottom: 18px;
 }
 .vip__info::before {
-  /* sombra local atrás do texto: o carro fica de cenário sem atrapalhar a leitura */
   content: ""; position: absolute; z-index: -1;
   inset: -10% -30% -4% -24%;
   background: radial-gradient(60% 56% at 56% 46%, color-mix(in srgb, #0a0910 78%, transparent), transparent 76%);
   pointer-events: none;
 }
 .vip__detail { display: none; }
-/* rótulo de categoria em itálico ACIMA do display */
 .vip__d-cat {
   display: flex; align-items: center; gap: 8px;
   margin: 0 0 6px;
@@ -783,8 +713,6 @@
   color: color-mix(in srgb, var(--c-lavender) 50%, transparent);
 }
 
-/* CTA: BLOCO ÚNICO chanfrado. A faixa de requisito encaixa em cima do botão, com a mesma inclinação (skew no bloco).
-   Magenta cheio só no botão. */
 .vip__cta {
   position: relative;
   margin-top: clamp(22px, 5vh, 48px); margin-right: calc(var(--v-pad) * -1 + 30px); margin-left: 14px;
@@ -826,7 +754,6 @@
 .vip__btn > * { transform: skewX(14deg); }
 .vip__btn .sr-only { transform: none; }
 .vip__btn::before {
-  /* filete claro interno */
   content: ""; position: absolute; z-index: -1; pointer-events: none;
   inset: 6px 7px; border: 1px solid color-mix(in srgb, #fff 55%, transparent);
   clip-path: polygon(0 0, 100% 0, 100% calc(100% - 11px), calc(100% - 11px) 100%, 0 100%);
@@ -849,13 +776,11 @@
 .vip:has(#vip-p-bronze:checked) .vip__gem-art--bronze,
 .vip:has(#vip-p-prata:checked) .vip__gem-art--prata,
 .vip:has(#vip-p-ouro:checked) .vip__gem-art--ouro { opacity: 1; }
-/* planos de apoio: o cenário troca o carro pelo emblema grande */
 .vip:has(#vip-p-bronze:checked, #vip-p-prata:checked, #vip-p-ouro:checked) .vip__car { display: none; }
 .vip:has(#vip-p-bronze:checked, #vip-p-prata:checked, #vip-p-ouro:checked) .vip__gem { display: block; }
 
 @keyframes vip-in { from { opacity: 0; transform: translateX(14px); } to { opacity: 1; transform: none; } }
 
-/* ---------------- HUD de sistema ---------------- */
 .vip__hud {
   grid-column: 1 / -1; grid-row: 3;
   position: relative; z-index: 2;
@@ -866,7 +791,6 @@
   background: linear-gradient(0deg, color-mix(in srgb, #0a090e 92%, transparent), transparent);
   border-top: 1px solid color-mix(in srgb, #c9bfdc 8%, transparent);
 }
-/* esquerda: dicas de jogo com keycap + linha técnica discreta */
 .vip__sys { display: flex; flex-direction: column; align-items: flex-start; gap: 0; min-width: 0; }
 .vip__hints { display: flex; align-items: center; gap: 22px; }
 .vip__key--sm { min-height: 40px; font-size: var(--fs-sm); }
@@ -898,7 +822,6 @@
 }
 a.vip__key:hover kbd { background: var(--c-lavender); }
 
-/* ---------------- Telas menores ---------------- */
 @media (max-width: 1280px) {
   .vip__wrap { grid-template-columns: minmax(420px, 42%) 1fr minmax(300px, 340px); }
   .vip__specs { width: 240px; }
@@ -969,9 +892,6 @@ a.vip__key:hover kbd { background: var(--c-lavender); }
   .vip__dust--far, .vip__dust--near, .vip__fog--drift, .vip__beams, .vip__bokeh--big { animation: none; }
 }
 
-/* ================= LOJA DE DIAMANTES (prévia) =================
-   Reaproveita a cena, a trilha e o palco do VIP. Um card por linha (sem coluna Premium),
-   o pacote selecionado aparece grande no palco, sob o holofote. */
 .vip--loja .vip__tier { color: color-mix(in srgb, var(--plan, var(--c-pink)) 40%, #fff); }
 .vip--loja .vip__tier--bronze { --plan: #9C8CFF; } .vip--loja .vip__tier--prata { --plan: #A97CFF; }
 .vip--loja .vip__tier--ouro { --plan: #B86CFF; } .vip--loja .vip__tier--esmeralda { --plan: #C95CFF; }
@@ -991,13 +911,11 @@ a.vip__key:hover kbd { background: var(--c-lavender); }
 }
 .vip--loja .vip__cell-name small { margin: 0; font-style: italic; text-transform: uppercase; }
 
-/* tile destaque: número grande à esquerda, pacote grande à direita */
 .vip--loja .vip__radio:checked + .vip__row .vip__cell-body { flex-direction: row; align-items: flex-end; justify-content: space-between; padding: 22px 10px 12px 18px; }
 .vip--loja .vip__radio:checked + .vip__row .vip__cell-art { order: 2; align-self: center; flex: 0 1 auto; height: 100%; width: auto; max-height: 200px; max-width: 52%; }
 .vip--loja .vip__radio:checked + .vip__row .vip__cell-name { flex-direction: column; align-items: flex-start; gap: 6px; }
 .vip--loja .vip__radio:checked + .vip__row .vip__qty { font-size: clamp(2.6rem, 1.6rem + 2vw, 3.6rem); text-shadow: 3px 3px 0 #1a1550; }
 
-/* palco: pacote no lugar do carro */
 .vip--loja .vip__gem { display: block; top: auto; bottom: 9%; width: min(92%, 460px); }
 .vip--loja .vip__gem-art {
   opacity: 0; transform: translateY(10px) scale(.96);
@@ -1030,7 +948,6 @@ a.vip__key:hover kbd { background: var(--c-lavender); }
   .vip--loja .vip__qty { font-size: 1.375rem; }
   .vip--loja .vip__radio:checked + .vip__row .vip__qty { font-size: 2.4rem; }
 }
-/* no palco, o pacote cresce com a quantidade (10 menor, 500 cheio) */
 .vip--loja .vip__gem-art { transform-origin: 50% 100%; }
 .vip--loja .vip__gem-art--bronze { --k: .52; } .vip--loja .vip__gem-art--prata { --k: .64; }
 .vip--loja .vip__gem-art--ouro { --k: .8; } .vip--loja .vip__gem-art--esmeralda { --k: .88; }
@@ -1041,3 +958,9 @@ a.vip__key:hover kbd { background: var(--c-lavender); }
 .vip--loja:has(#vip-p-ouro:checked) .vip__gem-art--ouro,
 .vip--loja:has(#vip-p-esmeralda:checked) .vip__gem-art--esmeralda,
 .vip--loja:has(#vip-p-rubi:checked) .vip__gem-art--rubi { transform: scale(var(--k)); }
+.vip__btn[hidden], .vip__season[hidden] { display: none; }
+.vip__btn--buy { text-decoration: none; cursor: pointer; transition: filter var(--t-fast) ease; }
+.vip__btn--buy:hover { filter: brightness(1.08); }
+.vip__btn--buy:focus-visible { outline: none; filter: brightness(1.12); }
+.vip__btn--buy:focus-visible::before { border: 2px solid #fff; }
+.vip__btn-en { align-self: center; font-size: .42em; font-weight: 700; letter-spacing: .14em; opacity: .7; }

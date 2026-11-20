@@ -1,12 +1,3 @@
-<!-- DÚVIDAS (dono: construtor de DÚVIDAS).
-     Tela de menu de jogo (rodada 15):
-       cena     = 3 profundidades: céu com horizonte claro e raios de luz, skyline distante com janelas,
-                  skyline próxima com letreiros, névoa, bokeh e vinheta;
-       meio     = objeto-herói: medalhão de metal NÍTIDO com o wordmark RYZ (só letras, sem coroa),
-                  luz de borda rosa, halo e estilhaços em 3 profundidades;
-       esquerda = placa de VIDRO escuro em perspectiva com 7 cartões de pergunta (glifo próprio, número, estado);
-       direita  = RAI·ZI (único texto gigante), widget OUVIR, resposta curta e a CTA.
-     Sem JS: todas as respostas aparecem empilhadas. Respostas que faltam: [RESPOSTA — ...] (ver PLACEHOLDERS.md). -->
 <section id="duvidas" class="section duv" aria-labelledby="duvidas-title" data-faq>
   <div class="duv__scene" aria-hidden="true">
     <span class="duv__sky"></span>
@@ -19,9 +10,6 @@
     <span class="duv__vignette"></span>
   </div>
 
-  <!-- Objeto-herói: medalhão octogonal que é a RODA DA SORTE (decorativo para leitor de tela;
-       o resultado é anunciado no painel 01). Camadas separadas para a roda girar só na GPU:
-       moldura de trás | roda (+ cópia desfocada para o borrão de velocidade) | moldura da frente | luzes | ponteiro | faíscas -->
   <div class="duv__hero" aria-hidden="true">
     <span class="duv__halo"></span>
     <div class="duv__medal">
@@ -36,39 +24,25 @@
           <radialGradient id="duv-m-gloss" cx=".34" cy=".18" r=".85"><stop offset="0" stop-color="#fff" stop-opacity=".2"/><stop offset=".45" stop-color="#fff" stop-opacity=".04"/><stop offset=".7" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#05030f" stop-opacity=".45"/></radialGradient>
           <filter id="duv-m-soft" x="-30%" y="-60%" width="160%" height="220%"><feGaussianBlur stdDeviation="22"/></filter>
         </defs>
-        <!-- aro externo de metal (escudo chanfrado de 8 lados) -->
         <path d="M150 8h220l142 142v214L370 552H150L8 364V150z" fill="url(#duv-m-metal)"/>
         <path d="M150 8h220l142 142v214L370 552H150L8 364V150z" fill="none" stroke="url(#duv-m-top)" stroke-width="2"/>
-        <!-- bisel interno escuro -->
         <path d="M162 36h196l126 126v190L358 524H162L36 352V162z" fill="#0c0a22"/>
-        <!-- face de vidro -->
         <path d="M172 54h176l118 118v178L348 506H172L54 350V172z" fill="url(#duv-m-inner)"/>
         <path d="M172 54h176l118 118v178L348 506H172L54 350V172z" fill="url(#duv-m-glow)"/>
-        <!-- linhas de chanfro (luz no topo-esquerda, sombra embaixo) -->
         <path d="M54 172L172 54h176" fill="none" stroke="#dcd2ff" stroke-opacity=".7" stroke-width="2"/>
         <path d="M466 350L348 506H172" fill="none" stroke="#000" stroke-opacity=".6" stroke-width="3"/>
         <circle cx="260" cy="280" r="186" fill="#0c0a22"/>
       </svg>
-      <!-- RODA: fatias geradas em js/30-duvidas.js a partir da lista PREMIOS -->
-      <div class="duv-wheel" data-wheel-rot>
-        <svg class="duv-wheel__svg" viewBox="0 0 520 560" focusable="false"><g data-wheel></g></svg>
-        <svg class="duv-wheel__svg duv-wheel__blur" viewBox="0 0 520 560" focusable="false" data-wheel-blur></svg>
-      </div>
       <svg class="duv__medal-svg duv__medal-front" viewBox="0 0 520 560" focusable="false">
-        <circle class="duv-wheel__glass" cx="260" cy="280" r="171"/>
+        <circle cx="260" cy="280" r="171" fill="url(#duv-m-inner)"/>
+        <circle cx="260" cy="280" r="171" fill="url(#duv-m-glow)"/>
+        <circle cx="260" cy="280" r="152" fill="none" stroke="#dcd2ff" stroke-opacity=".14" stroke-width="1.5"/>
+        <image class="duv__medal-logo" href="assets/img/ryz-logo-480.webp" x="110" y="200" width="300" height="151" preserveAspectRatio="xMidYMid meet"/>
+        <circle class="duv__medal-glass" cx="260" cy="280" r="171"/>
         <circle cx="260" cy="280" r="177" fill="none" stroke="url(#duv-m-metal)" stroke-width="12"/>
         <circle cx="260" cy="280" r="183.5" fill="none" stroke="#dcd2ff" stroke-opacity=".35" stroke-width="1.5"/>
-        <circle cx="260" cy="280" r="50" fill="url(#duv-m-inner)" stroke="url(#duv-m-metal)" stroke-width="5"/>
-        <image class="duv__medal-mark" href="assets/img/ryz-wordmark-600.webp" x="216" y="266" width="88" height="28" preserveAspectRatio="xMidYMid meet"/>
-        <!-- luz de borda rosa (lado direito) -->
         <path d="M370 8l142 142v214L370 552" fill="none" stroke="url(#duv-m-rim)" stroke-width="5"/>
       </svg>
-      <svg class="duv-wheel__layer duv-wheel__bulbs" viewBox="0 0 520 560" focusable="false" data-wheel-bulbs></svg>
-      <svg class="duv-wheel__layer duv-wheel__ptr-l" viewBox="0 0 520 560" focusable="false" data-wheel-ptr>
-        <circle cx="260" cy="80" r="9" fill="url(#duv-m-metal)"/>
-        <path class="duv-wheel__ptr" d="M244 76h32l-16 48z"/>
-      </svg>
-      <div class="duv-wheel__fx" data-wheel-fx></div>
     </div>
   </div>
 
@@ -84,7 +58,6 @@
       </div>
     </header>
 
-    <!-- Placa da lista: vidro escuro, uma peça só em perspectiva (borda esquerda perto, direita afundando) -->
     <div class="duv__menu">
       <div class="duv__slab">
         <span class="duv__cast" aria-hidden="true"></span>
@@ -96,9 +69,9 @@
         </div>
         <div class="duv__list" role="tablist" aria-orientation="vertical" aria-label="Perguntas frequentes">
         <button class="duv-q is-active is-seen" role="tab" id="dq-1" aria-controls="dp-1" aria-selected="true" type="button" data-faq-tab>
-          <span class="duv-q__g" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><circle cx="12" cy="13" r="8"/><path d="M12 5v16M4 13h16M6.3 7.3l11.4 11.4M17.7 7.3 6.3 18.7"/><path d="M10 2h4l-2 3z" fill="currentColor"/></svg></span>
+          <span class="duv-q__g" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M6.5 4h11L21 9.5 12 20 3 9.5z"/><path d="M3 9.5h18M9.5 4 8 9.5 12 20l4-10.5L14.5 4"/></svg></span>
           <span class="duv-q__n" aria-hidden="true">01</span>
-          <span class="duv-q__t">Roda da sorte</span><svg class="ico duv-q__ok" aria-hidden="true"><use href="#i-check"/></svg>
+          <span class="duv-q__t">Como compro diamantes?</span><svg class="ico duv-q__ok" aria-hidden="true"><use href="#i-check"/></svg>
         </button>
         <button class="duv-q" role="tab" id="dq-2" aria-controls="dp-2" aria-selected="false" tabindex="-1" type="button" data-faq-tab>
           <span class="duv-q__g" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c2.4 2.4 3.6 5.2 3.6 8.5s-1.2 6.1-3.6 8.5c-2.4-2.4-3.6-5.2-3.6-8.5s1.2-6.1 3.6-8.5z"/></svg></span>
@@ -134,30 +107,15 @@
       </div>
     </div>
 
-    <!-- Detalhe: texto solto sobre a cena, um herói só -->
     <div class="duv__detail">
       <div class="duv__panels">
-        <div class="duv-p duv-p--say duv-p--wheel" role="tabpanel" id="dp-1" aria-labelledby="dq-1" tabindex="0">
-          <h3 class="duv-p__title">Gire a roda da sorte <span class="duv-p__en" lang="en">Spin the wheel</span></h3>
-          <p class="duv-p__phon duv-p__phon--wheel">Gire<i aria-hidden="true">·</i>Ganhe</p>
-          <!-- Vitrine: a roda gira e sorteia um prêmio da lista PREMIOS (js/30-duvidas.js), mas nada é entregue de verdade. -->
-          <div class="duv-voice duv-spin" data-spin>
-            <button class="duv-voice__btn duv-spin__btn" type="button" data-spin-btn><kbd aria-hidden="true">F</kbd><svg class="ico duv-spin__lock" aria-hidden="true"><use href="#i-lock"/></svg><span data-spin-label>Girar a roda</span></button>
-            <p class="duv-spin__out" data-spin-out aria-live="polite">Descontos · carros · diamantes · VIP</p>
-          </div>
-          <p class="duv-spin__who" data-spin-who hidden>Conectado como <b></b> · <button type="button" class="duv-spin__logout" data-spin-logout>sair</button></p>
-          <!-- Card do prêmio (modo valendo): o código também vai para o canal dos admins no Discord -->
-          <div class="duv-prize" data-prize hidden>
-            <p class="duv-prize__lbl">Seu prêmio de hoje</p>
-            <p class="duv-prize__name" data-prize-name></p>
-            <div class="duv-prize__code"><code data-prize-code></code><button type="button" class="duv-prize__copy" data-prize-copy>Copiar</button></div>
-            <p class="duv-prize__how">Abra um ticket no nosso Discord e mande este código. A equipe confere e entrega o prêmio.</p>
-            <a class="duv-prize__go" href="https://discord.gg/jogueryz" data-discord target="_blank" rel="noopener">Abrir ticket no Discord <span aria-hidden="true">›</span></a>
-          </div>
+        <div class="duv-p" role="tabpanel" id="dp-1" aria-labelledby="dq-1" tabindex="0">
+          <h3 class="duv-p__title">Como compro diamantes? <span class="duv-p__en" lang="en">Buying diamonds</span></h3>
           <div class="duv-p__body">
-            <p>Você tem <b>um giro por dia</b>. Gire e veja o que a cidade tem pra você: <b>descontos de 10% a 50%</b>, aluguel de carros, diamantes e tempo de VIP.</p>
-            <p class="duv-spin__note" data-spin-demo data-placeholder="Roda de demonstração: prêmios e resgate reais ainda não existem">Giro de demonstração. A roda valendo prêmio chega com a abertura da cidade.</p>
+            <p>Pela <a href="index.html#vip">Loja RYZ</a>, aqui no site. São <b>6 pacotes</b>, de 10 a 500 diamantes, e os diamantes são creditados na sua conta.</p>
+            <p>As vendas abrem na <b>inauguração da cidade</b>. Aí é só escolher o pacote e clicar em <b>Adquirir</b>: o pagamento é feito na <b>Tebex</b>, a loja usada pelos servidores de FiveM.</p>
           </div>
+          <dl class="duv-p__facts"><div><dt>Pacotes</dt><dd>6</dd></div><div><dt>Pagamento</dt><dd>Tebex</dd></div></dl>
         </div>
 
         <div class="duv-p" role="tabpanel" id="dp-2" aria-labelledby="dq-2" tabindex="0">
@@ -204,7 +162,6 @@
         </div>
       </div>
 
-      <!-- CTA: a única cor de ação da tela (bloco lavanda quase branco, texto escuro), com a aba "Faça sua WL agora" encostada -->
       <div class="duv__cta">
         <p class="duv__req"><svg class="ico" aria-hidden="true"><use href="#i-clock"/></svg>Faça sua WL agora</p>
         <a class="duv__btn" href="https://discord.gg/jogueryz" data-discord target="_blank" rel="noopener">
@@ -214,7 +171,6 @@
       </div>
     </div>
 
-    <!-- Rodapé de HUD: faixa escura contínua; linha de sistema apagada à esquerda, teclas à direita -->
     <div class="duv__foot">
       <p class="duv__sys">RYZ-CLIENT v0.1 | ryz.group™ | Servidor: <span data-players>Offline</span></p>
       <div class="duv__keys">

@@ -1,14 +1,4 @@
-<!-- REGRAS (dono: construtor das REGRAS). Composição de menu de jogo em 3 planos:
-     1) CENA: luz de horizonte, bokeh, névoa e vinheta em CSS (skyline só como massa desfocada em contraluz; sem coroa);
-     2) LISTA (secundária) à esquerda, num único plano 3D inclinado: abas 01-05 + busca + regras (número, título, gravidade);
-     3) HERÓI frontal à direita: coluna de texto limpa + emblema-objeto grande ao lado, faixa única de stats e placa de CTA embaixo à direita.
-     Para trocar o texto: em cada <li class="regra" data-rule> edite o título (.regra__t), o resumo (.regra__d, aparece no herói),
-     o texto (.regra__full) e a penalidade (.regra__pen: data-sev 0-4, data-scope, data-pun). Hoje são RASCUNHO (ver data-placeholder
-     e PLACEHOLDERS.md). Mantenha data-rule e data-hl. -->
 <section class="regras" aria-labelledby="regras-title">
-  <!-- CENA em 3 profundidades (CSS/SVG, sem coroa): céu + skyline noturna com janelas e neon (fundo, desfocada) /
-       wordmark RYZ sem coroa gigante e desfocado + nuvem de luz e névoa em faixas (meio) / bokeh e partículas grandes
-       fora de foco nos cantos (frente). Vinheta e gradiente forte embaixo ancoram o rodapé. -->
   <div class="regras__scene" aria-hidden="true">
     <span class="regras__sky"></span>
     <svg class="regras__city regras__city--far" viewBox="0 0 1440 420" preserveAspectRatio="xMidYMax slice"><path class="b" d="M-20 420V226h56V420ZM38 420V137h67V420ZM110 420V272h75V420ZM186 420V238h62V420ZM248 420V126h55V420ZM273 126v-29h4V126ZM307 420V164h41V420ZM352 420V286h86V420ZM393 286v-37h4V286ZM443 420V268h48V420ZM494 420V224h66V420ZM566 420V256h87V420ZM607 256v-38h4V256ZM657 420V139h50V420ZM710 420V244h65V420ZM780 420V255h41V420ZM825 420V185h53V420ZM881 420V239h61V420ZM947 420V250h66V420ZM1015 420V169h86V420ZM1106 420V299h68V420ZM1174 420V154h51V420ZM1230 420V232h60V420ZM1291 420V171h42V420ZM1310 171v-23h4V171ZM1335 420V203h44V420ZM1355 203v-15h4V203ZM1381 420V226h51V420ZM1437 420V217h54V420Z"/><path class="w" d="M12 236h8v11h-8ZM-14 254h8v11h-8ZM-1 254h8v11h-8ZM12 254h8v11h-8ZM-1 272h8v11h-8ZM-14 290h8v11h-8ZM-1 290h8v11h-8ZM12 308h8v11h-8ZM-14 326h8v11h-8ZM-1 326h8v11h-8ZM-14 380h8v11h-8ZM44 147h8v11h-8ZM83 165h8v11h-8ZM70 183h8v11h-8ZM83 183h8v11h-8ZM57 201h8v11h-8ZM57 219h8v11h-8ZM83 219h8v11h-8ZM44 237h8v11h-8ZM57 237h8v11h-8ZM83 237h8v11h-8ZM57 273h8v11h-8ZM70 273h8v11h-8ZM70 291h8v11h-8ZM83 309h8v11h-8ZM83 327h8v11h-8ZM83 345h8v11h-8ZM70 381h8v11h-8ZM83 381h8v11h-8ZM116 282h8v11h-8ZM168 300h8v11h-8ZM116 318h8v11h-8ZM155 336h8v11h-8ZM168 336h8v11h-8ZM116 354h8v11h-8ZM168 354h8v11h-8ZM116 372h8v11h-8ZM168 372h8v11h-8ZM116 390h8v11h-8ZM155 390h8v11h-8ZM231 248h8v11h-8ZM205 266h8v11h-8ZM218 266h8v11h-8ZM205 284h8v11h-8ZM205 302h8v11h-8ZM192 320h8v11h-8ZM205 320h8v11h-8ZM231 320h8v11h-8ZM192 338h8v11h-8ZM218 338h8v11h-8ZM192 356h8v11h-8ZM218 374h8v11h-8ZM192 392h8v11h-8ZM205 392h8v11h-8ZM267 136h8v11h-8ZM280 136h8v11h-8ZM267 154h8v11h-8ZM280 154h8v11h-8ZM267 172h8v11h-8ZM267 190h8v11h-8ZM254 208h8v11h-8ZM280 208h8v11h-8ZM280 244h8v11h-8ZM267 262h8v11h-8ZM267 280h8v11h-8ZM280 280h8v11h-8ZM267 298h8v11h-8ZM280 298h8v11h-8ZM280 316h8v11h-8ZM267 352h8v11h-8ZM280 352h8v11h-8ZM254 388h8v11h-8ZM267 388h8v11h-8ZM280 388h8v11h-8ZM313 192h8v11h-8ZM326 246h8v11h-8ZM326 282h8v11h-8ZM313 318h8v11h-8ZM313 336h8v11h-8ZM313 354h8v11h-8ZM326 354h8v11h-8ZM326 372h8v11h-8ZM384 296h8v11h-8ZM358 314h8v11h-8ZM358 332h8v11h-8ZM371 332h8v11h-8ZM384 332h8v11h-8ZM397 332h8v11h-8ZM358 368h8v11h-8ZM384 368h8v11h-8ZM410 368h8v11h-8ZM371 386h8v11h-8ZM397 386h8v11h-8ZM410 386h8v11h-8ZM423 386h8v11h-8ZM462 278h8v11h-8ZM475 386h8v11h-8ZM526 252h8v11h-8ZM539 252h8v11h-8ZM500 270h8v11h-8ZM526 270h8v11h-8ZM500 288h8v11h-8ZM526 288h8v11h-8ZM539 288h8v11h-8ZM513 306h8v11h-8ZM526 306h8v11h-8ZM539 306h8v11h-8ZM500 324h8v11h-8ZM526 324h8v11h-8ZM539 324h8v11h-8ZM500 342h8v11h-8ZM526 342h8v11h-8ZM539 342h8v11h-8ZM539 378h8v11h-8ZM500 396h8v11h-8ZM598 266h8v11h-8ZM611 266h8v11h-8ZM585 284h8v11h-8ZM611 284h8v11h-8ZM637 284h8v11h-8ZM598 302h8v11h-8ZM624 302h8v11h-8ZM637 302h8v11h-8ZM572 320h8v11h-8ZM598 320h8v11h-8ZM585 338h8v11h-8ZM624 338h8v11h-8ZM572 356h8v11h-8ZM585 356h8v11h-8ZM572 374h8v11h-8ZM585 374h8v11h-8ZM611 374h8v11h-8ZM624 374h8v11h-8ZM572 392h8v11h-8ZM624 392h8v11h-8ZM663 149h8v11h-8ZM663 167h8v11h-8ZM689 167h8v11h-8ZM663 185h8v11h-8ZM676 221h8v11h-8ZM689 221h8v11h-8ZM663 239h8v11h-8ZM663 257h8v11h-8ZM689 257h8v11h-8ZM663 293h8v11h-8ZM689 293h8v11h-8ZM676 311h8v11h-8ZM663 329h8v11h-8ZM676 329h8v11h-8ZM676 347h8v11h-8ZM663 383h8v11h-8ZM755 254h8v11h-8ZM742 290h8v11h-8ZM716 308h8v11h-8ZM755 326h8v11h-8ZM742 344h8v11h-8ZM755 344h8v11h-8ZM716 380h8v11h-8ZM742 380h8v11h-8ZM742 398h8v11h-8ZM786 265h8v11h-8ZM786 319h8v11h-8ZM786 337h8v11h-8ZM786 355h8v11h-8ZM786 373h8v11h-8ZM786 391h8v11h-8ZM799 391h8v11h-8ZM844 195h8v11h-8ZM844 213h8v11h-8ZM857 213h8v11h-8ZM831 231h8v11h-8ZM857 249h8v11h-8ZM857 267h8v11h-8ZM844 285h8v11h-8ZM857 285h8v11h-8ZM857 303h8v11h-8ZM844 321h8v11h-8ZM844 339h8v11h-8ZM844 357h8v11h-8ZM857 357h8v11h-8ZM831 393h8v11h-8ZM887 249h8v11h-8ZM913 249h8v11h-8ZM926 249h8v11h-8ZM900 267h8v11h-8ZM926 267h8v11h-8ZM900 285h8v11h-8ZM900 321h8v11h-8ZM926 321h8v11h-8ZM926 339h8v11h-8ZM926 357h8v11h-8ZM887 375h8v11h-8ZM913 375h8v11h-8ZM926 375h8v11h-8ZM900 393h8v11h-8ZM953 260h8v11h-8ZM979 260h8v11h-8ZM992 260h8v11h-8ZM966 278h8v11h-8ZM979 278h8v11h-8ZM992 278h8v11h-8ZM979 296h8v11h-8ZM992 314h8v11h-8ZM992 332h8v11h-8ZM953 350h8v11h-8ZM992 350h8v11h-8ZM953 386h8v11h-8ZM1021 179h8v11h-8ZM1034 179h8v11h-8ZM1047 179h8v11h-8ZM1060 179h8v11h-8ZM1073 179h8v11h-8ZM1060 197h8v11h-8ZM1073 197h8v11h-8ZM1034 215h8v11h-8ZM1086 215h8v11h-8ZM1060 233h8v11h-8ZM1073 233h8v11h-8ZM1021 251h8v11h-8ZM1034 251h8v11h-8ZM1073 251h8v11h-8ZM1086 251h8v11h-8ZM1021 269h8v11h-8ZM1034 269h8v11h-8ZM1086 269h8v11h-8ZM1034 287h8v11h-8ZM1047 287h8v11h-8ZM1034 305h8v11h-8ZM1073 305h8v11h-8ZM1073 323h8v11h-8ZM1034 341h8v11h-8ZM1034 359h8v11h-8ZM1060 377h8v11h-8ZM1073 395h8v11h-8ZM1086 395h8v11h-8ZM1112 309h8v11h-8ZM1125 309h8v11h-8ZM1125 327h8v11h-8ZM1112 345h8v11h-8ZM1125 345h8v11h-8ZM1138 345h8v11h-8ZM1151 345h8v11h-8ZM1112 363h8v11h-8ZM1125 363h8v11h-8ZM1112 381h8v11h-8ZM1125 381h8v11h-8ZM1151 381h8v11h-8ZM1206 164h8v11h-8ZM1206 200h8v11h-8ZM1180 218h8v11h-8ZM1193 218h8v11h-8ZM1206 236h8v11h-8ZM1193 254h8v11h-8ZM1193 272h8v11h-8ZM1206 290h8v11h-8ZM1193 308h8v11h-8ZM1180 326h8v11h-8ZM1193 326h8v11h-8ZM1206 326h8v11h-8ZM1193 344h8v11h-8ZM1206 344h8v11h-8ZM1180 362h8v11h-8ZM1206 362h8v11h-8ZM1206 380h8v11h-8ZM1180 398h8v11h-8ZM1262 242h8v11h-8ZM1275 278h8v11h-8ZM1262 314h8v11h-8ZM1236 332h8v11h-8ZM1262 332h8v11h-8ZM1236 350h8v11h-8ZM1249 350h8v11h-8ZM1249 368h8v11h-8ZM1275 368h8v11h-8ZM1249 386h8v11h-8ZM1262 386h8v11h-8ZM1297 181h8v11h-8ZM1310 217h8v11h-8ZM1297 235h8v11h-8ZM1310 235h8v11h-8ZM1297 253h8v11h-8ZM1310 253h8v11h-8ZM1297 289h8v11h-8ZM1310 289h8v11h-8ZM1297 307h8v11h-8ZM1310 325h8v11h-8ZM1297 343h8v11h-8ZM1310 343h8v11h-8ZM1310 379h8v11h-8ZM1297 397h8v11h-8ZM1310 397h8v11h-8ZM1341 213h8v11h-8ZM1354 267h8v11h-8ZM1341 285h8v11h-8ZM1341 303h8v11h-8ZM1354 303h8v11h-8ZM1341 393h8v11h-8ZM1387 254h8v11h-8ZM1400 254h8v11h-8ZM1413 272h8v11h-8ZM1400 290h8v11h-8ZM1413 308h8v11h-8ZM1387 362h8v11h-8ZM1413 380h8v11h-8ZM1443 227h8v11h-8ZM1456 227h8v11h-8ZM1456 245h8v11h-8ZM1469 245h8v11h-8ZM1456 263h8v11h-8ZM1456 281h8v11h-8ZM1469 299h8v11h-8ZM1469 335h8v11h-8ZM1456 353h8v11h-8ZM1443 389h8v11h-8ZM1456 389h8v11h-8Z"/></svg>
@@ -70,19 +60,19 @@
                 </div>
               </header>
               <ol class="regras__list" role="list">
-                <li class="regra is-selected" data-rule data-placeholder="Regra 1.1: título, resumo, texto e penalidade são rascunho até a staff mandar o texto oficial">
+                <li class="regra is-selected" data-rule>
                   <button class="regra__btn" type="button" aria-controls="regras-detail" aria-pressed="true"><span class="regra__code">1.1</span><span class="regra__body"><span class="regra__t" data-hl>Respeito entre jogadores</span><span class="regra__d" data-hl>Trate todo mundo com respeito, dentro e fora da cena.</span></span></button>
                   <span class="regra__full" data-hl hidden>Discussão de personagem fica na cena. Ofensa pessoal, ameaça real ou perseguição a outro jogador, no jogo ou no Discord, não é roleplay e não passa.</span><span class="regra__pen" data-sev="3" data-scope="Jogo + Discord" data-pun="ADV → BAN" hidden>Advertência a banimento, conforme a gravidade.</span>
                 </li>
-                <li class="regra" data-rule data-placeholder="Regra 1.2: título, resumo, texto e penalidade são rascunho até a staff mandar o texto oficial">
+                <li class="regra" data-rule>
                   <button class="regra__btn" type="button" aria-controls="regras-detail" aria-pressed="false"><span class="regra__code">1.2</span><span class="regra__body"><span class="regra__t" data-hl>Idade mínima</span><span class="regra__d" data-hl>Só entra quem tem 18 anos ou mais. Sem exceção.</span></span></button>
                   <span class="regra__full" data-hl hidden>A idade mínima é 18 anos e vale pra todo mundo, sem exceção. Se a staff pedir confirmação, ela precisa ser feita pra continuar na cidade.</span><span class="regra__pen" data-sev="2" data-scope="Jogo + Discord" data-pun="Sem acesso" hidden>Remoção do acesso até a confirmação.</span>
                 </li>
-                <li class="regra" data-rule data-placeholder="Regra 1.3: título, resumo, texto e penalidade são rascunho até a staff mandar o texto oficial">
+                <li class="regra" data-rule>
                   <button class="regra__btn" type="button" aria-controls="regras-detail" aria-pressed="false"><span class="regra__code">1.3</span><span class="regra__body"><span class="regra__t" data-hl>Conta e identidade</span><span class="regra__d" data-hl>Uma conta por pessoa. Nada de conta emprestada ou dividida.</span></span></button>
                   <span class="regra__full" data-hl hidden>Cada pessoa joga com a própria conta. Emprestar, vender ou dividir conta derruba o acesso de todo mundo envolvido.</span><span class="regra__pen" data-sev="4" data-scope="Jogo + Discord" data-pun="BAN" hidden>Banimento das contas envolvidas.</span>
                 </li>
-                <li class="regra" data-rule data-placeholder="Regra 1.4: título, resumo, texto e penalidade são rascunho até a staff mandar o texto oficial">
+                <li class="regra" data-rule>
                   <button class="regra__btn" type="button" aria-controls="regras-detail" aria-pressed="false"><span class="regra__code">1.4</span><span class="regra__body"><span class="regra__t" data-hl>Decisão da staff</span><span class="regra__d" data-hl>A palavra final é da staff. Discordou? Abre ticket, sem treta no jogo.</span></span></button>
                   <span class="regra__full" data-hl hidden>Durante a cena, siga a orientação da staff. Se achar que a decisão foi errada, abra um ticket com calma e com prova, depois da cena.</span><span class="regra__pen" data-sev="1" data-scope="Jogo" data-pun="ADV → Kick" hidden>Advertência; reincidência pode dar kick.</span>
                 </li>
@@ -97,15 +87,15 @@
                 </div>
               </header>
               <ol class="regras__list" role="list">
-                <li class="regra" data-rule data-placeholder="Regra 2.1: título, resumo, texto e penalidade são rascunho até a staff mandar o texto oficial">
+                <li class="regra" data-rule>
                   <button class="regra__btn" type="button" aria-controls="regras-detail" aria-pressed="false"><span class="regra__code">2.1</span><span class="regra__body"><span class="regra__t" data-hl>Canais e menções</span><span class="regra__d" data-hl>Cada assunto no seu canal. Marcação só quando precisar mesmo.</span></span></button>
                   <span class="regra__full" data-hl hidden>Use o canal certo pra cada assunto e evite marcar staff ou cargos sem necessidade. Quem marca demais some da fila.</span><span class="regra__pen" data-sev="1" data-scope="Discord" data-pun="Mute" hidden>Silenciamento temporário no Discord.</span>
                 </li>
-                <li class="regra" data-rule data-placeholder="Regra 2.2: título, resumo, texto e penalidade são rascunho até a staff mandar o texto oficial">
+                <li class="regra" data-rule>
                   <button class="regra__btn" type="button" aria-controls="regras-detail" aria-pressed="false"><span class="regra__code">2.2</span><span class="regra__body"><span class="regra__t" data-hl>Divulgação e spam</span><span class="regra__d" data-hl>Sem divulgar outro servidor e sem flood no chat.</span></span></button>
                   <span class="regra__full" data-hl hidden>Link de outro servidor, propaganda sem autorização e mensagem repetida em sequência são removidos na hora.</span><span class="regra__pen" data-sev="3" data-scope="Discord" data-pun="Mute → BAN" hidden>Silenciamento a banimento do Discord.</span>
                 </li>
-                <li class="regra" data-rule data-placeholder="Regra 2.3: título, resumo, texto e penalidade são rascunho até a staff mandar o texto oficial">
+                <li class="regra" data-rule>
                   <button class="regra__btn" type="button" aria-controls="regras-detail" aria-pressed="false"><span class="regra__code">2.3</span><span class="regra__body"><span class="regra__t" data-hl>Tickets e suporte</span><span class="regra__d" data-hl>Problema se resolve por ticket, com calma e com prova.</span></span></button>
                   <span class="regra__full" data-hl hidden>Abra um ticket por assunto, explique o que aconteceu e mande clipe ou print. Ticket sem informação é fechado.</span><span class="regra__pen" data-sev="1" data-scope="Discord" data-pun="Ticket fechado" hidden>Ticket encerrado sem resposta.</span>
                 </li>
@@ -120,19 +110,19 @@
                 </div>
               </header>
               <ol class="regras__list" role="list">
-                <li class="regra" data-rule data-placeholder="Regra 3.1: título, resumo, texto e penalidade são rascunho até a staff mandar o texto oficial">
+                <li class="regra" data-rule>
                   <button class="regra__btn" type="button" aria-controls="regras-detail" aria-pressed="false"><span class="regra__code">3.1</span><span class="regra__body"><span class="regra__t" data-hl>Powergaming</span><span class="regra__d" data-hl>Nada de forçar ação que o outro não tem como responder.</span></span></button>
                   <span class="regra__full" data-hl hidden>Toda ação precisa dar chance de resposta ao outro jogador. Impor resultado, ignorar reação ou fazer o impossível quebra a cena.</span><span class="regra__pen" data-sev="2" data-scope="Jogo" data-pun="ADV → BAN temp" hidden>Advertência a banimento temporário.</span>
                 </li>
-                <li class="regra" data-rule data-placeholder="Regra 3.2: título, resumo, texto e penalidade são rascunho até a staff mandar o texto oficial">
+                <li class="regra" data-rule>
                   <button class="regra__btn" type="button" aria-controls="regras-detail" aria-pressed="false"><span class="regra__code">3.2</span><span class="regra__body"><span class="regra__t" data-hl>Metagaming</span><span class="regra__d" data-hl>O que você viu fora do jogo não entra na cena.</span></span></button>
                   <span class="regra__full" data-hl hidden>Live, Discord e conversa por fora não são informação do personagem. Usar isso na cena tira a graça de todo mundo.</span><span class="regra__pen" data-sev="2" data-scope="Jogo" data-pun="ADV → BAN temp" hidden>Advertência a banimento temporário.</span>
                 </li>
-                <li class="regra" data-rule data-placeholder="Regra 3.3: título, resumo, texto e penalidade são rascunho até a staff mandar o texto oficial">
+                <li class="regra" data-rule>
                   <button class="regra__btn" type="button" aria-controls="regras-detail" aria-pressed="false"><span class="regra__code">3.3</span><span class="regra__body"><span class="regra__t" data-hl>Amor à vida</span><span class="regra__d" data-hl>Seu personagem tem medo de morrer. Age como tal.</span></span></button>
                   <span class="regra__full" data-hl hidden>Na mira de uma arma, seu personagem obedece e pensa na própria vida. Reagir como se nada fosse acontecer não é roleplay.</span><span class="regra__pen" data-sev="2" data-scope="Jogo" data-pun="ADV → BAN temp" hidden>Advertência a banimento temporário.</span>
                 </li>
-                <li class="regra" data-rule data-placeholder="Regra 3.4: título, resumo, texto e penalidade são rascunho até a staff mandar o texto oficial">
+                <li class="regra" data-rule>
                   <button class="regra__btn" type="button" aria-controls="regras-detail" aria-pressed="false"><span class="regra__code">3.4</span><span class="regra__body"><span class="regra__t" data-hl>Sair no meio da cena</span><span class="regra__d" data-hl>Começou a cena, termina a cena. Sem deslogar pra fugir.</span></span></button>
                   <span class="regra__full" data-hl hidden>Cair do jogo acontece; avise e volte. Deslogar de propósito pra escapar de uma cena conta como fuga.</span><span class="regra__pen" data-sev="3" data-scope="Jogo" data-pun="BAN temp" hidden>Banimento temporário.</span>
                 </li>
@@ -147,15 +137,15 @@
                 </div>
               </header>
               <ol class="regras__list" role="list">
-                <li class="regra" data-rule data-placeholder="Regra 4.1: título, resumo, texto e penalidade são rascunho até a staff mandar o texto oficial">
+                <li class="regra" data-rule>
                   <button class="regra__btn" type="button" aria-controls="regras-detail" aria-pressed="false"><span class="regra__code">4.1</span><span class="regra__body"><span class="regra__t" data-hl>Linguagem e preconceito</span><span class="regra__d" data-hl>Zero tolerância com preconceito, em qualquer canal.</span></span></button>
                   <span class="regra__full" data-hl hidden>Racismo, homofobia, machismo e qualquer outro preconceito tiram a pessoa da cidade, no jogo, na voz ou no Discord.</span><span class="regra__pen" data-sev="4" data-scope="Jogo + Discord" data-pun="BAN perm" hidden>Banimento permanente.</span>
                 </li>
-                <li class="regra" data-rule data-placeholder="Regra 4.2: título, resumo, texto e penalidade são rascunho até a staff mandar o texto oficial">
+                <li class="regra" data-rule>
                   <button class="regra__btn" type="button" aria-controls="regras-detail" aria-pressed="false"><span class="regra__code">4.2</span><span class="regra__body"><span class="regra__t" data-hl>Bugs e falhas</span><span class="regra__d" data-hl>Achou falha? Reporta. Usar a seu favor dá punição.</span></span></button>
                   <span class="regra__full" data-hl hidden>Encontrou algo quebrado, reporte no canal certo e não conte pra ninguém. Explorar falha a seu favor é tratado como trapaça.</span><span class="regra__pen" data-sev="4" data-scope="Jogo" data-pun="BAN temp → perm" hidden>Banimento temporário a permanente.</span>
                 </li>
-                <li class="regra" data-rule data-placeholder="Regra 4.3: título, resumo, texto e penalidade são rascunho até a staff mandar o texto oficial">
+                <li class="regra" data-rule>
                   <button class="regra__btn" type="button" aria-controls="regras-detail" aria-pressed="false"><span class="regra__code">4.3</span><span class="regra__body"><span class="regra__t" data-hl>Denúncias e provas</span><span class="regra__d" data-hl>Denúncia vem com clipe ou print. Sem prova, sem caso.</span></span></button>
                   <span class="regra__full" data-hl hidden>Grave suas cenas. A staff analisa o que tem prova; denúncia falsa ou montada também gera punição.</span><span class="regra__pen" data-sev="2" data-scope="Jogo + Discord" data-pun="ADV → BAN temp" hidden>Advertência a banimento temporário.</span>
                 </li>
@@ -171,22 +161,21 @@
                 </div>
               </header>
               <ol class="regras__list" role="list">
-                <li class="regra" data-rule data-placeholder="Regra 5.1: título, resumo, texto e penalidade são rascunho até a staff mandar o texto oficial">
+                <li class="regra" data-rule>
                   <button class="regra__btn" type="button" aria-controls="regras-detail" aria-pressed="false"><span class="regra__code">5.1</span><span class="regra__body"><span class="regra__t" data-hl>Sigilo do beta</span><span class="regra__d" data-hl>O que rola no beta fica no beta até a gente liberar.</span></span></button>
                   <span class="regra__full" data-hl hidden>Print, vídeo e live do beta só com liberação da staff. A cidade ainda está sendo construída e a estreia é nossa.</span><span class="regra__pen" data-sev="3" data-scope="Jogo + Discord" data-pun="Perde o beta" hidden>Perda do acesso ao beta.</span>
                 </li>
-                <li class="regra" data-rule data-placeholder="Regra 5.2: título, resumo, texto e penalidade são rascunho até a staff mandar o texto oficial">
+                <li class="regra" data-rule>
                   <button class="regra__btn" type="button" aria-controls="regras-detail" aria-pressed="false"><span class="regra__code">5.2</span><span class="regra__body"><span class="regra__t" data-hl>Reportar o que quebrar</span><span class="regra__d" data-hl>Beta Tester testa. Viu algo estranho, manda no canal certo.</span></span></button>
                   <span class="regra__full" data-hl hidden>Você é Beta Tester: seu papel é jogar e avisar o que estiver estranho. Quanto mais detalhe no report, mais rápido a gente arruma.</span><span class="regra__pen" data-sev="0" data-scope="Jogo" data-pun="Sem punição" hidden>Sem punição; report bom vira destaque.</span>
                 </li>
-                <li class="regra" data-rule data-placeholder="Regra 5.3: título, resumo, texto e penalidade são rascunho até a staff mandar o texto oficial">
+                <li class="regra" data-rule>
                   <button class="regra__btn" type="button" aria-controls="regras-detail" aria-pressed="false"><span class="regra__code">5.3</span><span class="regra__body"><span class="regra__t" data-hl>Convites</span><span class="regra__d" data-hl>Convite é pessoal. Não vende e não repassa.</span></span></button>
                   <span class="regra__full" data-hl hidden>O convite é seu e de mais ninguém. Vender, trocar ou repassar o acesso remove quem passou e quem recebeu.</span><span class="regra__pen" data-sev="3" data-scope="Jogo + Discord" data-pun="Perde o beta" hidden>Perda do acesso ao beta para os dois.</span>
                 </li>
               </ol>
             </section>
           </div>
-          <!-- pé do painel: progresso da seção + próxima seção (os dados vêm do JS) -->
           <div class="regras__foot">
             <div class="regras__foot-p"><span class="regras__foot-l">Lidas na seção</span><b data-sec-read>1/4</b><span class="regras__foot-bar" aria-hidden="true"><i data-sec-bar></i></span></div>
             <button class="regras__next" type="button" data-sec-next><span class="regras__next-l">Próxima seção</span><span class="regras__next-n" data-next-name>Discord</span><kbd aria-hidden="true">→</kbd></button>
@@ -196,10 +185,6 @@
     </div>
 
     <aside id="regras-detail" class="regras__detail" aria-label="Regra selecionada" data-detail data-sec-id="gerais">
-      <!-- HERÓI em 3 planos: cena com luz (fundo) / emblema-objeto da seção, grande, com metal facetado, especular, luz de borda
-           e sombra no chão (meio, coluna própria à direita: nunca encosta no texto) / título + texto + faixa de stats + placa de CTA (frente).
-           Os stats vêm de .regra__pen (data-sev, data-scope, data-pun) da regra selecionada; hoje são RASCUNHO (ver PLACEHOLDERS.md).
-           Emblema: SVG próprio, sem coroa e sem logo. Para seção nova: acrescente um <g data-for="id"> em .regras__emb-g e a regra CSS. -->
       <div class="regras__emb" aria-hidden="true">
         <span class="regras__emb-beam"></span>
         <span class="regras__emb-halo"></span>
@@ -219,20 +204,15 @@
             <filter id="rg-blur" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="7"/></filter>
             <clipPath id="rg-clip-core"><path d="M180 58 289 92V203L255 273 180 334 105 273 71 203V92Z"/></clipPath>
           </defs>
-          <!-- estilhaços soltos em volta (partículas sólidas) -->
           <g class="regras__emb-shards">
             <path d="M8 96 30 84 36 104 16 114Z"/><path d="M-22 250-4 244 2 262-14 270Z"/><path d="M398 150 414 140 420 158 404 166Z"/><path d="M52 388 70 380 74 396 58 402Z"/><path d="M370 372 392 364 396 384 378 390Z"/><path d="M40 20 52 14 56 26 46 30Z"/>
           </g>
           <g transform="translate(30 22)">
-            <!-- lâminas de trás (plano mais fundo do próprio objeto) -->
             <path d="M40 104-18 70V214L40 252Z" fill="url(#rg-m-back)" stroke="#F3D6FF" stroke-opacity=".28" stroke-width="1.5"/>
             <path d="M320 104 378 70V214L320 252Z" fill="url(#rg-m-lo)" stroke="#FF4DFF" stroke-opacity=".55" stroke-width="1.5"/>
             <path d="M-18 70 40 104" stroke="#fff" stroke-opacity=".7" stroke-width="2"/>
-            <!-- moldura quebrada externa -->
             <path d="M180-8 350 47V218L304 316 180 412 56 316 10 218V47Z" fill="none" stroke="#F3D6FF" stroke-opacity=".3" stroke-width="2" stroke-dasharray="74 26 12 26"/>
-            <!-- luz de borda magenta (contraluz), borrada, atrás da placa -->
             <path d="M334 58V214L292 304 180 392" fill="none" stroke="#FF4DFF" stroke-width="12" stroke-linejoin="round" filter="url(#rg-blur)" opacity=".95"/>
-            <!-- aro de metal em 8 facetas -->
             <path d="M26 58 180 8V30L47 73Z" fill="url(#rg-m-hi)"/>
             <path d="M180 8 334 58 313 73 180 30Z" fill="url(#rg-m-mid)"/>
             <path d="M334 58V214L313 209V73Z" fill="url(#rg-m-lo)"/>
@@ -241,16 +221,12 @@
             <path d="M180 392 68 304 85 290 180 365Z" fill="#1b1927"/>
             <path d="M68 304 26 214 47 209 85 290Z" fill="#2f2c42"/>
             <path d="M26 214V58L47 73V209Z" fill="url(#rg-m-mid)"/>
-            <!-- escovado do metal -->
             <path fill-rule="evenodd" d="M180 8 334 58V214L292 304 180 392 68 304 26 214V58ZM180 30 47 73V209L85 290 180 365 275 290 313 209V73Z" fill="url(#rg-brush)"/>
-            <!-- arestas: especular no alto à esquerda, magenta embaixo à direita -->
             <path d="M26 214V58L180 8" fill="none" stroke="#fff" stroke-opacity=".92" stroke-width="2.5" stroke-linejoin="round"/>
             <path d="M180 8 334 58" fill="none" stroke="#F3D6FF" stroke-opacity=".5" stroke-width="2"/>
             <path d="M334 58V214L292 304 180 392 68 304" fill="none" stroke="url(#rg-rimlight)" stroke-width="3" stroke-linejoin="round"/>
-            <!-- sulco -->
             <path d="M180 30 313 73V209L275 290 180 365 85 290 47 209V73Z" fill="#06050b"/>
             <path d="M313 209 275 290 180 365 85 290" fill="none" stroke="#F3D6FF" stroke-opacity=".3" stroke-width="1.5"/>
-            <!-- bisel do miolo em 8 facetas (azul-violeta) -->
             <path d="M55 80 180 40V58L71 92Z" fill="#b3a4ff"/>
             <path d="M180 40 305 80 289 92 180 58Z" fill="#7558ff"/>
             <path d="M305 80V207L289 203V92Z" fill="#2c14ad"/>
@@ -259,7 +235,6 @@
             <path d="M180 354 92 284 105 273 180 334Z" fill="#26119a"/>
             <path d="M92 284 55 207 71 203 105 273Z" fill="#3c20dc"/>
             <path d="M55 207V80L71 92V203Z" fill="#7a5fff"/>
-            <!-- miolo: dobra central, reflexo especular diagonal -->
             <path d="M180 58 289 92V203L255 273 180 334 105 273 71 203V92Z" fill="url(#rg-core)"/>
             <g clip-path="url(#rg-clip-core)">
               <path d="M180 58 71 92V203L105 273 180 334Z" fill="#fff" opacity=".09"/>
@@ -270,9 +245,7 @@
               <rect x="60" y="50" width="240" height="290" fill="url(#rg-brush)"/>
             </g>
             <path d="M71 203V92L180 58" fill="none" stroke="#fff" stroke-opacity=".5" stroke-width="1.5"/>
-            <!-- rebites -->
             <g fill="#F3D6FF"><path d="M176 14h8v8h-8Z" opacity=".9"/><path d="M33 64h7v7h-7ZM320 64h7v7h-7ZM33 200h7v7h-7ZM320 200h7v7h-7Z" opacity=".55"/></g>
-            <!-- glifo da seção, em relevo -->
             <g class="regras__emb-g" fill="none" stroke="url(#rg-glyph)" stroke-width="3.4" stroke-linejoin="round">
               <g data-for="gerais" transform="translate(115 92) scale(2.7)"><path d="M10 6h20l8 8v28H10Z"/><path d="M17 20h14M17 27h14M17 34h8"/></g>
               <g data-for="discord" transform="translate(110 88) scale(5.8)" fill="#FBF2FF" stroke="none"><use href="#i-discord" width="24" height="24"/></g>
@@ -280,7 +253,6 @@
               <g data-for="conduta" transform="translate(115 92) scale(2.7)"><path d="M24 6v34M14 42h20M8 14h32"/><path d="M12 14 6 28h12L12 14ZM36 14l-6 14h12l-6-14Z"/></g>
               <g data-for="beta" transform="translate(115 90) scale(2.7)"><path d="M19 6h10M21 6v13L9 38c-1 2 0 4 3 4h24c3 0 4-2 3-4L27 19V6"/><path d="M14 31h20"/></g>
             </g>
-            <!-- plaqueta de metal com o número da seção -->
             <path d="M118 262h124l16 22-16 38H118l-16-38Z" fill="#06050b" stroke="#06050b" stroke-width="6" stroke-linejoin="round"/>
             <path d="M118 262h124l16 22-16 38H118l-16-38Z" fill="url(#rg-m-back)"/>
             <path d="M102 284 118 262h124l16 22" fill="none" stroke="#fff" stroke-opacity=".75" stroke-width="2"/>
@@ -293,8 +265,7 @@
       <h2 class="regras__dt" data-d-title aria-live="polite">Respeito entre jogadores</h2>
       <p class="regras__dsum" data-d-sum>Trate todo mundo com respeito, dentro e fora da cena.</p>
       <p class="regras__dfull" data-d-full>Discussão de personagem fica na cena. Ofensa pessoal, ameaça real ou perseguição a outro jogador, no jogo ou no Discord, não é roleplay e não passa.</p>
-      <!-- faixa única de stats: GRAVIDADE domina (valor grande + medidor), escopo e punição são linhas simples -->
-      <dl class="regras__stats" data-placeholder="Gravidade, escopo e punição da regra selecionada: rascunho até a staff mandar o texto oficial">
+      <dl class="regras__stats">
         <div class="regras__stat regras__stat--sev" data-sev="3">
           <dt>Gravidade</dt>
           <dd><span class="regras__sev-t" data-d-sev>Grave</span><span class="regras__sev" aria-hidden="true"><i></i><i></i><i></i><i></i></span></dd>
@@ -308,7 +279,6 @@
           <dd><span data-d-pun>ADV → BAN</span><span class="sr-only">: <span data-d-pen>Advertência a banimento, conforme a gravidade.</span></span></dd>
         </div>
       </dl>
-      <!-- CTA: única placa de cor de ação da tela, ancorada embaixo à direita, com a keycap ENTER embutida -->
       <div class="regras__cta">
         <a class="regras__go" href="https://discord.gg/jogueryz" data-discord target="_blank" rel="noopener"><kbd class="regras__go-k" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M19 5v9H7m4-4-4 4 4 4" fill="none" stroke="currentColor" stroke-width="2.6"/></svg>Enter</kbd><span class="regras__go-sw" aria-hidden="true"></span><span class="regras__go-b"><span class="regras__go-t"><svg class="ico" aria-hidden="true"><use href="#i-discord"/></svg>Abrir no Discord</span><span class="regras__go-s">Ficou na dúvida? A staff responde lá</span></span></a>
       </div>

@@ -1,33 +1,17 @@
-/* ==========================================================================
-   80-regras.css  (dono: construtor das REGRAS)
-   Composição de menu de jogo:
-   1) CENA (CSS/SVG, sem coroa): bloom, skyline em dois planos desfocados, névoa, vinheta forte.
-   2) OBJETO FÍSICO em primeiro plano: lombada 01-05 + painel único (perspective + rotateY),
-      corpo escuro translúcido com blur, chanfros, faixa de cabeçalho inclinada, sombra projetada.
-      Cada regra é uma célula própria (ícone, número, título, gravidade) com estado lida/não lida/selecionada.
-   3) HERÓI frontal em 3 planos: cena com vinheta (fundo), emblema nítido da seção em SVG com bisel,
-      luz de borda e sombra projetada (meio), título + descrição + 3 stat chips em vidro escuro (frente).
-   Cor: o CTA é o ÚNICO bloco claro (lavanda quase branca + texto escuro). Magenta = seleção (1.1) e GRAVE.
-   Gravidade por nível: Leve azul-violeta claro, Média roxo, Grave magenta, Máxima branco-quente.
-   ========================================================================== */
 .regras {
   --rg-act: var(--c-magenta);
-  --rg-ui: #1b1926;                        /* bloco neutro */
-  --rg-ui-2: #262437;                      /* bloco neutro claro (aba ativa) */
+  --rg-ui: #1b1926;                        
+  --rg-ui-2: #262437;                      
   --rg-line: color-mix(in srgb, var(--c-lavender) 16%, transparent);
   --rg-white: #FBF2FF;
   --rg-mute: color-mix(in srgb, var(--c-lavender) 62%, var(--c-bg));
-  --rg-glass: rgba(20, 17, 34, 0.56);      /* vidro dos painéis (a cena aparece através) */
+  --rg-glass: rgba(20, 17, 34, 0.56);      
   position: relative;
   isolation: isolate;
   overflow: clip;
   background: #07020f;
 }
 
-/* ---------------------------------------------------------------- 1. CENA em 3 profundidades
-   fundo: céu + skyline com janelas e neon (desfocada, escura, dessaturada)
-   meio: wordmark RYZ sem coroa gigante desfocado + nuvem de luz + névoa em faixas
-   frente: bokeh e partículas grandes fora de foco nos cantos; vinheta e gradiente embaixo */
 .regras__scene {
   position: absolute;
   inset: 0;
@@ -36,7 +20,6 @@
   pointer-events: none;
 }
 .regras__scene > * { position: absolute; }
-/* céu: horizonte claro no meio-baixo, topo quase preto */
 .regras__sky {
   inset: 0;
   background:
@@ -45,7 +28,6 @@
     radial-gradient(36% 30% at 92% 64%, color-mix(in srgb, var(--c-magenta) 16%, transparent), transparent 75%),
     linear-gradient(180deg, #07020f 0%, #140a34 30%, #2a1260 60%, #1a0b3a 80%, #08030f 100%);
 }
-/* skyline: SVG com prédios, janelas acesas e letreiros neon; desfocada (pré-desfoque estático, sem animação) */
 .regras__city { left: -2%; width: 104%; }
 .regras__city--far {
   bottom: 20%;
@@ -63,7 +45,6 @@
 .regras__city--near .b { fill: #06030e; }
 .regras__city--near .w { fill: #FF9DFF; opacity: 0.7; }
 .regras__city--near .n { fill: #FF4DFF; }
-/* nuvem de luz clara (lavanda/rosa claro) atrás do conteúdo, como a nuvem da referência */
 .regras__cloud {
   left: 20%;
   right: -6%;
@@ -78,7 +59,6 @@
   filter: blur(26px);
   opacity: 0.85;
 }
-/* emblema gigante: wordmark RYZ SEM coroa, desfocado e em baixa opacidade, atrás do escudo */
 .regras__mark {
   left: 28%;
   top: 12%;
@@ -90,7 +70,6 @@
   mix-blend-mode: screen;
   opacity: 0.16;
 }
-/* névoa volumétrica em faixas: duas camadas largas que derivam devagar (só transform) */
 .regras__fog { left: -20%; width: 140%; }
 .regras__fog--a {
   top: 46%;
@@ -111,7 +90,6 @@
   animation: rg-fog 52s ease-in-out infinite alternate-reverse;
 }
 @keyframes rg-fog { from { transform: translateX(-4%); } to { transform: translateX(4%); } }
-/* bloom magenta/azul atrás do escudo (direita) */
 .regras__bloom {
   inset: 0;
   background:
@@ -119,7 +97,6 @@
     radial-gradient(30% 40% at 82% 40%, color-mix(in srgb, var(--c-blue) 34%, transparent), transparent 74%);
   mix-blend-mode: screen;
 }
-/* partículas pequenas flutuando (sobem devagar) */
 .regras__motes {
   inset: -10% 0 0;
   opacity: 0.75;
@@ -138,7 +115,6 @@
   animation: rg-motes 26s linear infinite alternate;
 }
 @keyframes rg-motes { from { transform: translateY(0); } to { transform: translateY(-5%); } }
-/* bokeh de primeiro plano: discos grandes fora de foco nos cantos (desfoque já no gradiente, sem filtro) */
 .regras__bokeh {
   inset: 0;
   z-index: 3;
@@ -153,7 +129,6 @@
     radial-gradient(circle at 36% 99%, color-mix(in srgb, var(--c-lavender) 16%, transparent) 0, transparent 60px),
     radial-gradient(circle at 62% 101%, color-mix(in srgb, var(--c-pink) 18%, transparent) 0, transparent 70px);
 }
-/* vinheta nas bordas + gradiente forte embaixo (ancora o rodapé) */
 .regras__vig {
   inset: 0;
   z-index: 4;
@@ -164,7 +139,6 @@
     linear-gradient(270deg, rgba(4, 0, 10, 0.5), transparent 14%),
     radial-gradient(90% 90% at 55% 52%, transparent 52%, rgba(3, 0, 8, 0.6) 100%);
 }
-/* grão */
 .regras__scene::before {
   content: "";
   position: absolute;
@@ -175,7 +149,6 @@
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
-/* ---------------------------------------------------------------- Grade */
 .regras__wrap {
   display: grid;
   grid-template-columns: minmax(0, 560px) minmax(0, 1fr);
@@ -191,7 +164,6 @@
   padding: var(--sp-5) var(--gutter) 0;
 }
 
-/* ---------------------------------------------------------------- Rótulo da página (pequeno: o herói é a regra) */
 .regras__head { grid-area: head; min-width: 0; display: flex; flex-wrap: wrap; align-items: center; gap: 14px 28px; }
 .regras__title {
   display: flex;
@@ -233,7 +205,6 @@
 .regras__meta b { font-weight: 800; color: var(--rg-white); }
 .regras__meta i { font-style: normal; font-weight: 700; color: var(--c-lavender); }
 .regras__meta-sep { margin-inline: 10px; color: color-mix(in srgb, var(--c-lavender) 30%, transparent); }
-/* LIDAS: medidor de progresso (HUD do jogador) */
 .regras__read {
   display: inline-flex;
   align-items: center;
@@ -249,13 +220,11 @@
 .regras__read-n { font-size: 1.5rem; font-weight: 900; font-style: italic; line-height: 1; font-variant-numeric: tabular-nums; color: var(--rg-white); }
 .regras__read-n small { font-size: 0.55em; font-weight: 800; color: var(--rg-mute); }
 .regras__read-pct { min-width: 3.2em; font-size: 1.125rem; font-weight: 800; font-variant-numeric: tabular-nums; color: var(--c-lavender); text-align: right; }
-/* um segmento por regra */
 .regras__segs { display: flex; gap: 4px; }
 .regras__segs i { width: 7px; height: 14px; background: color-mix(in srgb, var(--c-lavender) 14%, transparent); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--c-lavender) 10%, transparent); transform: skewX(var(--skew)); transition: background var(--t-med) var(--ease); }
 .regras__segs i.is-on { background: linear-gradient(180deg, #fff, var(--c-lavender)); box-shadow: none; }
 .regras__en { font-size: 0.8125rem; font-weight: 600; font-style: italic; letter-spacing: 0.22em; text-transform: uppercase; color: var(--rg-mute); }
 
-/* ---------------------------------------------------------------- 2. Objeto físico: lombada + painel, um só plano 3D */
 .regras__deck {
   grid-area: deck;
   min-width: 0;
@@ -276,7 +245,6 @@
   transform-origin: 0 50%;
 }
 
-/* lombada numerada 01-05 encostada no painel */
 .regras__toc {
   position: relative;
   z-index: 2;
@@ -336,7 +304,6 @@
 .regras__tab.is-done .regras__tr::before { content: "✓ "; }
 .regras__tlock { grid-area: lock; justify-self: end; width: 15px; height: 15px; margin-right: 6px; color: var(--c-lavender); opacity: 0.8; }
 .regras__tc { display: none; }
-/* aba ativa: se projeta para a direita e se funde com o corpo do painel */
 .regras__tab[aria-current] {
   margin-right: -16px;
   padding-right: 24px;
@@ -361,7 +328,6 @@
 .regras.is-searching .regras__tab[aria-current]::before { display: none; }
 .regras__tab:focus-visible { outline: 2px solid var(--c-lavender); outline-offset: -3px; }
 
-/* painel: corpo sólido escuro translúcido com blur, chanfro nos cantos sup. esq. e inf. dir., sombra projetada */
 .regras__main {
   position: relative;
   z-index: 1;
@@ -372,7 +338,6 @@
   padding-bottom: 22px;
 }
 .regras__main::before {
-  /* sombra projetada sobre a cena */
   content: "";
   position: absolute;
   inset: 40px -34px -34px 26px;
@@ -381,7 +346,6 @@
   filter: blur(26px);
   pointer-events: none;
 }
-/* VIDRO: o desfoque da cena fica no próprio .regras__plate (um clip-path no pai cortaria o backdrop) */
 .regras__plate {
   position: absolute;
   inset: 0;
@@ -394,7 +358,6 @@
   -webkit-backdrop-filter: blur(18px) saturate(1.1);
   backdrop-filter: blur(18px) saturate(1.1);
 }
-/* fio de borda em degradê (anel por máscara) */
 .regras__plate::after {
   content: "";
   position: absolute;
@@ -406,7 +369,6 @@
   mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
 }
 
-/* faixa de cabeçalho inclinada: SEÇÃO 01 · GERAIS · General · 1/4 */
 .regras__band-top {
   display: flex;
   align-items: center;
@@ -432,7 +394,6 @@
 .regras__bt-read { margin-left: auto; font-size: 1.125rem; font-weight: 800; font-variant-numeric: tabular-nums; color: color-mix(in srgb, var(--c-lavender) 70%, transparent); }
 .regras__bt-read b { color: var(--rg-white); }
 
-/* busca dentro do painel, no topo */
 .regras__search {
   display: flex;
   align-items: center;
@@ -491,7 +452,6 @@
 
 .regras__panel { position: relative; flex: 1; padding: 14px 20px 0 22px; }
 
-/* pé do painel: progresso da seção + próxima seção (fecha o painel embaixo, sem vazio) */
 .regras__foot {
   display: flex;
   align-items: center;
@@ -532,7 +492,6 @@
 .regras__board:not(.is-searching) .regras__sec.is-off { display: none; }
 .regras__board.is-searching .regras__sec:not([hidden]) ~ .regras__sec:not([hidden]) { margin-top: var(--sp-4); }
 
-/* cabeçalho de seção: a faixa do topo faz esse papel; aparece só como divisória na busca */
 .regras__sh { margin: 0 0 8px; }
 .regras__board:not(.is-searching) .regras__sh {
   position: absolute;
@@ -547,7 +506,6 @@
 .regras__bc { margin-left: auto; font-size: 0.8125rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--rg-mute); }
 .regras__band .g-tag { flex: none; font-size: 0.75rem; filter: saturate(0.2); }
 
-/* células: placa escura própria, divisória chanfrada, ícone à esquerda, medidor de gravidade */
 .regras__list { display: grid; gap: 10px; padding: 0; margin: 0; list-style: none; }
 .regra { position: relative; transition: transform var(--t-med) var(--ease); }
 .regra__btn {
@@ -571,9 +529,7 @@
   box-shadow: inset 4px 0 0 var(--sv), inset 0 1px 0 color-mix(in srgb, var(--c-lavender) 16%, transparent), inset 0 -1px 0 rgba(0, 0, 0, 0.5);
   transition: background var(--t-fast) var(--ease);
 }
-/* não lida: um pouco mais escura, mas legível (quase branco a 75%) */
 .regra:not(.is-read) .regra__btn { background: linear-gradient(90deg, rgba(30, 27, 46, 0.66), rgba(20, 18, 32, 0.58)); }
-/* ícone de categoria por regra, em célula chanfrada com borda na cor da gravidade */
 .regra__ico {
   grid-area: ico;
   position: relative;
@@ -588,7 +544,6 @@
 }
 .regra__ico::before,
 .regra__ico::after {
-  /* fio diagonal nos dois chanfros (o clip-path corta a borda inset) */
   content: "";
   position: absolute;
   width: 15px;
@@ -611,7 +566,6 @@
   display: none;
 }
 .regra.is-read .regra__chk { display: none; }
-/* marca lida / não lida: caixa inclinada à direita (vazia = não lida, cheia com check = lida) */
 .regra__mk {
   grid-area: mk;
   display: grid;
@@ -636,9 +590,8 @@
   line-height: 1.02;
   text-wrap: balance;
   color: color-mix(in srgb, var(--rg-white) 92%, transparent);
-  padding-top: .2em; margin-top: -.2em; /* folga: o corte não pega o acento (MÍNIMA, DECISÃO) */
+  padding-top: .2em; margin-top: -.2em; 
 }
-/* resumo de uma linha: quase branco a 75%, 16px */
 .regra__d {
   display: block;
   margin-top: 4px;
@@ -654,7 +607,6 @@
 .regra:not(.is-selected) .regra__btn:hover { background: linear-gradient(90deg, rgba(48, 44, 68, 0.96), rgba(32, 29, 47, 0.96)); }
 .regra:not(.is-selected) .regra__btn:hover > * { opacity: 1; }
 
-/* gravidade: cor por nível (azul-violeta, roxo, magenta só no GRAVE/MÁXIMA) */
 .regra, .regra__sev, .regras__stat--sev { --sv: color-mix(in srgb, var(--c-lavender) 40%, transparent); }
 .regra[data-sev="1"], .regra__sev[data-sev="1"], .regras__stat--sev[data-sev="1"] { --sv: color-mix(in srgb, var(--c-blue) 40%, var(--c-lavender)); }
 .regra[data-sev="2"], .regra__sev[data-sev="2"], .regras__stat--sev[data-sev="2"] { --sv: var(--c-purple); }
@@ -670,7 +622,6 @@
 .regra__sev-t { font-size: 0.8125rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--sv); }
 .regra__sev[data-sev="4"] .regra__sev-t { padding: 1px 6px; color: var(--c-ink); background: var(--sv); transform: skewX(var(--skew)); }
 
-/* selecionada: borda magenta + glow interno, projeta para a direita e liga ao herói por um conector */
 .regra.is-selected { z-index: 2; transform: translateX(24px); }
 .regra.is-selected .regra__btn {
   background:
@@ -685,7 +636,6 @@
 .regra.is-selected .regra__t { font-size: 1.375rem; font-weight: 800; font-style: italic; color: var(--rg-white); }
 .regra.is-selected .regra__d { color: color-mix(in srgb, var(--rg-white) 86%, transparent); }
 .regra.is-selected::before {
-  /* brilho externo (a célula é recortada, então o glow fica atrás dela) */
   content: "";
   position: absolute;
   inset: 4px;
@@ -693,7 +643,6 @@
   box-shadow: 0 0 26px color-mix(in srgb, var(--c-magenta) 45%, transparent), 18px 20px 26px rgba(0, 0, 0, 0.6);
 }
 .regra.is-selected::after {
-  /* feixe de luz que nasce do item e se abre em direção ao herói (sem linha de infográfico) */
   content: "";
   position: absolute;
   top: -40px;
@@ -711,7 +660,6 @@
 .regra__btn:focus-visible > * { opacity: 1; }
 .regras__board mark { padding: 0 0.1em; background: var(--c-lavender); color: var(--c-ink); }
 
-/* estado vazio */
 .regras__empty { display: grid; justify-items: start; gap: var(--sp-3); padding: var(--sp-5) var(--sp-2); }
 .regras__empty[hidden] { display: none; }
 .regras__empty-t { font-size: 2rem; font-weight: 800; font-style: italic; line-height: 1; text-transform: uppercase; color: var(--rg-white); }
@@ -720,9 +668,6 @@
 .regras__empty-d span { color: var(--c-lavender); font-weight: 700; }
 .regras__key { min-height: 44px; background: none; border: 0; cursor: pointer; font-size: 0.9375rem; color: var(--c-lavender); }
 
-/* ---------------------------------------------------------------- 3. Herói (frontal) em 3 planos
-   coluna de texto limpa à esquerda (nunca tocada) / emblema-objeto grande à direita, sangrando a margem /
-   faixa única de stats e placa de CTA na frente */
 .regras__detail {
   position: relative;
   isolation: isolate;
@@ -749,19 +694,16 @@
 }
 .regras__detail.is-idle { opacity: 0.3; }
 
-/* EMBLEMA: objeto-herói (plano do meio). Fica numa área própria à direita do texto e sangra para fora da margem. */
 .regras__emb {
   position: absolute;
   z-index: -1;
   top: clamp(24px, 4vh, 44px);
-  /* começa sempre depois da coluna de texto (+44px de folga) e sangra para fora da margem direita */
   left: max(calc(var(--txt-w) + 44px), calc(100% - var(--emb-w) + var(--gutter) + 36px));
   width: var(--emb-w);
   aspect-ratio: 420 / 440;
   pointer-events: none;
   perspective: 900px;
 }
-/* feixe/bloom magenta que sai do escudo e se abre para baixo e para a esquerda (falloff largo, sem filtro) */
 .regras__emb-beam {
   position: absolute;
   left: -70%;
@@ -785,7 +727,6 @@
   filter: blur(6px);
   mix-blend-mode: screen;
 }
-/* anel de luz atrás do objeto (volumetria) */
 .regras__emb-ring {
   position: absolute;
   left: 50%;
@@ -801,7 +742,6 @@
   opacity: 0.45;
   transform: rotateX(64deg) rotateZ(-8deg);
 }
-/* sombra de contato no "chão" */
 .regras__emb-floor {
   position: absolute;
   left: 8%;
@@ -842,7 +782,6 @@
 .regras__emb-g { filter: drop-shadow(0 3px 0 rgba(18, 0, 34, 0.7)) drop-shadow(0 0 10px rgba(243, 214, 255, 0.45)); }
 .regras__emb-n { font-family: inherit; font-size: 30px; font-weight: 900; font-style: italic; letter-spacing: 0.06em; fill: var(--rg-white); }
 
-/* COLUNA DE TEXTO (frente) */
 .regras__kick {
   grid-area: kick;
   display: flex;
@@ -870,7 +809,6 @@
   text-shadow: var(--shadow-title);
   text-wrap: balance;
 }
-/* resumo em destaque: régua de acento + subtítulo em itálico, lê como lore */
 .regras__dsum {
   grid-area: sum;
   max-width: 420px;
@@ -884,7 +822,6 @@
   color: #FBF2FF;
   box-shadow: inset 3px 0 0 var(--c-lavender);
 }
-/* texto completo: painel de vidro curto, ~420px */
 .regras__dfull {
   grid-area: full;
   max-width: 420px;
@@ -902,7 +839,6 @@
   box-shadow: inset 0 0 0 1px var(--rg-line);
 }
 
-/* FAIXA ÚNICA DE STATS: um bloco só, divisores diagonais; a gravidade domina com medidor grande */
 .regras__stats {
   grid-area: stats;
   align-self: start;
@@ -927,7 +863,6 @@
   min-width: 0;
   padding: 14px 18px 14px 34px;
 }
-/* divisor diagonal entre as células */
 .regras__stat + .regras__stat::before {
   content: "";
   position: absolute;
@@ -950,7 +885,6 @@
 .regras__stat--sev[data-sev="3"] .regras__sev i:nth-child(-n+3),
 .regras__stat--sev[data-sev="4"] .regras__sev i { background: var(--sv); box-shadow: none; }
 
-/* PLACA DE CTA: menor, chanfrada, ancorada embaixo à direita, keycap integrada. Único bloco de cor de ação. */
 .regras__cta {
   grid-area: cta;
   justify-self: end;
@@ -981,7 +915,6 @@
     linear-gradient(180deg, rgba(255, 255, 255, 0.55), transparent);
   pointer-events: none;
 }
-/* keycap embutida: bloco escuro à esquerda da placa */
 .regras__go-k {
   display: grid;
   place-content: center;
@@ -1002,7 +935,6 @@
 }
 .regras__go-k svg { width: 24px; height: 24px; }
 .regras__go-b { position: relative; z-index: 1; display: grid; align-content: center; gap: 5px; padding: 12px 44px 12px 22px; }
-/* varredura de brilho suave (só transform; parada em reduced-motion) */
 .regras__go-sw {
   position: absolute;
   top: 0;
@@ -1038,7 +970,6 @@
 @keyframes rg-in { from { opacity: 0; transform: translateX(14px); } }
 @keyframes rg-emb { from { opacity: 0.2; transform: rotateY(-50deg) rotateZ(5deg) scale(0.92); } }
 
-/* ---------------------------------------------------------------- HUD do rodapé */
 .regras__hud {
   position: relative;
   z-index: 1;
@@ -1082,7 +1013,6 @@ button.regras__k:hover kbd { background: var(--c-lavender); }
   .regras__detail.is-flash .regras__stat dd { animation: none; }
 }
 
-/* ---------------------------------------------------------------- Tablet: herói desce */
 @media (max-width: 1180px) {
   .regras__wrap {
     grid-template-columns: minmax(0, 1fr);
@@ -1096,7 +1026,6 @@ button.regras__k:hover kbd { background: var(--c-lavender); }
   .regras__emb { right: 0; }
 }
 
-/* ---------------------------------------------------------------- Celular */
 @media (max-width: 900px) {
   .regras__wrap { padding-top: var(--sp-5); min-height: 0; padding-bottom: var(--section-y); }
   .regras__deck { perspective: none; max-width: none; margin-top: var(--sp-4); padding-bottom: 0; }
@@ -1147,7 +1076,6 @@ button.regras__k:hover kbd { background: var(--c-lavender); }
     grid-template-columns: minmax(0, 1fr);
     grid-template-areas: "emb" "kick" "dt" "sum" "full" "stats" "cta";
   }
-  /* no celular o emblema vira um bloco próprio acima do título (nunca sobre o texto) */
   .regras__emb { position: relative; grid-area: emb; top: auto; left: auto; justify-self: center; width: 210px; margin-bottom: var(--sp-5); }
   .regras__cta { justify-self: stretch; margin-right: 0; }
   .regras__stat--sev + .regras__stat::before { display: none; }

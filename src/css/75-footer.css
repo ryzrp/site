@@ -1,24 +1,16 @@
-/* ==========================================================================
-   75-footer.css  (dono: construtor do RODAPÉ)
-   Rodapé = cena final (arte + vinheta + menu de opções em coluna)
-   + lâminas em camadas (lavanda / periwinkle / roxo escuro) com chevron vazado
-   + barra de HUD compacta (prompt | ESC) + linha de telemetria.
-   ========================================================================== */
 .footer {
   --ft-bar: color-mix(in srgb, var(--c-ink) 30%, var(--c-black));
-  /* tons das lâminas (derivados da paleta) */
   --ft-lav:   color-mix(in srgb, color-mix(in srgb, var(--c-lavender) 62%, var(--c-blue)) 80%, var(--c-ink));
   --ft-peri:  color-mix(in srgb, color-mix(in srgb, var(--c-blue) 55%, var(--c-lavender)) 85%, var(--c-deep));
   --ft-dark:  color-mix(in srgb, color-mix(in srgb, var(--c-deep) 55%, var(--c-blue)) 82%, var(--c-ink));
   --ft-chev:  color-mix(in srgb, var(--c-lavender) 58%, var(--c-blue));
-  --ft-sh: 100px;  /* altura da faixa de lâminas */
+  --ft-sh: 100px;  
   position: relative;
   margin-top: var(--section-y);
   background: var(--ft-bar);
   overflow: hidden;
 }
 
-/* ---- Cena da chamada final ---- */
 .footer__cta {
   position: relative;
   isolation: isolate;
@@ -29,7 +21,6 @@
     radial-gradient(70% 120% at 18% 0%, color-mix(in srgb, var(--c-violet) 24%, transparent), transparent 65%),
     color-mix(in srgb, var(--c-ink) 82%, var(--c-deep));
 }
-/* arte da cidade por trás de tudo, aparecendo também entre as lâminas */
 .footer__art {
   position: absolute;
   inset: 0 0 0 22%;
@@ -92,11 +83,9 @@
 }
 .footer__cta-txt strong { color: var(--c-text-strong); font-weight: 700; }
 
-/* ---- Menu de opções em coluna ---- */
 .footer__menu { flex: none; width: min(100%, 30rem); }
 .footer__menu > ul { display: grid; gap: 6px; margin: 0; padding: 0; list-style: none; }
 .footer__item { position: relative; padding-left: 18px; }
-/* barra lateral: acesa no item focado */
 .footer__item::before {
   content: "";
   position: absolute;
@@ -116,7 +105,6 @@
 }
 .footer__item.is-focus::before { top: 0; bottom: 0; }
 
-/* item focado = botão do Discord com acabamento */
 .footer__cta-btn {
   --btn-line: color-mix(in srgb, var(--c-lavender) 85%, var(--c-pink));
   --ft-cut: 12px;
@@ -132,7 +120,6 @@
 }
 .footer__cta-btn::before,
 .footer__cta-btn::after {
-  /* paralelogramo com chanfro no canto sup. esquerdo e inf. direito */
   clip-path: polygon(calc(var(--lean-sm) * 2 + var(--ft-cut)) 0, 100% 0, calc(100% - var(--lean-sm) * 2) calc(100% - var(--ft-cut)), calc(100% - var(--lean-sm) * 2 - var(--ft-cut)) 100%, 0 100%, calc(var(--lean-sm) * 1.6) var(--ft-cut));
 }
 .footer__cta-btn::after {
@@ -170,7 +157,6 @@
   transform: skewX(var(--skew));
 }
 
-/* demais opções: faixa inclinada discreta que acende no foco */
 .footer__opt,
 .footer__item--social {
   position: relative;
@@ -237,7 +223,6 @@
 .footer__social a[aria-disabled="true"]:hover { color: var(--c-text-mute); }
 .footer__item--social .g-tag { margin-left: auto; }
 
-/* ---- Lâminas chapadas ---- */
 .footer__shards {
   position: absolute;
   left: 0;
@@ -253,7 +238,6 @@
 .footer__shards .fs-lav   { fill: var(--ft-lav); }
 .footer__shards .fs-floor { fill: var(--ft-bar); }
 
-/* chevron sólido: proporção fixa, ancorado no topo da faixa (centro) */
 .footer__chev {
   position: absolute;
   left: 50%;
@@ -268,7 +252,6 @@
 .footer__chev .fc-out { fill: var(--ft-chev); }
 .footer__chev .fc-in  { fill: #fff; filter: drop-shadow(0 1.5px 0 color-mix(in srgb, var(--c-deep) 70%, transparent)); }
 
-/* ---- Barra HUD inferior: só prompt e ESC, sobre o chão das lâminas ---- */
 .footer__bar {
   position: relative;
   z-index: 1;
@@ -333,7 +316,6 @@
 .footer__top:hover kbd { background: var(--c-pink); }
 .footer__top:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
 
-/* ---- Telemetria (linha tipo UID), colada na borda de baixo ---- */
 .footer__uid {
   display: flex;
   flex-wrap: wrap;
@@ -363,7 +345,6 @@
   .footer__item::before, .footer__opt::after, .footer__opt-arr { transition: none; }
 }
 
-/* ---- Tablet / celular ---- */
 @media (max-width: 960px) {
   .footer__cta-in { flex-direction: column; align-items: flex-start; gap: var(--sp-6); }
 }
